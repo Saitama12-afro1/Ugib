@@ -1,9 +1,11 @@
 from email.policy import default
 import os 
 import binascii
+from statistics import mode
 
 
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -94,7 +96,13 @@ class UdsMeta(models.Model):
         managed = False
         db_table = 'uds_meta'
 
-
+class Statistic(models.Model):
+    date = models.DateTimeField()
+    typeAction = models.CharField(max_length = 100)
+    my_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    
+    class Meta:
+        db_table = 'statistic'
 
 
 

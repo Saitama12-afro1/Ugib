@@ -4,5 +4,6 @@ from . import views
 app_name='crud'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('test', views.test, name='test'),
+    path('profile', views.profile, name='profile'),
+    path('logout', views.logout, name='logout'),
 ]
