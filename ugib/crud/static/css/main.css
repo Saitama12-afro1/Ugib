@@ -1,0 +1,10 @@
+.main_div{
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+}
+#overflow {
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+    }
