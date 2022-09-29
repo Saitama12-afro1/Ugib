@@ -1,12 +1,14 @@
 from email.policy import default
 import os 
 import binascii
+from pyexpat import model
 from statistics import mode
 
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
+
 
 
 class UnlimitedCharField(models.CharField):
@@ -90,22 +92,57 @@ class UdsMeta(models.Model):
     timecode = UnlimitedCharField( blank=True, null=True)#all null
     obj_sub_group_ref = UnlimitedCharField( blank=True, null=True)
     path_local_ref = UnlimitedCharField( blank=True, null=True)
-    path_cloud_ref = UnlimitedCharField( blank=True, null=True)     
+    path_cloud_ref = UnlimitedCharField( blank=True, null=True)
+
         
     class Meta:
         managed = False
         db_table = 'uds_meta'
 
+
+    
+
 class Statistic(models.Model):
     date = models.DateTimeField()
     typeAction = models.CharField(max_length = 100)
-    my_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    my_user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE
+    )
+    date = models.DateTimeField()
     
     class Meta:
         db_table = 'statistic'
+        
+        
+
+class Bascet(models.Model):
+    udsMeta = models.ManyToManyField(
+        UdsMeta,
+        related_name = "bascets",
+        related_query_name = "bascet"
+    )
+    my_user = models.OneToOneField(
+        User, 
+        on_delete = models.CASCADE
+    )
+    class Meta:
+        db_table = "bascet"
 
 
-
+class Order(models.Model):
+    udsMeta = models.ForeignKey(
+            UdsMeta, 
+            on_delete = models.CASCADE
+        )
+    my_user = models.ManyToManyField(
+            User, 
+            )
+    datetimeAppend = models.DateTimeField()
+    status = models.BooleanField()
+    
+    class Meta:
+        db_table = "order"
 
 # class UdsMetaApr(models.Model):
 #     oid = models.BigAutoField(primary_key=True)

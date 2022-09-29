@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('profile', views.profile, name='profile'),
     path('logout', views.logout, name='logout'),
+    path('profile/bascet', views.bascet, name='bascet'),
 ]
