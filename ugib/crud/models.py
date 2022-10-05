@@ -94,26 +94,18 @@ class UdsMeta(models.Model):
     path_local_ref = UnlimitedCharField( blank=True, null=True)
     path_cloud_ref = UnlimitedCharField( blank=True, null=True)
 
+    
+    def __str__(self) -> str:
+        return (str(self.uniq_id) +  " "  + self.stor_folder + " " + self.obj_assoc_inv_nums + " " + self.obj_authors + " " + self.obj_name
+                + " " + self.obj_year)
         
     class Meta:
-        managed = False
         db_table = 'uds_meta'
 
 
     
 
-class Statistic(models.Model):
-    date = models.DateTimeField()
-    typeAction = models.CharField(max_length = 100)
-    my_user = models.ForeignKey(
-        User,
-        on_delete = models.CASCADE
-    )
-    date = models.DateTimeField()
-    
-    class Meta:
-        db_table = 'statistic'
-        
+
         
 
 class Bascet(models.Model):
@@ -136,7 +128,9 @@ class Order(models.Model):
             on_delete = models.CASCADE
         )
     my_user = models.ManyToManyField(
-            User, 
+            User,
+            related_name = "orders",
+            related_query_name = "order" 
             )
     datetimeAppend = models.DateTimeField()
     status = models.BooleanField()
@@ -144,6 +138,39 @@ class Order(models.Model):
     class Meta:
         db_table = "order"
 
+
+class History(models.Model):
+    date = models.DateField()
+    typeAction = models.CharField(max_length = 100)
+    
+    my_user = models.ForeignKey(
+        User,
+        on_delete = models.CASCADE,
+        related_name = "histories"
+    )
+    udsMeta = models.ForeignKey(
+        UdsMeta, 
+        related_name = "histories",
+        related_query_name = "history",
+        on_delete = models.CASCADE,
+        default = None,
+        null = True,
+    )
+    order = models.BooleanField()
+    
+    class Meta:
+        db_table = 'history'
+
+    def __str__(self) -> str:
+        return str(self.date)
+
+
+class Test(models.Model):
+    arr = models.CharField(max_length = 100)
+    class Meta:
+        db_table = "test"
+
+        
 # class UdsMetaApr(models.Model):
 #     oid = models.BigAutoField(primary_key=True)
 #     uniq_id = models.UnlimitedCharField(=100)

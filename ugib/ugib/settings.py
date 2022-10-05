@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-fpc@etuu-s8+ur02!9ji=yb#q)ra93$^&)ktyqiq%t5xqc14=(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_htmx",
+    'django_tables2',
+    'django_filters',
+    'crispy_forms',
+    'django_static_jquery',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 ROOT_URLCONF = 'ugib.urls'
@@ -127,3 +133,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGOUT_REDIRECT_URL = "/"
+
+
+
+ACCOUNT_ACTIVATION_DAYS = 3
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "8000"
+
+EMAIL_HOST_USER = "chernyshov@tsnigri.ru"
+EMAIL_HOST_PASSWORD = "1012Chern1012"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

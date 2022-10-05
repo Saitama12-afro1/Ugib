@@ -20,11 +20,11 @@
     <form method = "POST" name = "{{el.oid}}" id = "{{el.oid}}">
         {% csrf_token %}
             <input type ="submit" name = "del" value = "Удалить" form = {{el.oid}} >
+            <input type ="submit" name = "create_order" value = "Создать заявку" form = {{el.oid}} >
             <input type = "text"  form = "{{el.oid}}" name = "stor_phys" value = "{{el.stor_phys}}"> </input>
             <input type = "text"  form = "{{el.oid}}" name = "uniq_id" value = "{{el.uniq_id}}"> </input>
             <input type = "text"  form = "{{el.oid}}" name = "stor_folder" value = "{{el.stor_folder}}" > </input>
             <input type = "hidden"  form = "{{el.oid}}" name = "oid" value = "{{el.oid}}" > </input>
-            
             <input type = "text"  form = "{{el.oid}}" name = "stor_phys" value = "{{el.stor_phys}}"> </input>
             <input type = "text"  form = "{{el.oid}}" name = "stor_reason" value = "{{el.stor_reason}}"> </input>
             <input type = "text"  form = "{{el.oid}}" name = "stor_date" value = "{{el.stor_date}}"> </input>

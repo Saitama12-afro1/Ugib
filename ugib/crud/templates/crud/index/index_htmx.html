@@ -1,0 +1,108 @@
+{% extends "django_tables2/bootstrap4.html" %}
+{% load static %}
+
+{%block script%}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script type="text/javascript" src="{% static 'static_jquery/js/jquery.js' %}" />
+<script src="{% static 'js/main.js' %}"></script>  
+{%endblock%}
+{% load django_tables2 %}
+{% load i18n %}
+
+{% block table.thead %}
+
+  {% if table.show_header %}
+  <div id = "my_table">
+      <thead {{ table.attrs.thead.as_html }}>
+      <tr>
+          {% for column in table.columns %}
+ 
+              <th  {{ column.attrs.th.as_html }}
+                  hx-get="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}"
+                  hx-trigger="click"
+                  hx-target="div.table-container"
+                  hx-swap="outerHTML"
+                  hx-indicator=".progress"
+                  style="cursor: pointer;">
+                  {{ column.header }}
+                   
+              </th>
+          {% endfor %}
+      </tr>
+      </thead>
+    </div>
+  {% endif %}
+{% endblock table.thead %}
+
+{% block table.tbody %}
+<tbody {{ table.attrs.tbody.as_html }}>
+{% for row in table.paginated_rows %}
+    {% block table.tbody.row %}
+    <form  method = "POST" id = "dsds">
+    {% csrf_token %}
+    <tr {{ row.attrs.as_html }} form = "dsds">
+        {% for column, cell in row.items %}
+            <td {{ column.attrs.td.as_html }}>{% if column.localize == None %} {{ cell }}{% else %}{% if column.localize %}{{ cell|localize }}{% else %}{{ cell|unlocalize }}{% endif %}{% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+    </form>
+
+    {% endblock table.tbody.row %}
+</form>
+{% empty %}
+    {% if table.empty_text %}
+    {% block table.tbody.empty_text %}
+        <tr><td colspan="{{ table.columns|length }}">{{ table.empty_text }}</td></tr>
+    {% endblock table.tbody.empty_text %}
+    {% endif %}
+
+{% endfor %}
+</tbody>
+{% endblock table.tbody %}
+
+
+{# Pagination block overrides #}
+{% block pagination.previous %}
+    <li class="previous page-item">
+        <div hx-get="{% querystring table.prefixed_page_field=table.page.previous_page_number %}"
+             hx-trigger="click"
+             hx-target="div.table-container"
+             hx-swap="outerHTML"
+             hx-indicator=".progress"
+             class="page-link">
+            <span aria-hidden="true">&laquo;</span>
+            {% trans 'previous' %}
+        </div>
+    </li>
+{% endblock pagination.previous %}
+{% block pagination.range %}
+    {% for p in table.page|table_page_range:table.paginator %}
+        <li class="page-item{% if table.page.number == p %} active{% endif %}">
+            <div class="page-link" 
+                 {% if p != '...' %}hx-get="{% querystring table.prefixed_page_field=p %}"{% endif %}
+                 hx-trigger="click"
+                 hx-target="div.table-container"
+                 hx-swap="outerHTML"
+                 hx-indicator=".progress">
+                {{ p }}
+            </div>
+        </li>
+    {% endfor %}
+{% endblock pagination.range %}
+{% block pagination.next %}
+    <li class="next page-item">
+        <div hx-get="{% querystring table.prefixed_page_field=table.page.next_page_number %}"
+             hx-trigger="click"
+             hx-target="div.table-container"
+             hx-swap="outerHTML"
+             hx-indicator=".progress"
+             class="page-link">
+            {% trans 'next' %}
+            <span aria-hidden="true">&raquo;</span>
+        </div>
+    </li>
+{% endblock pagination.next %}
