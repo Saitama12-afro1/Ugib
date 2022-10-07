@@ -6,15 +6,24 @@
 {% load static %}
 {%block script%}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 <script src="{% static 'js/main.js' %}"></script>  
 {%endblock%}
 
 {% block body %}
-    <h1>UdsMeta table</h1>
-
+    <div class = "boss_div">
+    <div class = "head">
+      {% if user.is_active %}
+        <a href = "/"> Назад </a>          
+        <a href = "{% url "crud:profile"%}"> Профиль</a>
+        <a href = "{% url "crud:logout"%}"> Выйти</a>
+        <br>
+      {% endif %}
+        
     {# Search form #}
     <form hx-get="{% url 'crud:table' %}" 
           hx-target="div.table-container" 
@@ -23,7 +32,170 @@
           class="form-inline">
         {% crispy filter.form %}
     </form>
+  
+</div>
+<div class = "modal_form">
+    {% if user.is_active == False %} 
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Войти
+    </button>
+    {% endif %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                <form  method = "POST">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input name = "login" value = "Войти" > </input>
+                  </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div> 
+<div class = "create_div">
 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLong">
+    Создать
+</button>
+<div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-custom" role="document">
+      <div class="modal-content modal-content-custom" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form  method = "POST" id = "create_form">
+                {% csrf_token %}
+                <div class = "col">
+                  <div class = "col">
+                    <label for = "stor_folder" class = "lbl">stor_folder </label>
+                    <input type = "text" class="form-control"id = "stor_folder"  name = "stor_folder" value = ""  >
+
+                    <label for = "uniq_id" class = "lbl" >uniq_id</label> 
+                    <input type = "text" class="form-control" id = "uniq_id" name = "uniq_id" value = ""  >
+                
+                    <label for = "stor_phys" class = "lbl">stor_phys</label>
+                
+                    <input type = "text" class="form-control" id = "stor_phys"  name = "stor_phys" value = "">
+                    <label for = "stor_reason" class = "lbl">stor_reason</label> 
+                    <input type = "text" class="form-control" id = "stor_reason"  name = "stor_reason" value = "">
+                    <label for = "stor_date" class = "lbl"> stor_date</label> 
+                    <input type = "text" class="form-control" id = "stor_date" name = "stor_date" value = "">
+                    <label for = "stor_dept" class = "lbl">stor_dept</label> 
+                    <input type = "text" class="form-control" id = "stor_dept" name = "stor_dept" value = "" >
+                    <label for = "stor_person" class = "lbl">stor_person</label> 
+                    <input type = "text" class="form-control" id = "stor_person" name = "stor_person" value = "" >
+                    <label for = "stor_fmts" class = "lbl">stor_fmts</label> 
+                    <input type = "text" class="form-control" name = "stor_fmts" value = "" >
+                    <label for = "stor_units" class = "lbl">stor_units</label> 
+                    <input type = "text" class="form-control" name = "stor_units" value = "" >
+                    <label for = "obj_name" class = "lbl">obj_name</label> 
+                    <input type = "text" class="form-control" name = "obj_name" value = "" > 
+                    <label for = "type_of_work" class = "lbl">type_of_work</label> 
+                    <input type = "text" class="form-control" name = "type_of_work" value = ""> 
+                    <label for = "obj_synopsis" class = "lbl">obj_synopsis</label> 
+                    <input type = "text" class="form-control" name = "obj_synopsis" value = "" >
+                    <label for = "obj_type" class = "lbl">obj_type</label> 
+                    <input type = "text" class="form-control" name = "obj_type" value = "">
+                    <label for = "obj_sub_type" class = "lbl">obj_sub_type</label> 
+                    <input type = "text" class="form-control" name = "obj_sub_type" value = "" >
+                    <label for = "obj_assoc_inv_nums" class = "lbl">obj_assoc_inv_nums</label> 
+                    <input type = "text" class="form-control" name = "obj_assoc_inv_nums" value = "" > 
+                    <label for = "obj_date" class = "lbl">obj_date</label> 
+                    <input type = "text" class="form-control" name = "obj_date" value = "" > 
+                    <label for = "obj_year" class = "lbl">obj_year</label> 
+                    <input type = "text" class="form-control" name = "obj_year" value = ""> 
+                    <label for = "obj_authors" class = "lbl">obj_authors</label> 
+                    <input type = "text" class="form-control" name = "obj_authors" value = ""> 
+                    <label for = "obj_orgs" class = "lbl">obj_orgs</label> 
+                    <input type = "text" class="form-control" name = "obj_orgs" value = ""> 
+                    <label for = "obj_restrict" class = "lbl">obj_restrict</label> 
+                    <input type = "text" class="form-control" name = "obj_restrict"value = "" >
+                    <label for = "obj_rights" class = "lbl">obj_rights</label> 
+                    <input type = "text" class="form-control" name = "obj_rights" value = ""> 
+                    <label for = "obj_rdoc_name" class = "lbl">obj_rdoc_name</label> 
+                    <input type = "text" class="form-control" name = "obj_rdoc_name" value = "" >
+                    <label for = "obj_rdoc_num" class = "lbl">obj_rdoc_num</label> 
+                    <input type = "text" class="form-control" name = "obj_rdoc_num" value = "" > 
+                    <label for = "obj_terms" class = "lbl">obj_terms</label> 
+                    <input type = "text" class="form-control" name = "obj_terms" value = ""> 
+                    <label for = "obj_sources" class = "lbl">obj_sources</label> 
+                    <input type = "text" class="form-control" name = "obj_sources" value = ""> 
+                    <label for = "obj_main_min" class = "lbl">obj_supl_info</label> 
+                    <input type = "text" class="form-control" name = "obj_supl_info" value = "" > 
+                    <label for = "obj_main_min" class = "lbl">obj_main_min</label> 
+                    <input type = "text" class="form-control"  name = "obj_main_min" value = ""> 
+                    <label for = "obj_supl_min" class = "lbl">obj_supl_min</label> 
+                    <input type = "text"   class="form-control" name = "obj_supl_min" value = ""> 
+                    <label for = "obj_group_min" class = "lbl">obj_group_min </label> 
+                    <input type = "text"   class="form-control" name = "obj_group_min" value = "" > 
+                    <label for = "obj_assoc_geol" class = "lbl">obj_assoc_geol</label> 
+                    <input type = "text"   class="form-control" name = "obj_assoc_geol" value = "" > 
+                    <label for = "spat_atd_ate" class = "lbl">spat_atd_ate</label> 
+                    <input type = "text"   class="form-control" name = "spat_atd_ate" value = "" > 
+                    <label for = "spat_loc" class = "lbl">spat_loc</label> 
+                    <input type = "text"   class="form-control"name = "spat_loc" value = ""> 
+                    <label for = "spat_num_grid" class = "lbl">spat_num_grid</label> 
+                    <input type = "text"   class="form-control" name = "spat_num_grid" value = ""> 
+                    <label for = "spat_coords_source" class = "lbl">spat_coords_source</label> 
+                    <input type = "text"   class="form-control" name = "spat_coords_source" value = "" > 
+                    <label for = "spat_toponim" class = "lbl">spat_toponim</label> 
+                    <input type = "text"   class="form-control" name = "spat_toponim" value = "" > 
+                    <label for = "inf_type" class = "lbl">inf_type</label> 
+                    <input type = "text"   class="form-control" name = "inf_type" value = "">
+                    <label for = "inf_media" class = "lbl">inf_media</label> 
+                    <input type = "text"   class="form-control" name = "inf_media" value = ""> 
+                    <label for = "path_others" class = "lbl">path_others</label> 
+                    <input type = "text"   class="form-control" name = "path_others" value = "">
+                    <label for = "obj_main_group" class = "lbl">obj_main_group</label> 
+                    <input type = "text"   class="form-control" name = "obj_main_group" value = "">
+                    <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
+                    <input type = "text"   class="form-control" name = "obj_sub_group" value = "" > </input>
+                    <label for = "path_local" class = "lbl">path_local</label> 
+                    <input type = "text"   class="form-control" name = "path_local" value = "" > </input>
+                    <label for = "path_cloud" class = "lbl">path_cloud</label> 
+                    <input type = "text"   class="form-control" name = "path_cloud" value = "" > </input>
+                    <label for = "status" class = "lbl">status</label> 
+                    <input type = "text"   class="form-control" name = "status" value = ""> </input>
+                    <label for = "timecode" class = "lbl">timecode</label> 
+                    <input type = "text"   class="form-control" name = "timecode" value = "" > </input>
+                    <label for = "obj_sub_group_ref" class = "lbl">obj_sub_group_ref </label> 
+                    <input type = "text"   class="form-control" name = "obj_sub_group_ref" value = ""> </input><label for = "" class = "lbl"> </label> 
+                    <label for = "path_local_ref" class = "lbl"> </label> 
+                    <input type = "text"   class="form-control" name = "path_local_ref" value = "" > </input>
+                    <label for = "path_cloud_ref" class = "lbl">path_cloud_ref </label> 
+                    <input type = "text"   class="form-control" name = "path_cloud_ref" value = "" > </input>
+                  </div>
+
+                </div>
+                <button type="button" id = "my_but" class="btn btn-secondary my_but" data-dismiss="modal"  onClick = "createPost(event)"  form = "{{record.oid}}"> Создать </button>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+</div>
     {# Progress indicator #}
     <div class="progress">
         <div class="indeterminate"></div>
@@ -31,6 +203,6 @@
 
     {# The actual table #}
     <div>
-        
+
     {% render_table table %}
 {% endblock %}

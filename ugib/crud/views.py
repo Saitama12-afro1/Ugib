@@ -1,7 +1,9 @@
 from datetime import datetime
 from pprint import pprint
 import csv
+from urllib import request
 import requests
+import json
 
 from docxtpl import DocxTemplate
 
@@ -16,10 +18,12 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
+from django.views.decorators.csrf import csrf_exempt
+
 
 from.models import History, UdsMeta, Bascet, Order
 from .HelperUdsMeta import HelperUdsMet
-from .forms import LoginForm, WordDocFilling
+from .forms import LoginForm, UdsMetaForm, WordDocFilling
 from .history import decor
 from .tables import UdsMetaTable
 from .filters import  UdsMetaFilters
@@ -44,7 +48,7 @@ def index(request):
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if 'update'  in request.POST:
-            
+            print(request.headers)
             form_data = HelperUdsMet.create_dict_from_query_set_without_oid(request.POST)  
             try:
                 UdsMeta.objects.filter(oid = request.POST["oid"]).update(**form_data)
@@ -294,46 +298,90 @@ def history_views(request):
 
 def test(request):
     uds = UdsMeta.objects.all().order_by("-oid")
-    a = "https://cloud.tsnigri.ru/login?redirect_url=/apps/files/?dir%3D/01-04-%25D0%25A4%25D0%259E%25D0%259D%25D0%2594%25D0%259E%25D0%2592%25D0%25AB%25D0%2595%2520%25D0%259C%25D0%2590%25D0%25A2%25D0%2595%25D0%25A0%25D0%2598%25D0%2590%25D0%259B%25D0%25AB%2520%25D0%25A1%25D0%25A2%25D0%259E%25D0%25A0%25D0%259E%25D0%259D%25D0%259D%25D0%2598%25D0%25A5%2520%25D0%259E%25D0%25A0%25D0%2593%25D0%2590%25D0%259D%25D0%2598%25D0%2597%25D0%2590%25D0%25A6%25D0%2598%25D0%2599/6266-%25D0%259E%25D0%25BB%25D1%258C%25D1%2585%25D0%25BE%25D0%25B2%25D1%2581%25D0%25BA%25D0%25B8%25D0%25B9%2520%25D0%2590.%25D0%2598.,1963"
-    resp  = requests.get(a)
+    a = "https://cloud.tsnigri.ru/apps/files/?dir=/01-01-%D0%A4%D0%9E%D0%9D%D0%94%D0%9E%D0%92%D0%AB%D0%95%20%D0%9C%D0%90%D0%A2%D0%95%D0%A0%D0%98%D0%90%D0%9B%D0%AB%20%D0%A6%D0%9D%D0%98%D0%93%D0%A0%D0%98/8518-%D0%91%D0%B5%D1%80%D0%B5%D0%B7%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%AE.%D0%9A.%2C1986&fileid=5896026"
+    b = "http://cloud.tsnigri.ru/apps/files/?dir=/01-01-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/8518-Березиков Ю.К.,1986"
+    resp  = requests.get(a,headers={"Host":"cloud.tsnigri.ru"})
     print(resp.request.headers, resp.status_code)
     
-    answer = []
-    for i in uds:
-        url = str(i.path_cloud_ref)
-        url = url.replace("http://cloud.tsnigri.ru/", "https://cloud.tsnigri.ru/login?redirect_url=")
-
-        try:
-            a = requests.get(url, headers={"Host":"cloud.tsnigri.ru"}, timeout=5)
-            if a.status_code == 404:
-                answer.append(i.oid)
-        except :
-            answer.append(i.oid)
+    # answer = []
+    # for i in uds:
+    #     url = str(i.path_cloud_ref)
+    #     print(url, end=" ")
+    #     url = url.replace("http://cloud.tsnigri.ru/", "https://cloud.tsnigri.ru/login?redirect_url=")
+    #     print(url)
+    #     try:
+    #         a = requests.get(url, headers={"Host":"cloud.tsnigri.ru"}, timeout=5)
+    #         print(a.url,  a.status_code)
+    #         if a.status_code == 404:
+    #             answer.append(i.oid)
+    #     except :
+    #         answer.append(i.oid)
     
-    print(answer)
-    return render(request, "crud/test.html")
-
+    # print(answer)
+    if request.method == "POST":
+        print(request.POST)
+    return redirect("/table")
 
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     table_class = UdsMetaTable
     queryset = UdsMeta.objects.all().order_by("-oid")
     filterset_class = UdsMetaFilters
     paginate_by = 25
-    def post(self, request,*args, **kwargs):
-        if request.method == "POST":
-            print("arrrrr")
-            print(request.POST)
-            return HttpResponseRedirect("/table")
+    form = LoginForm()
+    create_form = UdsMetaForm()
 
+    def post(self, request,*args, **kwargs):
+        login_form = LoginForm(request.POST)
+        user = request.user
+        if 'del' in request.POST:
+            try:
+                udsMetaObj = UdsMeta.objects.get(oid = request.POST["oid"])
+                @decor # не работает при удалении связя слетают
+                def arr():
+                    return "del"
+                arr(user, UdsMeta.objects.get(oid =  request.POST["oid"]))
+                udsMetaObj.delete()
+                
+            except ObjectDoesNotExist:
+                return redirect('/table')
+            return redirect('/table')
+        elif 'login' in request.POST:
+            if login_form.is_valid():
+                user = authenticate(username = login_form.cleaned_data["username"], password = login_form.cleaned_data["password"])
+            
+                if user is not None:
+                    login(request, user)
+                    return redirect("/table")
+        elif 'create' in request.POST:
+           
+            try:          
+                form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+                UdsMeta.objects.create(**form_data)
+                
+                @decor
+                def arr():
+                    return "create"
+                arr(user, UdsMeta.objects.get(uniq_id =  form_data["uniq_id"]))
+                
+            except IntegrityError:
+                pass
+        elif 'update' in request.POST:
+            pass
+            
+        return redirect("/table")
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = self.form
+        context["create_form"] = self.create_form
+        context["user"] = self.request.user
+        return context
+    
     def get_template_names(self): 
-        
         if self.request.htmx:
-            print(1111111111)
-            template_name = "crud/index/index_table_htmx.html"
-          
+            template_name = "crud/index/index_table_partial.html"
         else:
-            print(2222222)
             template_name = "crud/index/index_table_htmx.html"
         return template_name
-    
     

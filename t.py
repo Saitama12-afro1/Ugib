@@ -1,16 +1,16 @@
-class Solution:
-    def climbStairs(self, n):
-        def fib(n):
-            if n <= 1:
-                return n
-            return fib(n-1) + fib(n-2)
-        return fib(n + 1)
+# import requests
+# url = "http://cloud.tsnigri.ru/apps/files/?dir=/01-01-ФОНДОВЫЕМАТЕРИАЛЫЦНИГРИ/4625-ФеофилактовГ.А.,1970"
+# resp  = requests.get(url)
+# print(resp.request.headers, resp.status_code)
 
-n = 4
-print(Solution.climbStairs(None, n))
-arr = [1,1,1,1,1]
-arr_1 = [2,1,1,1]# 2111 1211 1121 1112
-arr_3 = [2,2,1]# 221 212 122
+import collections
+st = "You're on the right track! Keep going."
+st = st.replace(' ', '')
+st = st.replace('\'', '')
+st = st.lower()
+print(st)
+a = max(collections.Counter(st).values())
 
-arr = arr[1:]
-# arr.append(2)
+print(a)
+
+

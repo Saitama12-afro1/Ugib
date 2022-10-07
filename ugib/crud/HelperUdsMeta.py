@@ -1,3 +1,5 @@
+import re
+
 from django.db.models import QuerySet
 
 from .models import UdsMeta
@@ -16,7 +18,7 @@ class HelperUdsMet:
     
     
     @classmethod
-    def create_dict_from_query_set(cls, obj:QuerySet) -> list:
+    def create_dict_from_query_set(cls, obj:QuerySet) -> dict:
         dict_query_set = {}
         for i in HelperUdsMet._all_columns:
             dict_query_set[i] = obj[i]
@@ -24,12 +26,22 @@ class HelperUdsMet:
     
     
     @classmethod
-    def create_dict_from_query_set_without_oid(cls, obj:QuerySet) -> list:
+    def create_dict_from_query_set_without_oid(cls, obj:QuerySet) -> dict:
         dict_query_set = {}
         for i in HelperUdsMet._all_columns[1:]:
             dict_query_set[i] = obj[i]
         return dict_query_set
     
+    @classmethod
+    def credte_dict_from_js_dict(cls, js_dict:dict) -> dict:
+ 
+        d = {}
+        for i in js_dict:
+            if i != "csrfmiddlewaretoken" and i != "create" and  i != 'data[csrfmiddlewaretoken]':
+                d[i[5:len(i)-1]] = js_dict[i]
+        return d
+        
+            
             
     
     

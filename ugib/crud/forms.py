@@ -8,7 +8,7 @@ class UdsMetaForm(forms.ModelForm):
     # stor_folder = forms.CharField(show_hidden_initial=True,initial ="wwwww")
     class Meta:
         model = UdsMeta
-        exclude = ("oid", "uniq_id")
+        exclude = ('uniq_id', )
   
 class WordDocFilling(forms.Form):
     CHOICES = (
