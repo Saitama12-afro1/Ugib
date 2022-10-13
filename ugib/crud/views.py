@@ -1,4 +1,5 @@
 from datetime import datetime
+from multiprocessing import get_context
 from pprint import pprint
 import csv
 from urllib import request
@@ -15,10 +16,11 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
-from django.views.decorators.csrf import csrf_exempt
+from django.db.models.query import QuerySet
 
 
 from.models import History, UdsMeta, Bascet, Order
@@ -58,7 +60,6 @@ def index(request):
                 arr(user, UdsMeta.objects.get(uniq_id =  request.POST["uniq_id"]))
             except ObjectDoesNotExist:
                 pass
-            
             return redirect("/")
         
         elif 'del' in request.POST:
@@ -75,11 +76,10 @@ def index(request):
             return redirect('/')
         
         elif 'create' in request.POST:
-            
             try:          
                 form_data = HelperUdsMet.create_dict_from_query_set_without_oid(request.POST)
                 UdsMeta.objects.create(**form_data)
-                
+        
                 @decor
                 def arr():
                     return "create"
@@ -209,7 +209,6 @@ def profile(request):
         else: 
             return(f"{num} {array[1]}")
     
-
     context["count_elements_in_bascet"] = generate_str_for_count(len(context["allUdsMeta"]))
     
     if user.groups.filter(name = "common_user"):
@@ -275,12 +274,8 @@ def bascet(request):
     return render(request, template, context=context)
 
 
-
-
 def page_not_found(request, exception):
-    print(11212121)
     return render(request,'crud/errors/404.html', {'path': request.path}, status = 404 )
-
 
 
 def history_views(request):
@@ -301,7 +296,6 @@ def test(request):
     a = "https://cloud.tsnigri.ru/apps/files/?dir=/01-01-%D0%A4%D0%9E%D0%9D%D0%94%D0%9E%D0%92%D0%AB%D0%95%20%D0%9C%D0%90%D0%A2%D0%95%D0%A0%D0%98%D0%90%D0%9B%D0%AB%20%D0%A6%D0%9D%D0%98%D0%93%D0%A0%D0%98/8518-%D0%91%D0%B5%D1%80%D0%B5%D0%B7%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%AE.%D0%9A.%2C1986&fileid=5896026"
     b = "http://cloud.tsnigri.ru/apps/files/?dir=/01-01-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/8518-Березиков Ю.К.,1986"
     resp  = requests.get(a,headers={"Host":"cloud.tsnigri.ru"})
-    print(resp.request.headers, resp.status_code)
     
     # answer = []
     # for i in uds:
@@ -320,64 +314,125 @@ def test(request):
     # print(answer)
     if request.method == "POST":
         print(request.POST)
-    return redirect("/table")
+    return redirect("/")
 
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     table_class = UdsMetaTable
-    queryset = UdsMeta.objects.all().order_by("-oid")
+    def get_queryset(self):
+        try:
+            bascet = Bascet.objects.get(my_user_id = self.request.user.id).udsMeta.all()
+        except:
+            bascet = []
+        uds_meta = UdsMeta.objects.all()
+        for i in bascet:
+            uds_meta = uds_meta.filter(~Q(oid = i.oid))
+            
+        return uds_meta.order_by("-oid")
+    
     filterset_class = UdsMetaFilters
     paginate_by = 25
-    form = LoginForm()
+    login_form = LoginForm()
     create_form = UdsMetaForm()
-
+    
+    def get_table_kwargs(self):
+        if self.request.user.is_active:
+            if self.request.user.groups.filter(name = "common_user").exists():   
+                return {
+                    'exclude':('Delete','Update')
+                    }
+            else:
+                return {
+                    'exclude':('Bascet')
+                    }
+        else:
+            return {
+                    'exclude':('Bascet','Delete','Update')
+                    }    
+            
+    
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
         user = request.user
         if 'del' in request.POST:
             try:
                 udsMetaObj = UdsMeta.objects.get(oid = request.POST["oid"])
+                
                 @decor # не работает при удалении связя слетают
                 def arr():
                     return "del"
                 arr(user, UdsMeta.objects.get(oid =  request.POST["oid"]))
-                udsMetaObj.delete()
                 
+                udsMetaObj.delete()
             except ObjectDoesNotExist:
-                return redirect('/table')
-            return redirect('/table')
+                return redirect('/')
+            return redirect('/')
+        
         elif 'login' in request.POST:
             if login_form.is_valid():
                 user = authenticate(username = login_form.cleaned_data["username"], password = login_form.cleaned_data["password"])
             
                 if user is not None:
                     login(request, user)
-                    return redirect("/table")
+                    return redirect("/")
+                
         elif 'create' in request.POST:
-           
             try:          
                 form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
                 UdsMeta.objects.create(**form_data)
-                
+        
                 @decor
                 def arr():
                     return "create"
-                arr(user, UdsMeta.objects.get(uniq_id =  form_data["uniq_id"]))
+                arr(user, UdsMeta.objects.get(uniq_id =  form_data["uniq_id"])) 
                 
             except IntegrityError:
                 pass
+            return redirect('/') 
         elif 'update' in request.POST:
-            pass
+            form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+            try:
+                UdsMeta.objects.filter(oid = form_data["oid"]).update(**form_data)  
+                @decor
+                def arr():
+                    return "update"
+                arr(user, UdsMeta.objects.get(uniq_id =  form_data["uniq_id"]))
+            except ObjectDoesNotExist:
+                pass
+        elif 'upd_one' in request.POST:
+            UdsMeta.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
+            return redirect("/")
+        elif 'bascet' in request.POST:
+            udsMetaObj = UdsMeta.objects.get(oid = request.POST["oid"])
+            user = request.user
+            bascet, created  = Bascet.objects.get_or_create(my_user = user)
+            udsMetaObj.bascets.add(bascet)
             
-        return redirect("/table")
+            @decor
+            def arr():
+                return "bascet"
+            arr(user, UdsMeta.objects.get(oid =  request.POST["oid"]))
+            
+            return redirect('/') 
+            
+        return redirect("/")
     
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = self.form
+        # stor_phys_dict = {} 
+        # buff = UdsMeta.objects.all()
+        # for i in buff:
+        #     stor_phys_dict.update({i.obj_sub_group_ref: stor_phys_dict.get(i.obj_sub_group_ref, 0) + 1})
+        # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
+        # print(context["stor_phys_p"])
+        context["form"] = self.login_form
         context["create_form"] = self.create_form
         context["user"] = self.request.user
+        context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
+        print(1111111)
+        context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
         return context
-    
+ 
     def get_template_names(self): 
         if self.request.htmx:
             template_name = "crud/index/index_table_partial.html"

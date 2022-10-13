@@ -37,7 +37,7 @@ class HelperUdsMet:
  
         d = {}
         for i in js_dict:
-            if i != "csrfmiddlewaretoken" and i != "create" and  i != 'data[csrfmiddlewaretoken]':
+            if i != "csrfmiddlewaretoken" and i != "create" and i != "update" and  i != 'data[csrfmiddlewaretoken]':
                 d[i[5:len(i)-1]] = js_dict[i]
         return d
         

@@ -77,36 +77,101 @@
     float: right;
 }
 
-.table-container table td:nth-child(3) {
+.table-container table td.oid {
     min-width: 100px;
 }
 
+.table-container table td.bascet {
+    min-width: 200px;
+}
 
-.table-container table td:nth-child(7) {
+.table-container table td.stor_reason {
     min-width: 400px;
 }
-.table-container table td:nth-child(28) {
-    min-width: 400px;
+.table-container table td.stor_person{
+    min-width: 200px;
 }
-.table-container table td:nth-child(34) {
-    min-width: 400px;
+.table-container table td.stor_dept {
+    min-width: 200px;
 }
-.table-container table td:nth-child(51) {
-    min-width: 1000px;
+.table-container table td.stor_units {
+    min-width: 200px;
 }
-.table-container table td:nth-child(46) {
-    min-width: 1000px;
-}
-.table-container table td:nth-child(45) {
+.table-container table td.obj_name {
     min-width: 500px;
 }
-.table-container table td:nth-child(50) {
-    min-width: 500px;
-}
-.table-container table td:nth-child(14) {
+.table-container table td.type_of_work {
     min-width: 300px;
 }
-
+.table-container table td.obj_type {
+    min-width: 300px;
+}
+.table-container table td.obj_sub_type{
+    min-width: 200px;
+}
+.table-container table td.obj_synopsis {
+    min-width: 150px;
+}
+.table-container table td.obj_assoc_inv_nums{
+    min-width: 400px;
+}
+.table-container table td.obj_assoc_geol{
+    min-width: 800px;
+}
+.table-container table td.obj_authors{
+    min-width: 300px;
+}
+.table-container table td.obj_restrict{
+    min-width: 150px;
+}
+.table-container table td.obj_terms{
+    min-width: 400px;
+}
+.table-container table td.obj_sources{
+    min-width: 150px;
+}
+.table-container table td.obj_supl_min{
+    min-width: 150px;
+}
+.table-container table td.obj_main_min{
+    min-width: 150px;
+}
+.table-container table td.obj_supl_min{
+    min-width: 150px;
+}
+.table-container table td.obj_group_min{
+    min-width: 150px;
+}
+.table-container table td.obj_supl_info{
+    min-width: 150px;
+}
+.table-container table td.spat_num_grid{
+    min-width: 400px;
+}
+.table-container table td.spat_toponim{
+    min-width: 150px;
+}
+.table-container table td.path_others{
+    min-width: 150px;
+}
+.table-container table td.obj_main_group{
+    min-width: 150px;
+}
+.table-container table td.obj_sub_group{
+    min-width: 150px;
+}
+.table-container table td.path_local{
+    min-width: 500px;
+}
+.table-container table td.path_cloud{
+    min-width: 1100px;
+}
+.table-container table td.path_local_ref{
+    min-width: 500px;
+}
+.table-container table td.path_cloud_ref{
+    min-width: 1100px;
+}
 
 
 
@@ -261,3 +326,22 @@
     width: 50px;
     height: 50px;
 } */
+
+textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 3em;
+}
+.form-control.inp {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 3em;
+}
+
+#custom_modal{
+    max-width: 700px;
+}

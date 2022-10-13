@@ -11,15 +11,16 @@ class UdsMetaFilters(django_filters.FilterSet):
     class Meta:
         model = UdsMeta
         fields = ["query"] # , "oid", "obj_year", "stor_folder"
+        
     def universal_search(self, queryset, name, value):
         if value.replace(".", "", 1).isdigit():
             value = Decimal(value)
             return UdsMeta.objects.filter(
-                Q(oid=value)
+                Q(oid__icontains=value)
             )
 
         return UdsMeta.objects.filter(
-            Q(obj_authors__icontains=value) | Q(stor_folder__icontains=value)
+            Q(obj_authors__icontains=value) | Q(stor_folder__icontains=value) | Q(stor_reason__icontains=value)
         )
         
         

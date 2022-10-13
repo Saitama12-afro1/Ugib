@@ -12,7 +12,6 @@
 {% endblock%}
 
 {% block body %}
-{{test}}
 <div class="pagination">
     {% if  user.is_active == False %}
     <span class="step-links">
@@ -29,7 +28,6 @@
         <a href = "{% url "crud:table"%}"> Таблица</a>
         <a href = "{% url "crud:profile"%}"> Профиль</a>
         <a href = "{% url "crud:logout"%}"> Выйти</a>
-       
     {% endif %}
     </div> 
         {% if page_obj.has_previous %}
