@@ -104,9 +104,36 @@ class UdsMeta(models.Model):
 
 
     
+# class User(AbstractUser):
+#     username = None
+#     email = models.EmailField(
+#         max_length=255,
+#         unique=True,
+#     )
+#     
+    
+#     USERNAME_FIELD = 'email'
+#     REQUIRED_FIELDS = []
+#     class Meta(AbstractUser.Meta):
+#         swappable = 'AUTH_USER_MODEL'
+#     class Meta:
+#         db_table = "auth_user"
 
-
+class UserInfo(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete = models.CASCADE,        
+        primary_key = True,
+    )
+    departament = models.CharField(max_length = 200)
+    position = models.CharField(max_length = 200)
+    
+    class Meta: 
+        db_table = "user_info"
         
+# class SuperUser(models.Model):
+    
+
 
 class Bascet(models.Model):
     udsMeta = models.ManyToManyField(
@@ -148,14 +175,7 @@ class History(models.Model):
         on_delete = models.CASCADE,
         related_name = "histories"
     )
-    udsMeta = models.ForeignKey(
-        UdsMeta, 
-        related_name = "histories",
-        related_query_name = "history",
-        on_delete = models.CASCADE,
-        default = None,
-        null = True,
-    )
+    udsMeta = models.TextField()
     order = models.BooleanField()
     
     class Meta:
@@ -166,7 +186,7 @@ class History(models.Model):
 
 
 class Test(models.Model):
-    arr = models.CharField(max_length = 100)
+    arr = models.CharField(max_length = 100, default = "")
     class Meta:
         db_table = "test"
 

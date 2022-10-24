@@ -3,7 +3,7 @@ from itertools import count
 from django_tables2 import tables, TemplateColumn
 from django.template.loader import get_template
 
-from .models import UdsMeta
+from .models import UdsMeta, History
 
 class UdsMetaTable(tables.Table):
     Update = TemplateColumn(template_name = "crud/tables_utilits/update_button_with_modal_wind.html")
@@ -18,7 +18,11 @@ class UdsMetaTable(tables.Table):
         template_name = "crud/index/uds_table_htmx.html"
         sequence = ('Delete','Update', 'Bascet')
        
-   
+
+class HistoryTable(tables.Table):
+    class Meta:
+        model = History
+        
         
         
         

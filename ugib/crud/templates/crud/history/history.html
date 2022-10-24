@@ -1,17 +1,38 @@
 {% extends 'crud/base.html' %}
 {% load static %}
+
 {%block script%}
+
+
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script type="text/javascript" src="{% static 'js/jquery.js' %}" />
+
 <script src="{% static 'js/main.js' %}"></script>  
 {%endblock%}
 {% block title %}
-
+История
 {% endblock%}
+
 {% block body %}
 <a href = "/profile"> Назад</a>
-<br>
-{% for el in history %}
-    {{el}}  {{el.my_user}} {{el.typeAction}}<br>
-{% endfor %}
 
+<br>
+<table class = "table">
+<thead class="thead-dark">
+<tr>
+    <th scope="col">#</th>
+    <th scope="col">Дата</th>
+    <th scope="col">Тип Действия</th>
+    <th scope="col">Объект</th>
+</tr>
+</thead>
+<tbody>
+{% for el in history %}
+<tr> 
+    <th scope="row">{{el.id}}</th>
+    <td>{{el.date}}</td> <td>{{el.typeAction}}</td> <td>{{el.udsMeta}}</td>
+</tr>
+    {% endfor %}
+</tbody>
+<table>
 {% endblock %}

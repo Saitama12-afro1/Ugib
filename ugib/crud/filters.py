@@ -2,7 +2,7 @@ from dataclasses import field
 import django_filters 
 from django.db.models import Q
 from decimal import Decimal
-from .models import UdsMeta
+from .models import UdsMeta, History
 
 class UdsMetaFilters(django_filters.FilterSet):
     query = django_filters.CharFilter(method='universal_search',
@@ -24,4 +24,16 @@ class UdsMetaFilters(django_filters.FilterSet):
         )
         
         
+class HistoryFilter(django_filters.FilterSet):
     
+    query = django_filters.CharFilter(method='universal_search',
+                                      label="")
+    
+    class Meta:
+        model = History
+        fields = ["query"]
+        
+    def universal_search(self, queryset, name, value):
+        return History.objects.filter(
+            Q(typeAction__icontains=value) | Q(order__icontains=value) | Q(udsMeta__icontains=value)
+        )

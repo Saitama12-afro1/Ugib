@@ -49,7 +49,6 @@
         {% for column, cell in row.items %}
             <td {{ column.attrs.td.as_html }} class = {{column|addstr}}>
             <div class = "use-2">
-             {% comment %} {% for i in  user.groups.all %} {{i}} {% endfor %} {% endcomment %}
             {% if column.localize == None %} {{ cell }}{% else %}{% if column.localize %}{{ cell|localize }}{% else %}{{ cell|unlocalize }}{% endif %}{% endif %}
             {% if column.header != "Delete" and column.header != "Update" and column.header != 'Bascet' %}  {% if user.is_active %}<button hidden type="button" class="btn btn-primary test" data-toggle="modal" data-target="#updModal"  onClick = "update_one_cell(event)" value = "{{record.oid}}"><img  width="25" src="static/update.png" alt=""></img> </button> {% endif %}{% endif %}
             </div>

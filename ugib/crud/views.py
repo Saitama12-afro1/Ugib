@@ -2,6 +2,9 @@ from datetime import datetime
 from multiprocessing import get_context
 from pprint import pprint
 import csv
+import re
+from secrets import choice
+from turtle import position
 from urllib import request
 import requests
 import json
@@ -15,7 +18,7 @@ from django.db.utils import IntegrityError
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin
@@ -23,12 +26,12 @@ from django_filters.views import FilterView
 from django.db.models.query import QuerySet
 
 
-from.models import History, UdsMeta, Bascet, Order
+from .models import History, UdsMeta, Bascet, Order, UserInfo
 from .HelperUdsMeta import HelperUdsMet
-from .forms import LoginForm, UdsMetaForm, WordDocFilling
+from .forms import LoginForm, UdsMetaForm, WordDocFilling, RegisterForm
 from .history import decor
-from .tables import UdsMetaTable
-from .filters import  UdsMetaFilters
+from .tables import UdsMetaTable, HistoryTable
+from .filters import  UdsMetaFilters, HistoryFilter
 
 
 def index(request):
@@ -282,13 +285,12 @@ def history_views(request):
     context = {}
     user = request.user
     context["history"] = History.objects.all()
+    context["table"] = HistoryTable(context["history"])
     if user.groups.filter(name = "common_user"):
         template ="crud/history/history_for_common_user.html"
         context["history"] = user.histories.all()
     else:
-        
         template ="crud/history/history.html"
-        
     return render(request, template, context)
 
 def test(request):
@@ -316,6 +318,21 @@ def test(request):
         print(request.POST)
     return redirect("/")
 
+
+# class HistoryView(SingleTableMixin, FilterView):
+#     table_class = HistoryTable
+#     queryset = History.objects.all()
+#     filterset_class = HistoryFilter
+#     paginate_by = 25
+#     def get_template_names(self): 
+#         if self.request.htmx:
+#             template_name = "crud/history/history.html"
+#         else:
+#             template_name = "crud/history/history.html"
+#         return template_name
+    
+    
+    
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     table_class = UdsMetaTable
     def get_queryset(self):
@@ -333,16 +350,17 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     paginate_by = 25
     login_form = LoginForm()
     create_form = UdsMetaForm()
-    
+    register_form =  RegisterForm()
     def get_table_kwargs(self):
         if self.request.user.is_active:
             if self.request.user.groups.filter(name = "common_user").exists():   
                 return {
-                    'exclude':('Delete','Update')
+                    'exclude':('Delete','Update'),
                     }
             else:
                 return {
-                    'exclude':('Bascet')
+                    'exclude':('Bascet'),
+                    
                     }
         else:
             return {
@@ -352,6 +370,8 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
+        register_form = LoginForm(request.POST)
+        super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru", "gening@tsnigri.ru", "uscharova@tsnigri.ru", "test@mail.ru")
         user = request.user
         if 'del' in request.POST:
             try:
@@ -361,7 +381,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                 def arr():
                     return "del"
                 arr(user, UdsMeta.objects.get(oid =  request.POST["oid"]))
-                
                 udsMetaObj.delete()
             except ObjectDoesNotExist:
                 return redirect('/')
@@ -375,6 +394,36 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                     login(request, user)
                     return redirect("/")
                 
+        elif 'register' in request.POST:
+            if register_form.is_valid():
+                if register_form.cleaned_data["username"] in super_user_username:
+                    try:
+                        user = User(username = register_form.cleaned_data["username"], 
+                                    first_name = request.POST["first_name"], last_name = request.POST["last_name"], is_superuser = True,\
+                                    is_staff = True
+                        )
+                        user.set_password(register_form.cleaned_data["password"])
+                        user.save()
+                        user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
+                        user_info.save()
+                    except:
+                        pass
+                else:
+                    user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"], last_name =request.POST["last_name"],
+                                 is_superuser = False)
+                    user.set_password(register_form.cleaned_data["password"])
+                    user.save()
+                    group = Group.objects.get(pk = 1)
+                    group.user_set.add(user)
+                    user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
+                    user_info.save()
+                aut_user = authenticate(username = user.username, password = register_form.cleaned_data["password"])
+            
+                if aut_user is not None:
+                    login(request, user)
+                    return redirect("/")
+                    
+                    
         elif 'create' in request.POST:
             try:          
                 form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
@@ -388,6 +437,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
             except IntegrityError:
                 pass
             return redirect('/') 
+        
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
             try:
@@ -401,6 +451,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
         elif 'upd_one' in request.POST:
             UdsMeta.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
             return redirect("/")
+        
         elif 'bascet' in request.POST:
             udsMetaObj = UdsMeta.objects.get(oid = request.POST["oid"])
             user = request.user
@@ -420,17 +471,26 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # stor_phys_dict = {} 
-        # buff = UdsMeta.objects.all()
+        buff = UdsMeta.objects.order_by("-oid").first()
         # for i in buff:
-        #     stor_phys_dict.update({i.obj_sub_group_ref: stor_phys_dict.get(i.obj_sub_group_ref, 0) + 1})
+        #     stor_phys_dict.update({i.obj_orgs: stor_phys_dict.get(i.obj_orgs, 0) + 1})
         # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
         # print(context["stor_phys_p"])
         context["form"] = self.login_form
+        context["register_form"] = self.register_form
         context["create_form"] = self.create_form
         context["user"] = self.request.user
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
-        print(1111111)
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+        d, m, y = (context["current_date"].split('.'))# 14.10.2022 
+        old_uniq = buff.uniq_id
+        old_date = buff.stor_date
+        count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+        
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g01s01y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g01s01y{y}m{m}d{d}n{1}e"
         return context
  
     def get_template_names(self): 
@@ -439,4 +499,45 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
         else:
             template_name = "crud/index/index_table_htmx.html"
         return template_name
+    
+
+def get_html(request):
+    context = {}
+    context["user"] = request.user
+    context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+    context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
+    buff = UdsMeta.objects.order_by("-oid").first()
+    # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
+    d, m, y = (context["current_date"].split('.'))# 14.10.2022 
+    old_uniq = buff.uniq_id
+    old_date = buff.stor_date
+    count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+    if request.GET["choise"] == "01TSNIGRI":
+        context["choise"] = "01TSNIGRI"
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g01s01y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g01s01y{y}m{m}d{d}n{1}e"
+        return render(request, "crud/form/01TSNIGRI.html", context=context)
+    elif request.GET["choise"] == "02RFGF":
+        context["choise"] = "02RFGF"
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g01s02y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g01s02y{y}m{m}d{d}n{1}e"
+        return render(request, "crud/form/02RFGF.html", context=context)
+    elif request.GET["choise"] == "03TGF":
+        context["choise"] = "03TGF"
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g01s03y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g01s03y{y}m{m}d{d}n{1}e"
+        return render(request, "crud/form/03TGF.html", context=context)
+    elif request.GET["choise"] == "04OTHER_ORG":
+        context["choise"] = "04OTHER_ORG"
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g01s04y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g01s04y{y}m{m}d{d}n{1}e"
+        return render(request, "crud/form/04OTHER_ORG.html", context=context)
     

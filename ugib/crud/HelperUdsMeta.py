@@ -34,11 +34,21 @@ class HelperUdsMet:
     
     @classmethod
     def credte_dict_from_js_dict(cls, js_dict:dict) -> dict:
- 
         d = {}
+        exceptions = ('spat_coords_sourse')
         for i in js_dict:
             if i != "csrfmiddlewaretoken" and i != "create" and i != "update" and  i != 'data[csrfmiddlewaretoken]':
-                d[i[5:len(i)-1]] = js_dict[i]
+                if i[5:len(i)-1] not in exceptions:
+                    t = re.sub('\n',' ',js_dict[i])
+                t = re.sub('\t',' ',t)
+                t = t.strip()
+                t = (t.replace("  ", " "))
+                if len(t) != 0:
+                    if t[len(t) - 1 ] == ',':
+                        t = t.rstrip(",")
+                    elif t[len(t) - 1 ] == ';':
+                        t = t.rstrip(",")
+                d[i[5:len(i)-1]] = t
         return d
         
             
