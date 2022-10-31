@@ -1,16 +1,12 @@
 from datetime import datetime
-from multiprocessing import get_context
 from pprint import pprint
 import csv
 import re
-from secrets import choice
-from turtle import position
-from urllib import request
 import requests
 import json
-
 from docxtpl import DocxTemplate
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
@@ -134,7 +130,7 @@ def index(request):
 
 
 
-
+@login_required(login_url="/")
 def profile(request):
     context = {}
     user = request.user
@@ -227,11 +223,13 @@ def profile(request):
     context["page_obj"] =  page_obj
     return render(request, template, context=context)
 
+
 def logout(request):
     django_logout(request)
     return redirect("/")
 
 
+@login_required(login_url="/")
 def bascet(request):
     user = request.user
     allUdsMeta = Bascet.objects.filter(my_user_id = user.id).first().udsMeta.all().order_by("-oid")
@@ -280,12 +278,21 @@ def bascet(request):
 def page_not_found(request, exception):
     return render(request,'crud/errors/404.html', {'path': request.path}, status = 404 )
 
-
+@login_required(login_url="/")
 def history_views(request):
     context = {}
     user = request.user
-    context["history"] = History.objects.all()
-    context["table"] = HistoryTable(context["history"])
+    user_info = UserInfo.objects.get(user_id = user.id)
+    context["history"] = History.objects.all().order_by("-id")
+    p = Paginator(context["history"], 20)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context["page_obj"] = page_obj
+    f = HistoryFilter(request.GET, queryset= context["history"])
+    context["filter"] = f
+    # context["table"] = HistoryTable(context["history"])
+    if user.username != "vahrushev@tsnigri.ru" or user.username != "uvarova@tsnigri.ru":
+        return page_not_found(request,404)
     if user.groups.filter(name = "common_user"):
         template ="crud/history/history_for_common_user.html"
         context["history"] = user.histories.all()
@@ -343,7 +350,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
         uds_meta = UdsMeta.objects.all()
         for i in bascet:
             uds_meta = uds_meta.filter(~Q(oid = i.oid))
-            
         return uds_meta.order_by("-oid")
     
     filterset_class = UdsMetaFilters
@@ -370,13 +376,12 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
     
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
-        register_form = LoginForm(request.POST)
+        register_form = RegisterForm(request.POST)
         super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru", "gening@tsnigri.ru", "uscharova@tsnigri.ru", "test@mail.ru")
         user = request.user
         if 'del' in request.POST:
             try:
                 udsMetaObj = UdsMeta.objects.get(oid = request.POST["oid"])
-                
                 @decor # не работает при удалении связя слетают
                 def arr():
                     return "del"
@@ -386,6 +391,20 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                 return redirect('/')
             return redirect('/')
         
+        elif 'exc' in request.POST:
+            print(request.POST)
+            form_data = HelperUdsMet.create_dict_from_uds(UdsMeta.objects.get(oid = request.POST['oid']))#обернуть в тру execept
+            print(type(UdsMeta.objects.get(oid = request.POST['oid'])))
+            with open('stockitems_misuper.csv', 'w', newline="", encoding="1251") as myfile:  
+                wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, delimiter=",", dialect=csv.Dialect.delimiter)
+                wr.writerow(HelperUdsMet._all_columns,)
+                wr.writerow(list(form_data.values()))
+                
+            with open('stockitems_misuper.csv', encoding="1251") as myfile:
+                response = HttpResponse(myfile, content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename = stockitems_misuper.csv'
+            return response
+            
         elif 'login' in request.POST:
             if login_form.is_valid():
                 user = authenticate(username = login_form.cleaned_data["username"], password = login_form.cleaned_data["password"])
@@ -395,7 +414,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                     return redirect("/")
                 
         elif 'register' in request.POST:
-            if register_form.is_valid():
+            if register_form.is_valid(password=request.POST["password"]):
                 if register_form.cleaned_data["username"] in super_user_username:
                     try:
                         user = User(username = register_form.cleaned_data["username"], 
@@ -422,6 +441,8 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                 if aut_user is not None:
                     login(request, user)
                     return redirect("/")
+            else:
+                return redirect('/')#сделать доп ошибку
                     
                     
         elif 'create' in request.POST:
@@ -450,6 +471,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
                 pass
         elif 'upd_one' in request.POST:
             UdsMeta.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
+            @decor
+            def arr():
+                    return "update"
+            arr(user, UdsMeta.objects.get(oid =  int(request.POST["oid"])))
             return redirect("/")
         
         elif 'bascet' in request.POST:
@@ -480,6 +505,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView):
         context["register_form"] = self.register_form
         context["create_form"] = self.create_form
         context["user"] = self.request.user
+        
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
@@ -505,6 +531,9 @@ def get_html(request):
     context = {}
     context["user"] = request.user
     context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+    iniz = request.user.first_name.split(" ")
+    iniz = iniz[0][0] + "." + iniz[1][0] + "."
+    context["iniz"] = iniz
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
     buff = UdsMeta.objects.order_by("-oid").first()
     # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
@@ -512,6 +541,9 @@ def get_html(request):
     old_uniq = buff.uniq_id
     old_date = buff.stor_date
     count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+    if 'oid' in request.GET:
+        context["record"] = UdsMeta.objects.get(oid = request.GET["oid"])
+        return render(request, 'crud/form/update.html', context=context)
     if request.GET["choise"] == "01TSNIGRI":
         context["choise"] = "01TSNIGRI"
         if context["current_date"] == old_date:

@@ -91,7 +91,8 @@ function upd_post(event){
 
 function update_all_cells(event){
    let td_element = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-   let all_input = td_element.querySelectorAll("input")
+   console.log(td_element)
+   let all_input = td_element.querySelectorAll("textarea")
    let data = {}
     for (const i in all_input){
         data[(all_input[i].name)] = all_input[i].value
@@ -214,6 +215,7 @@ window.addEventListener('load', (event) => {
 function my_blur(event){
     let stor_folder_data = event.target.value
     let pattern = /,\s?[0-9-]+/
+    console.log(stor_folder_data)
     let year = stor_folder_data.match(pattern)[0]
     year.slice(1)
     let obj_year = document.getElementById("obj_year")
@@ -239,4 +241,10 @@ function my_blur(event){
     $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ%20МАТЕРИАЛЫ%20СТОРОННИХ%20ОРГАНИЗАЦИЙ/"+stor_folder_data)
     $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ СТОРОННИХ ОРГАНИЗАЦИЙ/"+stor_folder_data)
 }
+}
+
+function testik(event, record) {
+    $.get( "get_html/", data = {'oid':record}, function( data ) {
+        $( ".upd_div" ).html( data );
+      });
 }

@@ -15,7 +15,7 @@
 
 {% endblock%}
 {% block body %}
-<a href = "/"> Назад</a>
+<input type="button" class = "btn btn-link" onclick="history.back();" value="Назад"/>
 <a href = "/profile/history">История</a>
 <div>
 {% if page_obj.has_previous %}

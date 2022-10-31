@@ -314,7 +314,11 @@
 .use-2 button {
     background: transparent;
     border-radius: 10%;
-
+    position:relative;
+    right:0px;
+    border: none;
+    outline: none;
+    float: right;
   }
   
   
@@ -342,6 +346,37 @@ textarea {
     min-height: 3em;
 }
 
-#custom_modal{
-    max-width: 700px;
+.modal-content.modal-content-custom{
+    min-width: 700px;
+    color:black;
+}
+.btn.btn-outline-primary.unvisible{
+    appearance: none;
+border: none;
+pointer-events: none;
+}
+
+body{
+    background:#373737;
+    font-family:"Brush Script MT", "Brush Script Std", cursive;
+    color:#e6e6ff;
+}
+#delete_button{
+   color : #e6e6ff;
+}
+#update_button{
+    color : #e6e6ff;
+ }
+ #bascet_button{
+    color : #e6e6ff;
+ }
+ 
+.modal-body{
+    color: black;
+}
+#csv_button{
+    color : #e6e6ff;
+}
+.modal-content.modal-custom-upd{
+    width: 115%;
 }

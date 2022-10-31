@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-fpc@etuu-s8+ur02!9ji=yb#q)ra93$^&)ktyqiq%t5xqc14=(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -59,6 +59,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'ugib.urls'
 
 TEMPLATES = [
+     {
+   'BACKEND': 'django.template.backends.jinja2.Jinja2',
+   'DIRS': ['ugib/crud'],
+   'APP_DIRS': True,
+   'OPTIONS': {
+     'environment': 'ugib.jinja2.environment'
+   },
+ },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -95,18 +103,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+   {'NAME':'crud.password_valid.ValidPas'}
 ]
 
 
@@ -145,3 +142,14 @@ EMAIL_HOST_PASSWORD = "1012Chern1012"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AUTH_USER_MODEL = "crud.User" 
+
+
+CORS_REPLACE_HTTPS_REFERER      = False
+HOST_SCHEME                     = "http://"
+SECURE_PROXY_SSL_HEADER         = None
+SECURE_SSL_REDIRECT             = False
+SESSION_COOKIE_SECURE           = False
+CSRF_COOKIE_SECURE              = False
+SECURE_HSTS_SECONDS             = None
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
+SECURE_FRAME_DENY               = False

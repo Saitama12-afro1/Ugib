@@ -26,6 +26,8 @@ function dinamic_form(event) {
 
   function TSNIGRI_validation(choise){
     let stor_folder = document.getElementById("stor_folder_valid");
+    let stor_folder_class = document.getElementsByClassName("stor_folder_valid")
+    console.log(stor_folder_class)
     stor_folder.addEventListener("input", (event) => {
     var pattern =/[0-9]+-[а-яА-ЯёЁ]+\s?[а-яА-ЯёЁ]?\.?\s?[а-яА-ЯёЁ]?\.?\,[0-9]+/
     const error = document.querySelector(".error");
@@ -36,7 +38,7 @@ function dinamic_form(event) {
         showError()
     } 
     function showError() {
-        error.textContent = "ээээээээ"
+        error.textContent = "Не соответствует шаблону Число-Фамилия И.И.,Число"
         error.className = 'error active';
     }
     })
@@ -52,7 +54,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону N-46-XVI"
             error.className = 'error active';
         }
         })
@@ -69,7 +71,7 @@ function dinamic_form(event) {
         if (count_comma == 0){
         var pattern =/[А-я]+\s[А-я]\.[A-я]\./
             if (pattern.test(obj_authors.value)){
-                error.textContent = "";
+                error.textContent = "Не соответствует шаблону ";
                 error.className = "error";
             }else{
                 showError()
@@ -103,7 +105,7 @@ function dinamic_form(event) {
         }
         
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону возможно не хватает запятых или же точек в инициалах"
             error.className = 'error active';
         }
         
@@ -120,7 +122,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону"
             error.className = 'error active';
         }
     })
@@ -162,7 +164,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону"
             error.className = 'error active';
         }
     })
@@ -177,7 +179,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону"
             error.className = 'error active';
         }
     })
@@ -193,7 +195,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону"
             error.className = 'error active';
         }
     })
@@ -208,7 +210,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
             error.className = 'error active';
         }
     })
@@ -223,7 +225,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
             error.className = 'error active';
         }
     })
@@ -238,7 +240,7 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
             error.className = 'error active';
         }
     })
@@ -253,26 +255,12 @@ function dinamic_form(event) {
             showError()
         }        
         function showError() {
-            error.textContent = "ээээээээ"
+            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
             error.className = 'error active';
         }
     })
     let spat_atd_ate = document.getElementById("spat_atd_ate_valid");
-    spat_atd_ate.addEventListener("input", (event) => {
-        var pattern =/[(кр)(обл)]+([\s, .])/
-        let p = pattern.exec(spat_atd_ate.value)
-        const error = document.querySelector("#error_spat_atd_ate");
-        if (p == null){
-            error.textContent = "";
-            error.className = "error";
-        }else{
-            showError()
-        }        
-        function showError() {
-            error.textContent = "ээээээээ"
-            error.className = 'error active';
-        }
-    })
+   
 }
 
 

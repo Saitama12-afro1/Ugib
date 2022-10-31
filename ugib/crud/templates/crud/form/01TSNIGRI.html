@@ -2,7 +2,7 @@
     <label for = "uniq_id" class = "lbl" >uniq_id</label> 
     <textarea class="form-control" name = "uniq_id" id = "uniq_id_valid" value = "" novalidate>{{uniq_id}}</textarea>
     <label for = "stor_folder" class = "lbl">stor_folder </label>
-    <textarea class="form-control" name = "stor_folder" id = "stor_folder_valid" value = "" novalidate onblur = "my_blur(event)"></textarea>
+    <textarea class="form-control stor_folder_valid" name = "stor_folder" id = "stor_folder_valid"  value = "" novalidate onblur = "my_blur(event)"></textarea>
     <span class="error" aria-live="polite" id = "error_stor_folder"></span>
     <div class="dropright">
                 <label for = "stor_phys" class = "lbl">stor_phys</label>
@@ -24,7 +24,7 @@
         </div>
     <div class="dropright">
         <label for = "stor_person" class = "lbl">stor_person</label> 
-        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_person" value = "" >{{user.last_name}} {{user.first_name}}, {{userInfo.position}}</textarea>
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_person" value = "" >{{user.last_name}} {{iniz}}, {{userInfo.position}}</textarea>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                 <button class="dropdown-item" type="button" onClick ="valInput(event)">Генинг К.С., инженер 1 категории</button>
                 <button class="dropdown-item" type="button" onClick ="valInput(event)">Грачев В.А., ведущий инженер</button>

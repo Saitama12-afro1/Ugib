@@ -14,25 +14,54 @@
 {% endblock%}
 
 {% block body %}
-<a href = "/profile"> Назад</a>
-
+<input type="button" class = "btn btn-link" onclick="history.back();" value="Назад"/>
+<input type="button" class = "btn btn-link"  onclick="window.location.href = '/';" value="К таблице"/>
 <br>
+<form method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" value = "Найти">
+</form>
+
+
 <table class = "table">
 <thead class="thead-dark">
 <tr>
     <th scope="col">#</th>
+    <th scope="col">Пользователь</th>
+    <th scope="col">Отдел</th>
     <th scope="col">Дата</th>
     <th scope="col">Тип Действия</th>
     <th scope="col">Объект</th>
 </tr>
 </thead>
 <tbody>
-{% for el in history %}
+    {% for contact in page_obj %}
+    {% if contact in filter.qs %}
 <tr> 
-    <th scope="row">{{el.id}}</th>
-    <td>{{el.date}}</td> <td>{{el.typeAction}}</td> <td>{{el.udsMeta}}</td>
+    <th scope="row">{{contact.id}}</th>
+    <td>{{contact.my_user.last_name}}  {{contact.my_user.first_name}},  {{contact.my_user.userinfo.position}} </td> <td> {{contact.my_user.userinfo.departament}}</td><td>{{contact.date}}</td> <td>{{contact.typeAction}}</td> <td>{{contact.udsMeta}}</td> 
 </tr>
+{% endif %}
     {% endfor %}
+
 </tbody>
 <table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

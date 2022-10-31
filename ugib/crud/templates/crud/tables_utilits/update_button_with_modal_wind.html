@@ -1,15 +1,15 @@
 
 
-<button type="button" data-toggle="modal"  data-target="#exampleModalLong">
+<button type="button" data-toggle="modal"  data-target="#exampleModalLong" id = "update_button" onClick = "testik(event, record = {{record.oid}})">
     Изменить
   </button>
   
   <!-- Modal -->
   <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content modal-custom-upd">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle"> {{record}} </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -17,105 +17,11 @@
         <div class="modal-body">
             <div class = "col">
                 <div class = "col">
-                  <label for = "stor_folder" class = "lbl">stor_folder </label>
-                  <input type = "text" class="form-control"  name = "oid" value = "{{record.oid}}" hidden>
-                  <input type = "text" class="form-control"  name = "stor_folder" value = "{{record.stor_folder}}"  >
-                  <label for = "uniq_id" class = "lbl" >uniq_id</label> 
-                  <input type = "text" class="form-control"  name = "uniq_id" value = "{{record.uniq_id}}"  >
-                  <label for = "stor_phys" class = "lbl">stor_phys</label>
-                  <input type = "text" class="form-control"   name = "stor_phys" value = "{{record.stor_phys}}">
-                  <label for = "stor_reason" class = "lbl">stor_reason</label> 
-                  <input type = "text" class="form-control"   name = "stor_reason" value = "{{record.stor_reason}}">
-                  <label for = "stor_date" class = "lbl"> stor_date</label> 
-                  <input type = "text" class="form-control"  name = "stor_date" value = "{{record.stor_date}}">
-                  <label for = "stor_dept" class = "lbl">stor_dept</label> 
-                  <input type = "text" class="form-control"  name = "stor_dept" value = "{{record.stor_dept}}" >
-                  <label for = "stor_person" class = "lbl">stor_person</label> 
-                  <input type = "text" class="form-control"  name = "stor_person" value = "{{record.stor_person}}" >
-                  <label for = "stor_desc" class = "lbl">stor_desc</label> 
-                  <input type = "text" class="form-control"  name = "stor_desc" value = "{{record.stor_desc}}" > 
-                  <label for = "stor_fmts" class = "lbl">stor_fmts</label>
-                  <input type = "text" class="form-control" name = "stor_fmts" value = "{{record.stor_fmts}}" >
-                  <label for = "stor_units" class = "lbl">stor_units</label> 
-                  <input type = "text" class="form-control" name = "stor_units" value = "{{record.stor_units}}" >
-                  <label for = "obj_name" class = "lbl">obj_name</label> 
-                  <input type = "text" class="form-control" name = "obj_name" value = "{{record.obj_name}}" > 
-                  <label for = "type_of_work" class = "lbl">type_of_work</label> 
-                  <input type = "text" class="form-control" name = "type_of_work" value = "{{record.type_of_work}}"> 
-                  <label for = "obj_synopsis" class = "lbl">obj_synopsis</label> 
-                  <input type = "text" class="form-control" name = "obj_synopsis" value = "{{record.obj_synopsis}}" >
-                  <label for = "obj_type" class = "lbl">obj_type</label> 
-                  <input type = "text" class="form-control" name = "obj_type" value = "{{record.obj_type}}">
-                  <label for = "obj_sub_type" class = "lbl">obj_sub_type</label> 
-                  <input type = "text" class="form-control" name = "obj_sub_type" value = "{{record.obj_sub_type}}" >
-                  <label for = "obj_assoc_inv_nums" class = "lbl">obj_assoc_inv_nums</label> 
-                  <input type = "text" class="form-control" name = "obj_assoc_inv_nums" value = "{{record.obj_assoc_inv_nums}}" > 
-                  <label for = "obj_date" class = "lbl">obj_date</label> 
-                  <input type = "text" class="form-control" name = "obj_date" value = "{{record.obj_date}}" > 
-                  <label for = "obj_year" class = "lbl">obj_year</label> 
-                  <input type = "text" class="form-control" name = "obj_year" value = "{{record.obj_year}}"> 
-                  <label for = "obj_authors" class = "lbl">obj_authors</label> 
-                  <input type = "text" class="form-control" name = "obj_authors" value = "{{record.obj_authors}}"> 
-                  <label for = "obj_orgs" class = "lbl">obj_orgs</label> 
-                  <input type = "text" class="form-control" name = "obj_orgs" value = "{{record.obj_orgs}}"> 
-                  <label for = "obj_restrict" class = "lbl">obj_restrict</label> 
-                  <input type = "text" class="form-control" name = "obj_restrict"value = "{{record.obj_restrict}}" >
-                  <label for = "obj_rights" class = "lbl">obj_rights</label> 
-                  <input type = "text" class="form-control" name = "obj_rights" value = "{{record.obj_rights}}"> 
-                  <label for = "obj_rdoc_name" class = "lbl">obj_rdoc_name</label> 
-                  <input type = "text" class="form-control" name = "obj_rdoc_name" value = "{{record.obj_rdoc_name}}" >
-                  <label for = "obj_rdoc_num" class = "lbl">obj_rdoc_num</label> 
-                  <input type = "text" class="form-control" name = "obj_rdoc_num" value = "{{record.obj_rdoc_num}}" > 
-                  <label for = "obj_terms" class = "lbl">obj_terms</label> 
-                  <input type = "text" class="form-control" name = "obj_terms" value = "{{record.obj_terms}}"> 
-                  <label for = "obj_sources" class = "lbl">obj_sources</label> 
-                  <input type = "text" class="form-control" name = "obj_sources" value = "{{record.obj_sources}}"> 
-                  <label for = "obj_main_min" class = "lbl">obj_supl_info</label> 
-                  <input type = "text" class="form-control" name = "obj_supl_info" value = "{{record.obj_supl_info}}" > 
-                  <label for = "obj_main_min" class = "lbl">obj_main_min</label> 
-                  <input type = "text" class="form-control"  name = "obj_main_min" value = "{{record.obj_main_min}}"> 
-                  <label for = "obj_supl_min" class = "lbl">obj_supl_min</label> 
-                  <input type = "text"   class="form-control" name = "obj_supl_min" value = "{{record.obj_supl_min}}"> 
-                  <label for = "obj_group_min" class = "lbl">obj_group_min </label> 
-                  <input type = "text"   class="form-control" name = "obj_group_min" value = "{{record.obj_group_min}}" > 
-                  <label for = "obj_assoc_geol" class = "lbl">obj_assoc_geol</label> 
-                  <input type = "text"   class="form-control" name = "obj_assoc_geol" value = "{{record.obj_assoc_geol}}" > 
-                  <label for = "spat_atd_ate" class = "lbl">spat_atd_ate</label> 
-                  <input type = "text"   class="form-control" name = "spat_atd_ate" value = "{{record.spat_atd_ate}}" > 
-                  <label for = "spat_loc" class = "lbl">spat_loc</label> 
-                  <input type = "text"   class="form-control"name = "spat_loc" value = "{{record.spat_loc}}"> 
-                  <label for = "spat_num_grid" class = "lbl">spat_num_grid</label> 
-                  <input type = "text"   class="form-control" name = "spat_num_grid" value = "{{record.spat_num_grid}}"> 
-                  <label for = "spat_coords_source" class = "lbl">spat_coords_source</label> 
-                  <input type = "text"   class="form-control" name = "spat_coords_source" value = "{{record.spat_coords_source}}" > 
-                  <label for = "spat_toponim" class = "lbl">spat_toponim</label> 
-                  <input type = "text"   class="form-control" name = "spat_toponim" value = "{{record.spat_toponim}}" > 
-                  <label for = "inf_type" class = "lbl">inf_type</label> 
-                  <input type = "text"   class="form-control" name = "inf_type" value = "{{record.inf_type}}">
-                  <label for = "inf_media" class = "lbl">inf_media</label> 
-                  <input type = "text"   class="form-control" name = "inf_media" value = "{{record.inf_media}}"> 
-                  <label for = "path_others" class = "lbl">path_others</label> 
-                  <input type = "text"   class="form-control" name = "path_others" value = "{{record.path_others}}">
-                  <label for = "obj_main_group" class = "lbl">obj_main_group</label> 
-                  <input type = "text"   class="form-control" name = "obj_main_group" value = "{{record.obj_main_group}}">
-                  <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
-                  <input type = "text"   class="form-control" name = "obj_sub_group" value = "{{record.obj_sub_group}}" > </input>
-                  <label for = "path_local" class = "lbl">path_local</label> 
-                  <input type = "text"   class="form-control" name = "path_local" value = "{{record.path_local}}" > </input>
-                  <label for = "path_cloud" class = "lbl">path_cloud</label> 
-                  <input type = "text"   class="form-control" name = "path_cloud" value = "{{record.path_cloud}}" > </input>
-                  <label for = "status" class = "lbl">status</label> 
-                  <input type = "text"   class="form-control" name = "status" value = "{{record.status}}"> </input>
-                  <label for = "timecode" class = "lbl">timecode</label> 
-                  <input type = "text"   class="form-control" name = "timecode" value = "{{record.timecode}}" > </input>
-                  <label for = "obj_sub_group_ref" class = "lbl">obj_sub_group_ref </label> 
-                  <input type = "text"   class="form-control" name = "obj_sub_group_ref" value = "{{record.obj_sub_group_ref}}"> </input>
-                  <label for = "" class = "lbl"> </label> 
-                  <label for = "path_local_ref" class = "lbl">path_local_ref </label> 
-                  <input type = "text"   class="form-control" name = "path_local_ref" value = "{{record.path_local_ref}}" > </input>
-                  <label for = "path_cloud_ref" class = "lbl">path_cloud_ref </label> 
-                  <input type = "text"   class="form-control" name = "path_cloud_ref" value = "{{record.path_cloud_ref}}" > </input>
-                </div>
+                  
+                <div class = "upd_div"> 
+					
+				</div>
+				</div>
               </div>
         </div>
         <div class="modal-footer">

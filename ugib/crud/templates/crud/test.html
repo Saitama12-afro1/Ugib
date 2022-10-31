@@ -4,5 +4,5 @@
 <script src="{% static 'js/main.js' %}"></script>
  <form method = "POST" name = "del" id = "del" >
     {% csrf_token %}
-    <button  onClick = "deleteUds()" id = "deleteButton" value = "{{record.oid}}"> Удалить </button>
+    <button  onClick = "deleteUds()" id = "deleteButton" value = "{{record.oid}}" color = "#e6e6ff"> Удалить </button>
 </form> 

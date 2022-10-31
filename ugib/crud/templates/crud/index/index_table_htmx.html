@@ -20,10 +20,14 @@
 {% block body %}
     <div class = "boss_div">
     <div class = "head">
-      {% if user.is_active %}     
+      {% if user.is_active %}
+      {% if common_user %}   
         <a href = "{% url "crud:profile"%}"> Профиль</a>
+      {% endif %} 
         <a href = "{% url "crud:logout"%}"> Выйти</a>
+        {% if user.username == "vahrushev@tsnigri.ru" or user.username == "uvarova@tsnigri.ru" %}
         <a href = "{% url "crud:history"%}"> История</a>
+        {% endif %}
 
         <br>
       {% endif %}
@@ -108,7 +112,7 @@
 </button>
 {% endif %}
 {% endif %}
-<div class="modal fade  " id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-custom " id = "custom_modal" role="document">
       <div class="modal-content modal-content-custom" >
         <div class="modal-header">
@@ -131,7 +135,7 @@
                 <div class = "col">
                   <div class = "col" id = "valid_div">
         
-				  </div>
+				          </div>
                 </div>
                 <button type="button" id = "my_but" class="btn btn-secondary my_but" data-dismiss="modal"  onClick = "createPost(event)"  form = "{{record.oid}}"> Создать </button>
               </form>
@@ -151,7 +155,6 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-      
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

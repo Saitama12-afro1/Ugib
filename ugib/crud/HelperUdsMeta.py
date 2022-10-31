@@ -1,4 +1,5 @@
 import re
+from itertools import chain
 
 from django.db.models import QuerySet
 
@@ -51,6 +52,14 @@ class HelperUdsMet:
                 d[i[5:len(i)-1]] = t
         return d
         
+    @classmethod
+    def create_dict_from_uds(cls, udsMeta):
+        opts = udsMeta._meta
+        data = {}
+        for f in chain(opts.concrete_fields, opts.private_fields):
+            data[f.name] = f.value_from_object(udsMeta)
+        return data
+
             
             
     

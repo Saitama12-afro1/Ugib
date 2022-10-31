@@ -96,8 +96,7 @@ class UdsMeta(models.Model):
 
     
     def __str__(self) -> str:
-        return (str(self.uniq_id) +  " "  + self.stor_folder + " " + self.obj_assoc_inv_nums + " " + self.obj_authors + " " + self.obj_name
-                + " " + self.obj_year)
+        return (self.uniq_id)
         
     class Meta:
         db_table = 'uds_meta'
