@@ -106,6 +106,9 @@
 .table-container table td.obj_type {
     min-width: 300px;
 }
+.table-container table td.stor_phys {
+    min-width: 300px;
+}
 .table-container table td.obj_sub_type{
     min-width: 200px;
 }
@@ -290,9 +293,13 @@
     margin-left: 100px;
 }
 .boss_div{
-    width: 500px;
-    position:relative;
-    margin-left: 20px;
+    width: 13000px;
+    position: sticky;
+    top: 0;
+    background-color:#373737;
+    z-index: 3;
+    height: 165px;
+    /* margin-left: 20px; */
 }
 .create_div{
     position: relative;
@@ -339,6 +346,7 @@ textarea {
     min-height: 3em;
 }
 .form-control.inp {
+    width: 350px;
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -347,7 +355,7 @@ textarea {
 }
 
 .modal-content.modal-content-custom{
-    min-width: 700px;
+    min-width: 250%;
     color:black;
 }
 .btn.btn-outline-primary.unvisible{
@@ -358,7 +366,7 @@ pointer-events: none;
 
 body{
     background:#373737;
-    font-family:"Brush Script MT", "Brush Script Std", cursive;
+    font-family:'Times New Roman', Times, serif;
     color:#e6e6ff;
 }
 #delete_button{
@@ -379,4 +387,20 @@ body{
 }
 .modal-content.modal-custom-upd{
     width: 115%;
+}
+.row.my_row{
+    margin-right: -100px; 
+    margin-left: -100px;
+    justify-content : center;
+}
+#ModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
+}
+
+#my_table{
+    position: sticky;
+    top: 10%;
+    background-color:#373737;
+    z-index: 2;
 }

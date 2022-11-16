@@ -1,4 +1,5 @@
 {% extends 'crud/base.html' %}
+{% load crud_extras %}
 {% load static %}
 
 {%block script%}
@@ -23,6 +24,7 @@
 </form>
 
 
+{{ filter.qs|length}}
 <table class = "table">
 <thead class="thead-dark">
 <tr>
@@ -39,7 +41,7 @@
     {% if contact in filter.qs %}
 <tr> 
     <th scope="row">{{contact.id}}</th>
-    <td>{{contact.my_user.last_name}}  {{contact.my_user.first_name}},  {{contact.my_user.userinfo.position}} </td> <td> {{contact.my_user.userinfo.departament}}</td><td>{{contact.date}}</td> <td>{{contact.typeAction}}</td> <td>{{contact.udsMeta}}</td> 
+    <td>{{contact.my_user.last_name}}  {{contact.my_user.first_name|inizial}},  {{contact.my_user.userinfo.position}} </td> <td> {{contact.my_user.userinfo.departament}}</td><td>{{contact.date}}</td> <td>{{contact.typeAction}}</td> <td>{{contact.udsMeta}}</td> 
 </tr>
 {% endif %}
     {% endfor %}

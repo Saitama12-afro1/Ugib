@@ -44,10 +44,23 @@ class HistoryFilter(django_filters.FilterSet):
         fields = ["query"]
         
     def universal_search(self, queryset, name, value:str):
+        if "-" in value:
+            val = value.split("-")
+            buff = val[0].split(".")
+            if len(buff) > 1:
+                date1 = f"{buff[2]}-{buff[1]}-{buff[0]}"
+            buff = val[1].split(".")
+            if len(buff) > 1:
+                date2 = f"{buff[2]}-{buff[1]}-{buff[0]}"
+            return History.objects.filter(date__range=[date1, date2])
         split_value = value.split(' ')
+        buff = value.split(".")
+        if len(buff) == 3:
+            date = f"{buff[2]}-{buff[1]}-{buff[0]}"
+        else:
+            date = ""
         return History.objects.filter(
             Q(typeAction__icontains=value)| Q(my_user__last_name__icontains=value) | Q(my_user__first_name__icontains=value) 
             | Q(my_user__userinfo__departament__icontains=value) 
-            | (Q(my_user__last_name__icontains=split_value[0]) and Q(my_user__first_name__icontains=value[1]))
-            
+            | (Q(my_user__last_name__icontains=split_value[0])) | Q(date__icontains=date)
             )

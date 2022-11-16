@@ -24,11 +24,15 @@ function dinamic_form(event) {
       }
 }
 
+function current_height(area){
+    let count_row = Math.ceil(area.value.length / 55)
+    area.style.height = count_row * 30 + "px";
+}
+
   function TSNIGRI_validation(choise){
     let stor_folder = document.getElementById("stor_folder_valid");
-    let stor_folder_class = document.getElementsByClassName("stor_folder_valid")
-    console.log(stor_folder_class)
     stor_folder.addEventListener("input", (event) => {
+    fixTextareaSize(stor_folder);
     var pattern =/[0-9]+-[а-яА-ЯёЁ]+\s?[а-яА-ЯёЁ]?\.?\s?[а-яА-ЯёЁ]?\.?\,[0-9]+/
     const error = document.querySelector(".error");
     if (pattern.test(stor_folder.value)){
@@ -43,8 +47,16 @@ function dinamic_form(event) {
     }
     })
 
-    let spat_toponim = document.getElementById("spat_num_grid_valid");
-    spat_toponim.addEventListener("input", (event) => {
+    let stor_reason = document.getElementById("stor_reason");
+    current_height(stor_reason)
+    stor_reason.addEventListener("input", function (e) { fixTextareaSize(stor_reason) })
+
+    let obj_assoc_inv_nums = document.getElementById("obj_assoc_inv_nums")
+    obj_assoc_inv_nums.addEventListener("input", function (e){fixTextareaSize(obj_assoc_inv_nums)})
+
+    let spat_num_grid = document.getElementById("spat_num_grid_valid");
+    spat_num_grid.addEventListener("input", (event) => {
+        fixTextareaSize(spat_num_grid);
         var pattern =/[I-V]-[0-9][0-9]-[IVX]+/
         const error = document.querySelector("#error_spat_num_grid");
         if (pattern.test(spat_toponim.value)){
@@ -61,6 +73,7 @@ function dinamic_form(event) {
 
     let obj_authors = document.getElementById("obj_authors_valid");
     obj_authors_valid.addEventListener("input", (event) => {
+        fixTextareaSize(obj_authors);
         let count_comma = 0 
         for (const i in obj_authors.value){
             if (obj_authors.value[i] == ","){
@@ -113,6 +126,7 @@ function dinamic_form(event) {
         
     let obj_terms = document.getElementById("obj_terms_valid");
     obj_terms.addEventListener("input", (event) => {
+        fixTextareaSize(obj_terms);
         var pattern =/[А-я\,\s]+[^\.]$/
         const error = document.querySelector("#error_obj_terms");
         if (pattern.test(obj_terms.value)){
@@ -129,6 +143,7 @@ function dinamic_form(event) {
 
     let stor_desc = document.getElementById("stor_desc")
     stor_desc.addEventListener("input", (event) =>{
+        fixTextareaSize(stor_desc);
         let area = document.getElementById("obj_assoc_inv_nums")
         let choise = document.getElementById("obj_sub_group").value
         if (choise == "01TSNIGRI"){
@@ -144,6 +159,7 @@ function dinamic_form(event) {
     if ((choise == "03TGF")|| (choise == "04OTHER_ORG")){
     let stor_phys = document.getElementById("stor_phys")
     stor_phys.addEventListener("input", (event) =>{
+        fixTextareaSize(area);
         let area = document.getElementById("obj_assoc_inv_nums")
         let choise = document.getElementById("obj_sub_group").value
         if (choise == "03TGF"){
@@ -155,6 +171,7 @@ function dinamic_form(event) {
 
     let obj_main_min = document.getElementById("obj_main_min_valid");
     obj_main_min.addEventListener("input", (event) => {
+        fixTextareaSize(obj_main_min);
         var pattern =/[А-я\s]+\,\s?/
         const error = document.querySelector("#error_obj_main_min");
         if (pattern.test(obj_main_min.value)){
@@ -170,6 +187,7 @@ function dinamic_form(event) {
     })
     let obj_supl_min = document.getElementById("obj_supl_min_valid");
     obj_supl_min.addEventListener("input", (event) => {
+        fixTextareaSize(obj_supl_min);
         var pattern =/[А-я\s]+\,\s?/
         const error = document.querySelector("#error_obj_supl_min");
         if (pattern.test(obj_supl_min.value)){
@@ -186,6 +204,7 @@ function dinamic_form(event) {
     
     let obj_group_min = document.getElementById("obj_group_min_valid");
     obj_group_min.addEventListener("input", (event) => {
+        fixTextareaSize(obj_group_min);
         var pattern =/[А-я\s]+\,\s?/
         const error = document.querySelector("#error_obj_group_min");
         if (pattern.test(obj_group_min.value)){
@@ -201,6 +220,7 @@ function dinamic_form(event) {
     })
     let obj_rdoc_name = document.getElementById("obj_rdoc_name_valid");
     obj_rdoc_name.addEventListener("input", (event) => {
+        fixTextareaSize(obj_rdoc_name);
         let mas = right_bracket(obj_rdoc_name.value)
         const error = document.querySelector("#error_obj_rdoc_name");
         if (mas.length == 0){
@@ -216,6 +236,7 @@ function dinamic_form(event) {
     })
     let obj_rdoc_num = document.getElementById("obj_rdoc_num_valid");
     obj_rdoc_num.addEventListener("input", (event) => {
+        fixTextareaSize(obj_rdoc_num);
         let mas = right_bracket(obj_rdoc_num.value)
         const error = document.querySelector("#error_obj_rdoc_num");
         if (mas.length == 0){
@@ -231,6 +252,7 @@ function dinamic_form(event) {
     })
     let obj_name = document.getElementById("obj_name_valid");
     obj_name.addEventListener("input", (event) => {
+        fixTextareaSize(obj_name);
         let mas = right_bracket(obj_name.value)
         const error = document.querySelector("#error_obj_name");
         if (mas.length == 0){
@@ -260,9 +282,23 @@ function dinamic_form(event) {
         }
     })
     let spat_atd_ate = document.getElementById("spat_atd_ate_valid");
-   
-}
-
+    obj_orgs.addEventListener("input", (event) => {
+        fixTextareaSize(spat_atd_ate);
+        var pattern =/[(кр)(обл)]+([\s, .])/
+        let p = pattern.exec(spat_atd_ate.value)
+        const error = document.querySelector("#error_spat_atd_ate");
+        if (p == null){
+            error.textContent = "";
+            error.className = "error";
+        }else{
+            showError()
+        }        
+        function showError() {
+            error.textContent = "ээээээээ"
+            error.className = 'error active';
+        }
+    })
+  }
 
 function right_bracket(str){
     let mas = []

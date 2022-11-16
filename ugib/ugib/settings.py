@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'django_static_jquery',
+    'dbbackup',
 ]
 
 MIDDLEWARE = [
@@ -153,3 +154,7 @@ CSRF_COOKIE_SECURE              = False
 SECURE_HSTS_SECONDS             = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
+SECURE_SSL_REDIRECT             = False
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': 'E:/Новая папка/Ugib/ugib/ugib/backups'}

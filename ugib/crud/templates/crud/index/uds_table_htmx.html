@@ -19,19 +19,17 @@
 {% block table.thead %}
 
   {% if table.show_header %}
-  <div id = "my_table">
-      <thead {{ table.attrs.thead.as_html }}>
+      <thead {{ table.attrs.thead.as_html }} id = "my_table">
       <tr>
           {% for column in table.columns %}
-              <th  {{ column.attrs.th.as_html }}
+              <th  {{ column.attrs.th.as_html}}
                   hx-get="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}"
                   hx-trigger="click"
                   hx-target="div.table-container"
                   hx-swap="outerHTML"
                   hx-indicator=".progress"
                   style="cursor: pointer;">
-                  {{ column.header }}
-                   
+                  {{ column.header|addstr|translate_column_name}}
               </th>
           {% endfor %}
       </tr>
@@ -47,7 +45,7 @@
  
     <tr {{ row.attrs.as_html }} >
         {% for column, cell in row.items %}
-            <td {{ column.attrs.td.as_html }} class = {{column|addstr}}>
+            <td {{ column.attrs.td.as_html}} class = {{column|addstr}}>
             <div class = "use-2">
             {% if column.localize == None %} {{ cell }}{% else %}{% if column.localize %}{{ cell|localize }}{% else %}{{ cell|unlocalize }}{% endif %}{% endif %}
             {% if column.header != "Delete" and column.header != "Oid" and column.header != "Exel"  and column.header != "Update" and column.header != 'Bascet' %}  {% if user.is_active %}<button hidden type="button" class="btn btn-primary test" data-toggle="modal" data-target="#updModal"  onClick = "update_one_cell(event)" value = "{{record.oid}}"><img  width="25" src="static/update.png" alt=""></img> </button> {% endif %}{% endif %}

@@ -49,7 +49,9 @@ function createPost(event){
     $.post('/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
-    }); 
+    });
+    let div = document.getElementsByClassName("boss_div")[0]
+    div.style = " position: sticky;"; 
     $(form).trigger("reset")
 }
 
@@ -247,4 +249,15 @@ function testik(event, record) {
     $.get( "get_html/", data = {'oid':record}, function( data ) {
         $( ".upd_div" ).html( data );
       });
+}
+
+function change_style(event){
+    let div = document.getElementsByClassName("boss_div")[0]
+    div.style = " position: revert;";
+    modal = document.getElementById("ModalLong")
+    
+}
+function unchange_style(event){
+    let div = document.getElementsByClassName("boss_div")[0]
+    div.style = " position: sticky;";
 }
