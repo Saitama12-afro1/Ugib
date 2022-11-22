@@ -28,13 +28,13 @@ from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
 from django.db.models.query import QuerySet
 
-
-from .models import History, UdsMeta, Bascet, Order, UserInfo
-from .HelperUdsMeta import HelperUdsMet
-from .forms import LoginForm, UdsMetaForm, WordDocFilling, RegisterForm, MyChangePassword
+from grr.models import UdsMetaGrrAccom, UdsMetaGrrStage
+from .models import History, UdsMeta, Bascet, Order, UserInfo,UdsMetaApr
+from .HelperUdsMeta import HelperUdsMet, HelperUdsMetApr
+from .forms import LoginForm, UdsMetaForm, WordDocFilling, RegisterForm, MyChangePassword, UdsMetaAprForm
 from .history import decor
-from .tables import UdsMetaTable, HistoryTable
-from .filters import  UdsMetaFilters, HistoryFilter
+from .tables import UdsMetaTable, UdsMetaAprTable
+from .filters import  UdsMetaFilters, HistoryFilter, UdsMetaAprFilters
 
 
 
@@ -262,7 +262,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         for i in bascet:
             uds_meta = uds_meta.filter(~Q(oid = i.oid))
         return uds_meta.order_by("-oid")
-    
     filterset_class = UdsMetaFilters
     paginate_by = 25
     login_form = LoginForm()
@@ -462,6 +461,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         context["user"] = self.request.user
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+        context["choise"] = "01FOUND"
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
         old_uniq = buff.uniq_id
         old_date = buff.stor_date
@@ -485,7 +485,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         return template_name
     
 
-def get_html(request):
+def get_html_uds(request):
     context = {}
     context["user"] = request.user
     context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
@@ -514,20 +514,74 @@ def get_html(request):
         context["choise"] = "04OTHER_ORG"
         context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
         return render(request, "crud/form/04OTHER_ORG.html", context=context)
+    
+    
+def get_html_apr(request):
+    context = {}
+    context["user"] = request.user
+    context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+    iniz = request.user.first_name.split(" ")
+    iniz = iniz[0][0] + "." + iniz[1][0] + "."#Создание инициалов из Имени и Отчества
+    context["iniz"] = iniz
+    context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
+    date = context["current_date"].replace(".", "_")
+    buff = UdsMetaApr.objects.order_by("-oid").first() 
+    last_count_stor_desc =  int(buff.stor_desc[len(buff.stor_desc) - 2:]) + 1
+    if last_count_stor_desc % 10 == last_count_stor_desc:
+        last_count_stor_desc = "0" + str(last_count_stor_desc)
+    context["stor_desc"] = f"{date} Протокол {last_count_stor_desc}" 
+    # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
+    if 'oid' in request.GET:
+        context["record"] = UdsMetaApr.objects.get(oid = request.GET["oid"])
+        return render(request, 'crud/form/update.html', context=context)
+    if "APR" == request.GET["choise"]:
+        context["choise"] = "apr"
+        context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
+        return render(request, "crud/form/13APR.html", context=context)
+
+
 
 def create_uniq_id(choise:str,current_date:datetime) ->str: # Функция создает уникальный идентификатор
         buff = UdsMeta.objects.order_by("-oid").first()
         old_uniq = buff.uniq_id
-        old_date = buff.stor_date 
-        d, m, y = (current_date.split('.'))# 14.10.2022 
-        name_fond = choise[0] + choise[1]
+        old_date = buff.stor_date
         count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
-        
+        name_fond = choise[0] + choise[1]
+        d, m, y = (current_date.split('.'))# 14.10.2022 
+        if choise == "apr":
+            buff = UdsMetaApr.objects.order_by("-oid").first()
+            old_uniq = buff.uniq_id
+            old_date = buff.stor_date
+            count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+            if current_date == old_date:
+                return f"g13s01y{y}m{m}d{d}n{int(count) + 1}e"
+            else:
+                return f"g13s01y{y}m{m}d{d}n{1}e"
+        if choise == "grr-stage":
+            buff = UdsMetaGrrStage.objects.order_by("-oid").first()
+            old_uniq = buff.uniq_id
+            old_date = buff.stor_date
+            count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+            if current_date == old_date:
+                return f"g14s01y{y}m{m}d{d}n{int(count) + 1}e"
+            else:
+                return f"g14s01y{y}m{m}d{d}n{1}e"
+        if choise == "grr-accom":
+            buff = UdsMetaGrrAccom.objects.order_by("-oid").first()
+            old_uniq = buff.uniq_id
+            old_date = buff.stor_date
+            count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]   
+            if current_date == old_date:
+                return f"g14s01y{y}m{m}d{d}n{int(count) + 1}e"
+            else:
+                return f"g14s01y{y}m{m}d{d}n{1}e"
         if current_date == old_date:
+            
+            
             return f"g01s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
         else:
              return f"g01s{name_fond}y{y}m{m}d{d}n{1}e"
-
+       
 
 def password_change(request):
     form = MyChangePassword()
@@ -544,3 +598,238 @@ def password_change(request):
     context = {}
     context["form"] = form
     return render(request, "crud/password_change.html" ,context=context )
+
+
+class UdsMetaAprHTMxTableView(SingleTableMixin, FilterView): # представление для базовой страницы
+    table_class = UdsMetaAprTable
+    def get_queryset(self):
+        try:
+            bascet = Bascet.objects.get(my_user_id = self.request.user.id).udsMeta.all()
+        except:
+            bascet = []
+        uds_meta_apr = UdsMetaApr.objects.all()
+        for i in bascet:
+            uds_meta_apr = uds_meta_apr.filter(~Q(oid = i.oid))
+        return uds_meta_apr.order_by("-oid")
+    filterset_class = UdsMetaAprFilters
+    paginate_by = 25
+    login_form = LoginForm()
+    register_form =  RegisterForm()
+    def get_table_kwargs(self):# Здесь исключаются из поля видимости столбцы недоступные пользователю не принадлежащему определенной группе
+        if self.request.user.is_active:
+            if self.request.user.groups.filter(name = "common_user").exists():   
+                return {
+                    'exclude':('Delete','Update'),
+                    }
+            else:
+                return {
+                    'exclude':('Bascet'),
+                    
+                    }
+        else:
+            return {
+                    'exclude':('Bascet','Delete','Update')
+                    }    
+            
+    
+    def post(self, request,*args, **kwargs):
+        login_form = LoginForm(request.POST)
+        register_form = RegisterForm(request.POST)
+        super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru", "gening@tsnigri.ru", "uscharova@tsnigri.ru", "test@mail.ru", "mukhina@tsnigri.ru", "t1@mail.ru") # пользователи с доступ к CRUD-операциям
+        user = request.user
+        if 'del' in request.POST:
+            try:
+                udsMetaAprObj = UdsMetaApr.objects.get(oid = request.POST["oid"])
+                @decor 
+                def arr():
+                    return "del"
+                arr(user, UdsMetaApr.objects.get(oid =  request.POST["oid"]))
+                udsMetaAprObj.delete()
+            except ObjectDoesNotExist:
+                return redirect('/apr/')
+            return redirect('/apr/')
+        
+        elif 'exc' in request.POST:
+            form_data = HelperUdsMet.create_dict_from_uds(UdsMetaApr.objects.get(oid = request.POST['oid']))#обернуть в тру execept
+            
+            with open('stockitems_misuper.csv', 'w', newline="", encoding="cp1251") as myfile:  
+                wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, delimiter=",", dialect=csv.Dialect.delimiter)
+                wr.writerow(HelperUdsMet._all_columns,)
+                wr.writerow(list(form_data.values()))
+                
+            for csvfile in glob.glob(os.path.join('.', '*.csv')):
+                workbook = xlsxwriter.Workbook()
+                workbook = Workbook(csvfile[:-4] + '.xlsx')
+                worksheet = workbook.add_worksheet()
+                with open(csvfile, 'rt', encoding='cp1251') as f:
+                    reader = csv.reader(f)
+                    for r, row in enumerate(reader):
+                        for c, col in enumerate(row):
+                            worksheet.write(r, c, col)
+                workbook.close()
+                
+            filename = 'stockitems_misuper.xlsx'
+            with io.open( filename, mode ='rb') as myfile:  
+                response = HttpResponse(
+                    myfile,
+                    content_type='text/xlsx'
+                )
+                response['Content-Disposition'] = 'attachment; filename=%s' % filename
+            return response
+        
+        elif 'export_exel' in request.POST:
+            allUdsMetaApr = UdsMetaApr.objects.all().order_by("-oid")
+            with open('stockitems_misuper.csv', 'w', newline="", encoding="utf-8") as myfile:  
+                wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, delimiter=",", dialect=csv.Dialect.delimiter)
+                wr.writerow(HelperUdsMet._all_columns,)
+                for i in allUdsMetaApr:
+                    form_data = HelperUdsMet.create_dict_from_uds(i)
+                    wr.writerow(list(form_data.values()))
+
+            for csvfile in glob.glob(os.path.join('.', '*.csv')):
+                workbook = xlsxwriter.Workbook()
+                workbook = Workbook(csvfile[:-4] + '.xlsx')
+                worksheet = workbook.add_worksheet()
+                with open(csvfile, 'rt', encoding='utf-8') as f:
+                    reader = csv.reader(f)
+                    for r, row in enumerate(reader):
+                        for c, col in enumerate(row):
+                            worksheet.write(r, c, col)
+                workbook.close()
+                
+            filename = 'stockitems_misuper.xlsx'
+            response = FileResponse(open(filename, 'rb'))
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['X-Sendfile'] = filename
+            return response
+               
+        elif 'login' in request.POST:
+            if login_form.is_valid():
+                user = authenticate(username = login_form.cleaned_data["username"], password = login_form.cleaned_data["password"])
+            
+                if user is not None:
+                    login(request, user)
+                    return redirect("/apr/")
+                
+        elif 'register' in request.POST:
+            if register_form.is_valid(password=request.POST["password"]):
+                if register_form.cleaned_data["username"] in super_user_username:
+                    try:
+                        user = User(username = register_form.cleaned_data["username"], 
+                                    first_name = request.POST["first_name"], last_name = request.POST["last_name"], \
+                                    is_staff = True
+                        )
+                        user.set_password(register_form.cleaned_data["password"])
+                        user.save()
+                        user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
+                        user_info.save()
+                    except:
+                        pass
+                else:
+                    user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"], last_name =request.POST["last_name"],
+                                 is_superuser = False)
+                    user.set_password(register_form.cleaned_data["password"])
+                    user.save()
+                    group = Group.objects.get(pk = 1)
+                    group.user_set.add(user)
+                    user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
+                    user_info.save()
+                aut_user = authenticate(username = user.username, password = register_form.cleaned_data["password"])
+            
+                if aut_user is not None:
+                    login(request, user)
+                    return redirect("/apr/")
+            else:
+                return redirect('/apr/')#сделать доп ошибку
+                    
+                    
+        elif 'create' in request.POST:
+            try:          
+                form_data = HelperUdsMetApr.credte_dict_from_js_dict(request.POST)
+                UdsMetaApr.objects.create(**form_data)
+        
+                @decor
+                def arr():
+                    return "create"
+                arr(user, UdsMetaApr.objects.get(uniq_id =  form_data["uniq_id"])) 
+                
+            except IntegrityError:
+                pass
+            return redirect('/apr/') 
+        
+        elif 'update' in request.POST:
+            form_data = HelperUdsMetApr.credte_dict_from_js_dict(request.POST)
+            
+            try:
+                UdsMetaApr.objects.filter(oid = form_data["oid"]).update(**form_data)  
+                @decor
+                def arr():
+                    return "update"
+                arr(user, UdsMetaApr.objects.get(uniq_id =  form_data["uniq_id"]))
+            except ObjectDoesNotExist:
+                
+                return redirect("/apr/")
+        
+        elif 'upd_one' in request.POST:
+            try:
+                UdsMetaApr.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
+                @decor
+                def arr():
+                        return "update"
+                arr(user, UdsMetaApr.objects.get(oid =  int(request.POST["oid"])))
+                return redirect("/apr/")
+            except ObjectDoesNotExist:
+                return redirect("/apr/")
+        
+        elif 'bascet' in request.POST:
+            udsMetaAprObj = UdsMetaApr.objects.get(oid = request.POST["oid"])
+            user = request.user
+            bascet, created  = Bascet.objects.get_or_create(my_user = user)
+            udsMetaAprObj.bascets.add(bascet)
+            
+            @decor
+            def arr():
+                return "bascet"
+            arr(user, UdsMetaApr.objects.get(oid =  request.POST["oid"]))
+            
+            return redirect('/apr/') 
+            
+        return redirect("/apr/")
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # stor_phys_dict = {} 
+        # buff = UdsMetaApr.objects.order_by("-oid")
+        # for i in buff:
+        #     stor_phys_dict.update({i.spat_num_grid: stor_phys_dict.get(i.spat_num_grid, 0) + 1})
+        # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
+        # pprint(context["stor_phys_p"])
+        buff = UdsMetaApr.objects.order_by("-oid").first() 
+        context["form"] = self.login_form
+        context["register_form"] = self.register_form
+        context["user"] = self.request.user
+        context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
+        context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
+        context["choise"] = "apr"
+        d, m, y = (context["current_date"].split('.'))# 14.10.2022
+        old_uniq = buff.uniq_id
+        old_date = buff.stor_date
+        try:
+            count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+        except AttributeError:
+            pass
+
+        if context["current_date"] == old_date:
+            context["uniq_id"] = f"g13s01y{y}m{m}d{d}n{int(count) + 1}e"
+        else:
+             context["uniq_id"] = f"g13s01y{y}m{m}d{d}n{1}e"
+        return context
+
+    
+    def get_template_names(self): 
+        if self.request.htmx:
+            template_name = "crud/index/index_table_apr_partial.html"
+        else:
+            template_name = "crud/index/index_table_apr_htmx.html"
+        return template_name

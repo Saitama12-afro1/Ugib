@@ -1,0 +1,193 @@
+{% extends "crud/base.html" %}
+
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+{%block script%}
+<link rel="stylesheet" href="{% static 'css/main_grr_accom.css' %}">
+<link rel="stylesheet" href="{% static 'css/validation.css' %}">
+<script src="{% static 'js/main_grr_accom.js' %}"></script>  
+<script src="{% static 'js/validators_grr_accom.js' %}"></script>  
+<script src="{% static 'js/jquery.js' %}"></script>  
+{%endblock%}
+{%block title%}
+    {{choise}}
+{%endblock%}
+{% block body %}
+    <div class = "boss_div">
+      <div class = "link_div">
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/';" >01FOUND</button>
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/apr/'">APR</button>
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/grr-stage/'">GRR-STAGE</button>
+        <button type="button" class="btn btn-link my" onclick="window.location.href ='/grr-accom/'" id = "grr_accom_btn">GRR-ACCOM</button>
+      </div>
+    <div class = "head">
+      {% if user.is_active %}
+      {% if common_user %}   
+        <a href = "{% url "crud:profile"%}">Профиль</a>
+      {% endif %} 
+        <a href = "{% url "crud:logout"%}"> Выйти</a>
+        {% if user.username == "vahrushev@tsnigri.ru" or user.username == "uvarova@tsnigri.ru"  or user.username == "test@mail.ru" %}
+        <a href = "{% url "crud:history"%}"> История</a>
+        {% endif %}
+
+        <br>
+      {% endif %}
+        
+    {# Search form #}
+    {% if user.is_active %}
+    <form hx-get="/grr-accom/" 
+          hx-target="div.table-container" 
+          hx-swap="outerHTML" 
+          hx-indicator=".progress" 
+          class="form-inline">
+        {% crispy filter.form %}
+    </form>
+    {% endif %}
+</div>
+<div class = "modal_form">
+    {% if user.is_active == False %} 
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onClick= "change_style(event)">
+        Войти
+    </button>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content create_content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Вход</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick= "unchange_style(event)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+              <form  method = "POST">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <button type = "submit" name = "login" onclick= "unchange_style(event)"> Войти</button>
+                </form>
+                <a href = "{% url "crud:password_change"%}"> Восстановить пароль</a>
+
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick= "unchange_style(event)" >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div> 
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RegModalCenter"  onClick= "change_style(event)">
+  Зарегистрироваться 
+</button>
+
+<div class="modal fade" id="RegModalCenter" tabindex="-1" role="dialog" aria-labelledby="RegModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">Вход</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick= "unchange_style(event)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+        <form  method = "POST">
+            {% csrf_token %}
+            {{register_form|crispy}}
+            <button type = "submit" name = "register" onclick= "unchange_style(event)"> Зарегистрироваться </input>
+          </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick= "unchange_style(event)">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+</div> 
+    {% endif %}
+
+<div class = "create_div">
+{% if user.is_active%}
+{% if common_user == False %}
+<form method = "POST">
+  {% csrf_token %}
+<button type = 'submit'  class="btn btn-primary"  value = "{{record.oid}}" name = "export_exel"> Экспорт Exel </button>
+</form>
+  <br>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalLong" id = "create_button"  onClick= "change_style(event)">
+    Создать
+</button>
+
+</div>
+
+{% endif %}
+{% endif %}
+<div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-custom " id = "custom_modal" role="document">
+      <div class="modal-content modal-content-custom" >
+        <div class="modal-header">
+          <select>
+            <option>GRR-ACCOM</option>
+          </select>
+          <select id = "select_sub" onClick = "dinamic_form(event)" >
+            <option>GRR-ACCOM</option>
+          </select>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick= "unchange_style(event)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form  method = "POST" id = "create_form">
+                {% csrf_token %}
+                <div class = "col">
+                  <div class = "col" id = "valid_div">
+        
+				          </div>
+                </div>
+                <button type="button" id = "my_but" class="btn btn-secondary my_but" data-dismiss="modal"  onClick = "createPost(event)"  form = "{{record.oid}}"> Создать </button>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button"  class="btn btn-secondary" data-dismiss="modal" onclick= "unchange_style(event)">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+<div class="modal fade" id="updModal" tabindex="-1" role="dialog" aria-labelledby="updModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class = "modal_area" id = "modal_area">  </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"  id = "close_btn">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick = "upd_post(event)" id = "upd_btn">Изменить</button>
+      </div>
+    </div>
+  </div>
+</div>
+    {# Progress indicator #}
+    <div class="progress">
+        <div class="indeterminate"></div>
+    </div>
+
+    {# The actual table #}
+    <div class = "obs_table">
+      <input hidden value = '{{common_user}}'  id = 'info_user'>
+    {% render_table table %}
+	</div>
+{% endblock %}

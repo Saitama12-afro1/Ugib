@@ -103,10 +103,36 @@
 .table-container table td.type_of_work {
     min-width: 300px;
 }
+
+.table-container table td.obj_date{
+    min-width: 300px;
+}
 .table-container table td.obj_type {
     min-width: 300px;
 }
+.table-container table td.obj_year {
+    min-width: 300px;
+}
+.table-container table td.obj_restrict{
+    min-width: 300px;
+}
+.table-container table td.obj_rights{
+    min-width: 300px;
+}
+.table-container table td.obj_rdoc_name{
+    min-width: 300px;
+}
+.table-container table td.obj_rdoc_num{
+    min-width: 300px;
+}
+
 .table-container table td.stor_phys {
+    min-width: 300px;
+}
+.table-container table td.spat_atd_ate {
+    min-width: 300px;
+}
+.table-container table td.inf_media {
     min-width: 300px;
 }
 .table-container table td.obj_sub_type{
@@ -124,35 +150,33 @@
 .table-container table td.obj_authors{
     min-width: 300px;
 }
-.table-container table td.obj_restrict{
-    min-width: 150px;
-}
+
 .table-container table td.obj_terms{
     min-width: 400px;
 }
 .table-container table td.obj_sources{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.obj_supl_min{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.obj_main_min{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.obj_supl_min{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.obj_group_min{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.obj_supl_info{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.spat_num_grid{
     min-width: 400px;
 }
 .table-container table td.spat_toponim{
-    min-width: 150px;
+    min-width: 300px;
 }
 .table-container table td.path_others{
     min-width: 150px;
@@ -293,12 +317,12 @@
     margin-left: 100px;
 }
 .boss_div{
-    width: 13000px;
+    width: 15100px;
     position: sticky;
     top: 0;
     background-color:#373737;
     z-index: 3;
-    height: 165px;
+    height: 190px;
     /* margin-left: 20px; */
 }
 .create_div{
@@ -355,7 +379,7 @@ textarea {
 }
 
 .modal-content.modal-content-custom{
-    min-width: 250%;
+    min-width: 210%;
     color:black;
 }
 .btn.btn-outline-primary.unvisible{
@@ -403,4 +427,14 @@ body{
     top: 10%;
     background-color:#373737;
     z-index: 2;
+    height: 160px;
+}
+
+.link_div{
+    position: absolute ;
+    bottom: 0;
+    top: 156px;
+}
+.btn.btn-link.my{
+background-color: #efefef;
 }

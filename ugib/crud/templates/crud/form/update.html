@@ -1,98 +1,92 @@
 <label for = "stor_folder" class = "lbl">stor_folder </label>
-                  <textarea type = "text" class="form-control"  name = "oid" value = "" hidden>{{record.oid}}</textarea>
-                  <textarea class="form-control stor_folder_valid" name = "stor_folder" id = "stor_folder_valid"  value = "" novalidate onblur = "my_blur(event)">{{record.stor_folder}}</textarea>
-                  <span class="error" aria-live="polite" id = "error_stor_folder"></span>
-                  <label for = "uniq_id" class = "lbl" >uniq_id</label> 
-                  <textarea class="form-control" name = "uniq_id" id = "uniq_id_valid" value = "" novalidate>{{record.uniq_id}}</textarea>
-                  <label for = "stor_phys" class = "lbl">stor_phys</label>
-                  <textarea class="form-control" name = "stor_phys" id = "stor_phys_valid" value = "" novalidate>{{record.stor_phys}}</textarea>
-                  <label for = "stor_reason" class = "lbl">stor_reason</label> 
-                  <textarea class="form-control" name = "stor_reason" id = "stor_reason_valid" value = "" novalidate>{{record.stor_reason}}</textarea>
-                  <label for = "stor_date" class = "lbl"> stor_date</label> 
-                  <textarea class="form-control" name = "stor_date" id = "stor_date_valid" value = "" novalidate>{{record.stor_date}}</textarea>
-                  <label for = "stor_dept" class = "lbl">stor_dept</label> 
-                  <textarea class="form-control" name = "stor_dept" id = "stor_dept_valid" value = "" novalidate>{{record.stor_dept}}</textarea>
-                  <label for = "stor_person" class = "lbl">stor_person</label> 
-                  <textarea class="form-control" name = "stor_person" id = "stor_person_valid" value = "" novalidate>{{record.stor_person}}</textarea>
-                  <label for = "stor_desc" class = "lbl">stor_desc</label> 
-                  <textarea class="form-control" name = "stor_desc" id = "stor_desc_valid" value = "" novalidate>{{record.stor_desc}}</textarea>
-                  <label for = "stor_fmts" class = "lbl">stor_fmts</label>
-                  <textarea class="form-control" name = "stor_fmts" id = "stor_fmts_valid" value = "" novalidate>{{record.stor_fmts}}</textarea>
-                  <label for = "stor_units" class = "lbl">stor_units</label> 
-                  <textarea class="form-control" name = "stor_units" id = "stor_units_valid" value = "" novalidate>{{record.stor_units}}</textarea>
-                  <label for = "obj_name" class = "lbl">obj_name</label> 
-                  <textarea class="form-control" name = "obj_name" id = "obj_name_valid" value = "" novalidate>{{record.obj_name}}</textarea>
-                  <label for = "type_of_work" class = "lbl">type_of_work</label> 
-                  <textarea class="form-control" name = "type_of_work" id = "type_of_work_valid" value = "" novalidate>{{record.type_of_work}}</textarea>
-                  <label for = "obj_synopsis" class = "lbl">obj_synopsis</label> 
-                  <textarea class="form-control" name = "obj_synopsis" id = "obj_synopsis_valid" value = "" novalidate>{{record.obj_synopsis}}</textarea>
-                  <label for = "obj_type" class = "lbl">obj_type</label> 
-                  <textarea class="form-control" name = "obj_type" id = "obj_type_valid" value = "" novalidate>{{record.obj_type}}</textarea>
-                  <label for = "obj_sub_type" class = "lbl">obj_sub_type</label> 
-                  <textarea class="form-control" name = "obj_sub_type" id = "obj_sub_type_valid" value = "" novalidate>{{record.obj_sub_type}}</textarea>
-                  <label for = "obj_assoc_inv_nums" class = "lbl">obj_assoc_inv_nums</label> 
-                  <textarea class="form-control" name = "obj_assoc_inv_nums" id = "obj_assoc_inv_nums_valid" value = "" novalidate>{{record.obj_assoc_inv_nums}}</textarea>
-                  <label for = "obj_date" class = "lbl">obj_date</label> 
-                  <textarea class="form-control" name = "obj_date" id = "obj_date_valid" value = "" novalidate>{{record.obj_date}}</textarea>
-                  <label for = "obj_year" class = "lbl">obj_year</label> 
-                  <textarea class="form-control" name = "obj_year" id = "obj_year_valid" value = "" novalidate>{{record.obj_year}}</textarea>
-                  <label for = "obj_authors" class = "lbl">obj_authors</label> 
-                  <textarea class="form-control" name = "obj_authors" id = "obj_authors_valid" value = "" novalidate>{{record.obj_authors}}</textarea>
-                  <label for = "obj_orgs" class = "lbl">obj_orgs</label> 
-                  <textarea class="form-control" name = "obj_orgs" id = "obj_orgs_valid" value = "" novalidate>{{record.obj_orgs}}</textarea>
-                  <label for = "obj_restrict" class = "lbl">obj_restrict</label> 
-                  <textarea class="form-control" name = "obj_restrict" id = "obj_restrict_valid" value = "" novalidate>{{record.obj_restrict}}</textarea>
-                  <label for = "obj_rights" class = "lbl">obj_rights</label> 
-                  <textarea class="form-control" name = "obj_rights" id = "obj_rights_valid" value = "" novalidate>{{record.obj_rights}}</textarea>
-                  <label for = "obj_rdoc_name" class = "lbl">obj_rdoc_name</label> 
-                  <textarea class="form-control" name = "obj_rdoc_name" id = "obj_rdoc_name_valid" value = "" novalidate>{{record.obj_rdoc_name}}</textarea>
-                  <label for = "obj_rdoc_num" class = "lbl">obj_rdoc_num</label> 
-                  <textarea class="form-control" name = "obj_rdoc_num" id = "obj_rdoc_num_valid" value = "" novalidate>{{record.obj_rdoc_num}}</textarea>
-                  <label for = "obj_terms" class = "lbl">obj_terms</label> 
-                  <textarea class="form-control" name = "obj_terms" id = "obj_terms_valid" value = "" novalidate>{{record.obj_terms}}</textarea>
-                  <label for = "obj_sources" class = "lbl">obj_sources</label> 
-                  <textarea class="form-control" name = "obj_sources" id = "obj_sources_valid" value = "" novalidate>{{record.obj_sources}}</textarea>
-                  <label for = "obj_main_min" class = "lbl">obj_supl_info</label> 
-                  <textarea class="form-control" name = "obj_supl_info" id = "obj_supl_info_valid" value = "" novalidate>{{record.obj_supl_info}}</textarea>
-                  <label for = "obj_main_min" class = "lbl">obj_main_min</label> 
-                  <textarea class="form-control" name = "obj_main_min" id = "obj_main_min_valid" value = "" novalidate>{{record.obj_main_min}}</textarea>
-                  <label for = "obj_supl_min" class = "lbl">obj_supl_min</label> 
-                  <textarea class="form-control" name = "obj_supl_min" id = "obj_supl_min_valid" value = "" novalidate>{{record.obj_supl_min}}</textarea>
-                  <label for = "obj_group_min" class = "lbl">obj_group_min </label> 
-                  <textarea class="form-control" name = "obj_group_min" id = "obj_group_min_valid" value = "" novalidate>{{record.obj_group_min}}</textarea>
-                  <label for = "obj_assoc_geol" class = "lbl">obj_assoc_geol</label> 
-                  <textarea class="form-control" name = "obj_assoc_geol" id = "obj_assoc_geol_valid" value = "" novalidate>{{record.obj_assoc_geol}}</textarea>
-                  <label for = "spat_atd_ate" class = "lbl">spat_atd_ate</label> 
-                  <textarea class="form-control" name = "spat_atd_ate" id = "spat_atd_ate_valid" value = "" novalidate>{{record.spat_atd_ate}}</textarea>
-                  <label for = "spat_loc" class = "lbl">spat_loc</label> 
-                  <textarea class="form-control" name = "spat_loc" id = "spat_loc_valid" value = "" novalidate>{{record.spat_loc}}</textarea>
-                  <label for = "spat_num_grid" class = "lbl">spat_num_grid</label> 
-                  <textarea class="form-control" name = "spat_num_grid" id = "spat_num_grid_valid" value = "" novalidate>{{record.spat_num_grid}}</textarea>
-                  <label for = "spat_coords_source" class = "lbl">spat_coords_source</label> 
-                  <textarea class="form-control" name = "spat_coords_source" id = "spat_coords_source_valid" value = "" novalidate>{{record.spat_coords_source}}</textarea>
-                  <label for = "spat_toponim" class = "lbl">spat_toponim</label> 
-                  <textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid" value = "" novalidate>{{record.spat_toponim}}</textarea>
-                  <label for = "inf_type" class = "lbl">inf_type</label> 
-                  <textarea class="form-control" name = "inf_type" id = "inf_type_valid" value = "" novalidate>{{record.inf_type}}</textarea>
-                  <label for = "inf_media" class = "lbl">inf_media</label> 
-                  <textarea class="form-control" name = "inf_media" id = "inf_media_valid" value = "" novalidate>{{record.inf_media}}</textarea>
-                  <label for = "path_others" class = "lbl">path_others</label> 
-                  <textarea class="form-control" name = "path_others" id = "path_others_valid" value = "" novalidate>{{record.path_others}}</textarea>
-                  <label for = "obj_main_group" class = "lbl">obj_main_group</label> 
-                  <textarea class="form-control" name = "obj_main_group" id = "obj_main_group_valid" value = "" novalidate>{{record.obj_main_group}}</textarea>
-                  <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
-                  <textarea class="form-control" name = "obj_main_group" id = "obj_main_group_valid" value = "" novalidate>{{record.obj_main_group}}</textarea>
-                  <label for = "path_local" class = "lbl">path_local</label> 
-                  <textarea class="form-control" name = "path_local" id = "path_local_valid" value = "" novalidate>{{record.path_local}}</textarea>
-                  <label for = "path_cloud" class = "lbl">path_cloud</label> 
-                  <textarea class="form-control" name = "path_cloud" id = "path_cloud_valid" value = "" novalidate>{{record.path_cloud}}</textarea>
-                  <label for = "status" class = "lbl">status</label> 
-                  <textarea class="form-control" name = "status" id = "status_valid" value = "" novalidate>{{record.status}}</textarea>
-                  <label for = "timecode" class = "lbl">timecode</label> 
-                  <textarea class="form-control" name = "timecode" id = "timecode_valid" value = "" novalidate>{{record.timecode}}</textarea>
-                  <label for = "obj_sub_group_ref" class = "lbl">obj_sub_group_ref </label> 
-                  <textarea class="form-control" name = "obj_sub_group_ref" id = "obj_sub_group_ref_valid" value = "" novalidate>{{record.obj_sub_group_ref}}</textarea>
-                  <label for = "path_local_ref" class = "lbl">path_local_ref </label> 
-                  <textarea class="form-control" name = "path_local_ref" id = "path_local_ref_valid" value = "" novalidate>{{record.path_local_ref}}</textarea>
-                  <label for = "path_cloud_ref" class = "lbl">path_cloud_ref </label> 
-                  <textarea class="form-control" name = "path_cloud_ref" id = "path_cloud_ref_valid" value = "" novalidate>{{record.path_cloud_ref}}</textarea>
+<textarea type = "text" class="form-control"  name = "oid" value = "" hidden>{{record.oid}}</textarea>
+<textarea class="form-control stor_folder_valid" name = "stor_folder" id = "stor_folder_valid"  value = "" novalidate onblur = "my_blur(event)">{{record.stor_folder}}</textarea>
+<span class="error" aria-live="polite" id = "error_stor_folder"></span>
+<label for = "uniq_id" class = "lbl" >uniq_id</label> 
+<textarea class="form-control" name = "uniq_id" id = "uniq_id_valid" value = "" novalidate>{{record.uniq_id}}</textarea>
+<label for = "stor_phys" class = "lbl">stor_phys</label>
+<textarea class="form-control" name = "stor_phys" id = "stor_phys_valid" value = "" novalidate>{{record.stor_phys}}</textarea>
+<label for = "stor_reason" class = "lbl">stor_reason</label> 
+<textarea class="form-control" name = "stor_reason" id = "stor_reason_valid" value = "" novalidate>{{record.stor_reason}}</textarea>
+<label for = "stor_date" class = "lbl"> stor_date</label> 
+<textarea class="form-control" name = "stor_date" id = "stor_date_valid" value = "" novalidate>{{record.stor_date}}</textarea>
+<label for = "stor_dept" class = "lbl">stor_dept</label> 
+<textarea class="form-control" name = "stor_dept" id = "stor_dept_valid" value = "" novalidate>{{record.stor_dept}}</textarea>
+<label for = "stor_person" class = "lbl">stor_person</label> 
+<textarea class="form-control" name = "stor_person" id = "stor_person_valid" value = "" novalidate>{{record.stor_person}}</textarea>
+<label for = "stor_desc" class = "lbl">stor_desc</label> 
+<textarea class="form-control" name = "stor_desc" id = "stor_desc_valid" value = "" novalidate>{{record.stor_desc}}</textarea>
+<label for = "stor_fmts" class = "lbl">stor_fmts</label>
+<textarea class="form-control" name = "stor_fmts" id = "stor_fmts_valid" value = "" novalidate>{{record.stor_fmts}}</textarea>
+<label for = "stor_units" class = "lbl">stor_units</label> 
+<textarea class="form-control" name = "stor_units" id = "stor_units_valid" value = "" novalidate>{{record.stor_units}}</textarea>
+<label for = "obj_name" class = "lbl">obj_name</label> 
+<textarea class="form-control" name = "obj_name" id = "obj_name_valid" value = "" novalidate>{{record.obj_name}}</textarea>
+<label for = "type_of_work" class = "lbl">type_of_work</label> 
+<textarea class="form-control" name = "type_of_work" id = "type_of_work_valid" value = "" novalidate>{{record.type_of_work}}</textarea>
+<label for = "obj_synopsis" class = "lbl">obj_synopsis</label> 
+<textarea class="form-control" name = "obj_synopsis" id = "obj_synopsis_valid" value = "" novalidate>{{record.obj_synopsis}}</textarea>
+<label for = "obj_type" class = "lbl">obj_type</label> 
+<textarea class="form-control" name = "obj_type" id = "obj_type_valid" value = "" novalidate>{{record.obj_type}}</textarea>
+<label for = "obj_sub_type" class = "lbl">obj_sub_type</label> 
+<textarea class="form-control" name = "obj_sub_type" id = "obj_sub_type_valid" value = "" novalidate>{{record.obj_sub_type}}</textarea>
+<label for = "obj_assoc_inv_nums" class = "lbl">obj_assoc_inv_nums</label> 
+<textarea class="form-control" name = "obj_assoc_inv_nums" id = "obj_assoc_inv_nums_valid" value = "" novalidate>{{record.obj_assoc_inv_nums}}</textarea>
+<label for = "obj_date" class = "lbl">obj_date</label> 
+<textarea class="form-control" name = "obj_date" id = "obj_date_valid" value = "" novalidate>{{record.obj_date}}</textarea>
+<label for = "obj_year" class = "lbl">obj_year</label> 
+<textarea class="form-control" name = "obj_year" id = "obj_year_valid" value = "" novalidate>{{record.obj_year}}</textarea>
+<label for = "obj_authors" class = "lbl">obj_authors</label> 
+<textarea class="form-control" name = "obj_authors" id = "obj_authors_valid" value = "" novalidate>{{record.obj_authors}}</textarea>
+<label for = "obj_orgs" class = "lbl">obj_orgs</label> 
+<textarea class="form-control" name = "obj_orgs" id = "obj_orgs_valid" value = "" novalidate>{{record.obj_orgs}}</textarea>
+<label for = "obj_restrict" class = "lbl">obj_restrict</label> 
+<textarea class="form-control" name = "obj_restrict" id = "obj_restrict_valid" value = "" novalidate>{{record.obj_restrict}}</textarea>
+<label for = "obj_rights" class = "lbl">obj_rights</label> 
+<textarea class="form-control" name = "obj_rights" id = "obj_rights_valid" value = "" novalidate>{{record.obj_rights}}</textarea>
+<label for = "obj_rdoc_name" class = "lbl">obj_rdoc_name</label> 
+<textarea class="form-control" name = "obj_rdoc_name" id = "obj_rdoc_name_valid" value = "" novalidate>{{record.obj_rdoc_name}}</textarea>
+<label for = "obj_rdoc_num" class = "lbl">obj_rdoc_num</label> 
+<textarea class="form-control" name = "obj_rdoc_num" id = "obj_rdoc_num_valid" value = "" novalidate>{{record.obj_rdoc_num}}</textarea>
+<label for = "obj_terms" class = "lbl">obj_terms</label> 
+<textarea class="form-control" name = "obj_terms" id = "obj_terms_valid" value = "" novalidate>{{record.obj_terms}}</textarea>
+<label for = "obj_sources" class = "lbl">obj_sources</label> 
+<textarea class="form-control" name = "obj_sources" id = "obj_sources_valid" value = "" novalidate>{{record.obj_sources}}</textarea>
+<label for = "obj_main_min" class = "lbl">obj_supl_info</label> 
+<textarea class="form-control" name = "obj_supl_info" id = "obj_supl_info_valid" value = "" novalidate>{{record.obj_supl_info}}</textarea>
+<label for = "obj_main_min" class = "lbl">obj_main_min</label> 
+<textarea class="form-control" name = "obj_main_min" id = "obj_main_min_valid" value = "" novalidate>{{record.obj_main_min}}</textarea>
+<label for = "obj_supl_min" class = "lbl">obj_supl_min</label> 
+<textarea class="form-control" name = "obj_supl_min" id = "obj_supl_min_valid" value = "" novalidate>{{record.obj_supl_min}}</textarea>
+<label for = "obj_group_min" class = "lbl">obj_group_min </label> 
+<textarea class="form-control" name = "obj_group_min" id = "obj_group_min_valid" value = "" novalidate>{{record.obj_group_min}}</textarea>
+<label for = "obj_assoc_geol" class = "lbl">obj_assoc_geol</label> 
+<textarea class="form-control" name = "obj_assoc_geol" id = "obj_assoc_geol_valid" value = "" novalidate>{{record.obj_assoc_geol}}</textarea>
+<label for = "spat_atd_ate" class = "lbl">spat_atd_ate</label> 
+<textarea class="form-control" name = "spat_atd_ate" id = "spat_atd_ate_valid" value = "" novalidate>{{record.spat_atd_ate}}</textarea>
+<label for = "spat_loc" class = "lbl">spat_loc</label> 
+<textarea class="form-control" name = "spat_loc" id = "spat_loc_valid" value = "" novalidate>{{record.spat_loc}}</textarea>
+<label for = "spat_num_grid" class = "lbl">spat_num_grid</label> 
+<textarea class="form-control" name = "spat_num_grid" id = "spat_num_grid_valid" value = "" novalidate>{{record.spat_num_grid}}</textarea>
+<label for = "spat_coords_source" class = "lbl">spat_coords_source</label> 
+<textarea class="form-control" name = "spat_coords_source" id = "spat_coords_source_valid" value = "" novalidate>{{record.spat_coords_source}}</textarea>
+<label for = "spat_toponim" class = "lbl">spat_toponim</label> 
+<textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid" value = "" novalidate>{{record.spat_toponim}}</textarea>
+<label for = "inf_type" class = "lbl">inf_type</label> 
+<textarea class="form-control" name = "inf_type" id = "inf_type_valid" value = "" novalidate>{{record.inf_type}}</textarea>
+<label for = "inf_media" class = "lbl">inf_media</label> 
+<textarea class="form-control" name = "inf_media" id = "inf_media_valid" value = "" novalidate>{{record.inf_media}}</textarea>
+<label for = "path_others" class = "lbl">path_others</label> 
+<textarea class="form-control" name = "path_others" id = "path_others_valid" value = "" novalidate>{{record.path_others}}</textarea>
+<label for = "obj_main_group" class = "lbl">obj_main_group</label> 
+<textarea class="form-control" name = "obj_main_group" id = "obj_main_group_valid" value = "" novalidate>{{record.obj_main_group}}</textarea>
+<label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
+<textarea class="form-control" name = "obj_main_group" id = "obj_main_group_valid" value = "" novalidate>{{record.obj_main_group}}</textarea>
+<label for = "path_local" class = "lbl">path_local</label> 
+<textarea class="form-control" name = "path_local" id = "path_local_valid" value = "" novalidate>{{record.path_local}}</textarea>
+<label for = "path_cloud" class = "lbl">path_cloud</label> 
+<textarea class="form-control" name = "path_cloud" id = "path_cloud_valid" value = "" novalidate>{{record.path_cloud}}</textarea>
+<label for = "status" class = "lbl">status</label> 
+<textarea class="form-control" name = "status" id = "status_valid" value = "" novalidate>{{record.status}}</textarea>
+<label for = "timecode" class = "lbl">timecode</label> 
+<textarea class="form-control" name = "timecode" id = "timecode_valid" value = "" novalidate>{{record.timecode}}</textarea>

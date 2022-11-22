@@ -1,24 +1,37 @@
-from collections import Counter
-
 class Solution:
-    def findDuplicate(self, nums):
-        # Find the intersection point of the two runners.
-        tortoise = hare = nums[0]
-        while True:
-            tortoise = nums[tortoise]
-            hare = nums[nums[hare]]
-            if tortoise == hare:
-                break
-        
-        # Find the "entrance" to the cycle.
-        tortoise = nums[0]
-        while tortoise != hare:
-            tortoise = nums[tortoise]
-            hare = nums[hare]
-            print(tortoise, hare)
+    def removeComments(self, source):
+        stack = []
+        answer = []
+        for i, val in enumerate(source):
+            
+            if "/*" in val and "*/" not in val:
+                buff = val.split("/*")[0]
+                if buff:
+                    answer.append(buff)
+                stack.append(i)
+                continue
+            elif "/*" not in val and "*/" in val:
+                buff = answer[len(answer) - 1] + val.split("*/")[1]
+                if buff:
+                    answer[len(answer) - 1] = buff
+                stack.pop(buff)
+                continue
+            elif "/*"  in val and "*/" in val:
+                print(val)
+                buff = val.split("/*")[0] + val.split("/*")[1].split("*/")[1]
+                if buff:
+                    answer.append()
+                continue
+            elif "//" in val:
+                answer.append(val.split("//")[0])
+                continue
+            if stack:
+                continue
+            else:
+                answer.append(val)
+        return answer
+source = ["struct Node{", "    /*/ declare members;/**/", "    int size;", "    /**/int val;", "};"]
+Solution.removeComments(None,source)
 
-        
-        return hare
-        
-nums = [1,3,4,2,1]
-print(Solution.findDuplicate(None,nums))
+
+

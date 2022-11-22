@@ -5,11 +5,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {%block script%}
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
 <link rel="stylesheet" href="{% static 'css/validation.css' %}">
 <script src="{% static 'js/main.js' %}"></script>  
@@ -17,8 +13,18 @@
 <script src="{% static 'js/jquery.js' %}"></script>  
 {%endblock%}
 
+{%block title%}
+    {{choise}}
+{%endblock%}
+
 {% block body %}
     <div class = "boss_div">
+      <div class = "link_div">
+        <button type="button" class="btn btn-link my" onclick="window.location.href = '/';">01FOUND</button>
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/apr/'">APR</button>
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/grr-stage/'">GRR-STAGE</button>
+        <button type="button" class="btn btn-link" onclick="window.location.href = '/grr-accom/'">GRR-ACCOM</button>
+      </div>
     <div class = "head">
       {% if user.is_active %}
       {% if common_user %}   

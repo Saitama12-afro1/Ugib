@@ -48,6 +48,7 @@ function createPost(event){
     console.log(d)
     $.post('/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
+        console.log(div)
         $('.table-container').html(div);
     });
     let div = document.getElementsByClassName("boss_div")[0]
@@ -167,33 +168,33 @@ window.addEventListener('load', (event) => {
     let user = document.getElementById("info_user");
     let create_button = document.getElementById("create_button")
     create_button.addEventListener("click", function (event){
-        if (count == 0){
+        console.log(124151)
         let sl = document.getElementById("select_sub")
             let this_choise = sl.value;
             if (this_choise == "01TSNIGRI")
-            $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+            $.get( "/get_html_uds/", data = {'choise':this_choise}, function( data ) {
                 $( "#valid_div" ).html( data );
                 TSNIGRI_validation(this_choise)
               });
               else if (this_choise == "02RFGF"){
-            $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+            $.get( "/get_html_uds/", data = {'choise':this_choise}, function( data ) {
                 $( "#valid_div" ).html( data );
                 TSNIGRI_validation(this_choise)
               });
               }
               else if (this_choise == "03TGF"){
-                $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+                $.get( "/get_html_uds/", data = {'choise':this_choise}, function( data ) {
                     $( "#valid_div" ).html( data );
                     TSNIGRI_validation(this_choise)
                   });
               }else if (this_choise == "04OTHER_ORG"){
-                $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+                $.get( "/get_html_uds/", data = {'choise':this_choise}, function( data ) {
                     $( "#valid_div" ).html( data );
                     TSNIGRI_validation(this_choise)
                   });
               }
         
-    }count ++;
+    count ++;
     })
     if (user.value == "False"){
         let all_btn = document.querySelectorAll("button.btn.btn-primary.test")
@@ -246,7 +247,7 @@ function my_blur(event){
 }
 
 function testik(event, record) {
-    $.get( "get_html/", data = {'oid':record}, function( data ) {
+    $.get( "/get_html_uds/", data = {'oid':record,}, function( data ) {
         $( ".upd_div" ).html( data );
       });
 }

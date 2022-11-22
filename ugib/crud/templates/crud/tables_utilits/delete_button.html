@@ -1,7 +1,7 @@
 {% load static %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{% static 'js/htmx.min.js' %}" defer></script>
-<script src="{% static 'js/main.js' %}"></script>
+
 
     {% csrf_token %}
     <button  onClick = "deleteUds(event)"  value = "{{record.oid}}" form = "{{record.oid}}" id = "delete_button"> Удалить </button>

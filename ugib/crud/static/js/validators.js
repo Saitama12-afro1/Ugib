@@ -1,23 +1,23 @@
 function dinamic_form(event) {
     let this_choise = event.target.value;
     if (this_choise == "01TSNIGRI")
-    $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+    $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
         $( "#valid_div" ).html( data );
         TSNIGRI_validation(this_choise)
       });
       else if (this_choise == "02RFGF"){
-    $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+    $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
         $( "#valid_div" ).html( data );
         TSNIGRI_validation(this_choise)
       });
       }
       else if (this_choise == "03TGF"){
-        $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+        $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
             $( "#valid_div" ).html( data );
             TSNIGRI_validation(this_choise)
           });
       }else if (this_choise == "04OTHER_ORG"){
-        $.get( "get_html/", data = {'choise':this_choise}, function( data ) {
+        $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
             $( "#valid_div" ).html( data );
             TSNIGRI_validation(this_choise)
           });
@@ -59,7 +59,7 @@ function current_height(area){
         fixTextareaSize(spat_num_grid);
         var pattern =/[I-V]-[0-9][0-9]-[IVX]+/
         const error = document.querySelector("#error_spat_num_grid");
-        if (pattern.test(spat_toponim.value)){
+        if (pattern.test(spat_num_grid.value)){
             error.textContent = "";
             error.className = "error";
         }else{

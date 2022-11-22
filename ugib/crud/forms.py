@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
-from crud.models import UdsMeta
+from crud.models import UdsMeta, UdsMetaApr
 
 
 
@@ -22,6 +22,11 @@ class UdsMetaForm(forms.ModelForm):
     # stor_folder = forms.CharField(show_hidden_initial=True,initial ="wwwww")
     class Meta:
         model = UdsMeta
+        exclude = ('uniq_id', )
+class UdsMetaAprForm(forms.ModelForm):
+    
+    class Meta:
+        model = UdsMetaApr
         exclude = ('uniq_id', )
   
 class WordDocFilling(forms.Form):

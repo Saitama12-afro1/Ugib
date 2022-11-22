@@ -1,0 +1,441 @@
+.main_div{
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+}
+#overflow {
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+    }
+#blackout {
+        background: rgba(102, 102, 102, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+
+.window {
+        width: 300px;
+        height: 100px;
+        text-align: center;
+        padding: 15px;
+        border: 3px solid #0000cc;
+        border-radius: 10px;
+        color: #0000cc;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        background: #fff;
+    }
+
+#blackout:target {display: block;}
+    .close {
+      display: inline-block;
+      border: 1px solid #0000cc;
+      color: #0000cc;
+      padding: 0 12px;
+      margin: 10px;
+      text-decoration: none;
+      background: #f2f2f2;
+      font-size: 14pt;
+      cursor:pointer;
+    }
+    .close:hover {background: #e6e6ff;}
+
+    .window_order {
+        width: 500px;
+        height: 200px;
+        text-align: center;
+        padding: 15px;
+        border: 3px solid #0000cc;
+        border-radius: 10px;
+        color: #0000cc;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        background: #fff;
+    }
+
+    /* Table style */
+.table-container th.asc:after {
+    content: '\0000a0\0025b2';
+    float: right;
+}
+
+.table-container th.desc:after {
+    content: '\0000a0\0025bc';
+    float: right;
+}
+
+.table-container table td.obj_date{
+    min-width: 300px;
+}
+.table-container table td.obj_type {
+    min-width: 300px;
+}
+.table-container table td.obj_year {
+    min-width: 300px;
+}
+.table-container table td.obj_restrict{
+    min-width: 300px;
+}
+.table-container table td.obj_rights{
+    min-width: 300px;
+}
+.table-container table td.obj_rdoc_name{
+    min-width: 300px;
+}
+.table-container table td.obj_rdoc_num{
+    min-width: 300px;
+}
+
+.table-container table td.oid {
+    min-width: 100px;
+}
+
+.table-container table td.bascet {
+    min-width: 200px;
+}
+
+.table-container table td.stor_reason {
+    min-width: 400px;
+}
+.table-container table td.stor_person{
+    min-width: 200px;
+}
+.table-container table td.stor_dept {
+    min-width: 200px;
+}
+.table-container table td.stor_units {
+    min-width: 200px;
+}
+.table-container table td.obj_name {
+    min-width: 500px;
+}
+.table-container table td.type_of_work {
+    min-width: 300px;
+}
+.table-container table td.stor_phys {
+    min-width: 300px;
+}
+.table-container table td.obj_sub_type{
+    min-width: 200px;
+}
+.table-container table td.obj_synopsis {
+    min-width: 700px;
+}
+.table-container table td.obj_assoc_inv_nums{
+    min-width: 400px;
+}
+.table-container table td.obj_assoc_geol{
+    min-width: 800px;
+}
+.table-container table td.obj_authors{
+    min-width: 300px;
+}
+.table-container table td.obj_terms{
+    min-width: 400px;
+}
+.table-container table td.obj_sources{
+    min-width: 300px;
+}
+.table-container table td.obj_supl_min{
+    min-width: 300px;
+}
+.table-container table td.spat_atd_ate{
+    min-width: 300px;
+}
+.table-container table td.spat_coords_source{
+    min-width: 300px;
+}
+.table-container table td.obj_main_min{
+    min-width: 300px;
+}
+.table-container table td.obj_supl_min{
+    min-width: 300px;
+}
+.table-container table td.obj_group_min{
+    min-width: 300px;
+}
+.table-container table td.obj_supl_info{
+    min-width: 300px;
+}
+.table-container table td.spat_num_grid{
+    min-width: 400px;
+}
+.table-container table td.spat_toponim{
+    min-width: 300px;
+}
+.table-container table td.path_others{
+    min-width: 150px;
+}
+.table-container table td.obj_main_group{
+    min-width: 150px;
+}
+.table-container table td.inf_media{
+    min-width: 300px;
+}
+.table-container table td.obj_sub_group{
+    min-width: 150px;
+}
+.table-container table td.path_local{
+    min-width: 500px;
+}
+.table-container table td.path_cloud{
+    min-width: 1100px;
+}
+.table-container table td.path_local_ref{
+    min-width: 500px;
+}
+.table-container table td.path_cloud_ref{
+    min-width: 1100px;
+}
+
+
+
+
+/* Progress bar */
+.progress {
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background-clip: padding-box;
+    overflow: hidden;
+    position: relative;
+    background-color: #0000cc;
+}
+
+.progress {
+    opacity: 0;
+}
+
+.htmx-request .progress {
+    opacity: 1;
+}
+.htmx-request.progress {
+    opacity: 1;
+}
+
+.progress .indeterminate {
+    background-color: blue;
+}
+
+.progress .indeterminate:before {
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+.progress .indeterminate:after{
+    content: '';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    -webkit-animation-delay: 1.15s;
+    animation-delay: 1.15s;
+}
+
+@keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+
+@keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+
+
+.even td
+{
+    min-width: 100px;
+}
+.odd td
+{
+    min-width: 100px;
+}
+/* td{
+    min-width: 200px;
+} */
+
+.head{
+    width: 269px;
+    margin:10px;
+    height: 75px;
+    position:relative;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 300px ;
+}
+.form-inline .form-control {
+    position:absolute;
+    bottom:0;
+    display: inline-block;
+    width: 200px;
+    
+}
+.modal_form{
+    margin-left: 100px;
+}
+.boss_div{
+    width: 14000px;
+    position: sticky;
+    top: 0;
+    background-color:#373737;
+    z-index: 3;
+    height: 190px;
+    /* margin-left: 20px; */
+}
+.create_div{
+    position: relative;
+    margin-left: 230px;
+    top: -50px;
+}
+
+#my_but{
+    width: fit-content;
+    margin: auto;
+}
+
+.lbl{
+    display: block;
+    width: fit-content;
+    margin: auto;
+}
+
+.use-2 button {
+    background: transparent;
+    border-radius: 10%;
+    position:relative;
+    right:0px;
+    border: none;
+    outline: none;
+    float: right;
+  }
+  
+  
+  button:hover {
+    cursor: pointer;
+  
+  }
+/* .upd_button{
+    width: 50px;
+    height: 50px;
+} */
+
+textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 3em;
+}
+.form-control.inp {
+    width: 350px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 3em;
+}
+
+.modal-content.modal-content-custom{
+    min-width: 210%;
+    color:black;
+}
+.btn.btn-outline-primary.unvisible{
+    appearance: none;
+border: none;
+pointer-events: none;
+}
+
+body{
+    background:#373737;
+    font-family:'Times New Roman', Times, serif;
+    color:#e6e6ff;
+}
+#delete_button{
+   color : #e6e6ff;
+}
+#update_button{
+    color : #e6e6ff;
+ }
+ #bascet_button{
+    color : #e6e6ff;
+ }
+ 
+.modal-body{
+    color: black;
+}
+#csv_button{
+    color : #e6e6ff;
+}
+.modal-content.modal-custom-upd{
+    width: 115%;
+}
+.row.my_row{
+    margin-right: -100px; 
+    margin-left: -100px;
+    justify-content : center;
+}
+#ModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
+}
+
+#my_table{
+    position: sticky;
+    top: 10%;
+    background-color:#373737;
+    z-index: 2;
+    height: 160px;
+}
+
+.link_div{
+    position: absolute ;
+    bottom: 0;
+    top: 156px;
+}
+.btn.btn-link.my{
+background-color: #efefef;
+}
