@@ -16,7 +16,7 @@ class UdsMetaGrrStageTable(tables.Table):
  
     class Meta:
         model = UdsMetaGrrStage
-        template_name = "grr/index/uds_meta_grr_stage.html"
+        template_name = "grr/index/grr_stage/uds_meta_grr_stage.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
 
 class UdsMetaGrrAccomTable(tables.Table):
@@ -31,5 +31,5 @@ class UdsMetaGrrAccomTable(tables.Table):
  
     class Meta:
         model = UdsMetaGrrAccom
-        template_name = "grr/index/uds_meta_grr_accom.html"
+        template_name = "grr/index/grr_accom/uds_meta_grr_accom.html"
         sequence = ('Delete','Exel', 'Update','Bascet')

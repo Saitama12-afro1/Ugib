@@ -15,7 +15,7 @@ class UdsMetaTable(tables.Table):
  
     class Meta:
         model = UdsMeta
-        template_name = "crud/index/uds_table_htmx.html"
+        template_name = "crud/index/01found/uds_table_htmx.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
 
 
@@ -31,7 +31,7 @@ class UdsMetaAprTable(tables.Table):
  
     class Meta:
         model = UdsMetaApr
-        template_name = "crud/index/uds_meta_apr_table.html"
+        template_name = "crud/index/apr/uds_meta_apr_table.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
        
 
