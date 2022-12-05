@@ -465,6 +465,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
         context["choise"] = "01FOUND"
+        context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "test@mail.ru")
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
         old_uniq = buff.uniq_id
         old_date = buff.stor_date

@@ -12,7 +12,7 @@ urlpatterns = [
     path('profile/bascet/', views.bascet, name='bascet'),
     path('profile/history/', views.history_views, name='history'),
     path('test/', views.test, name='test'),
-    path('get_html_uds/', views.get_html_uds, name='test'),
-    path('get_html_apr/', views.get_html_apr, name='test'),
+    path('get_html_uds/', views.get_html_uds, name='get_html_uds'),
+    path('get_html_apr/', views.get_html_apr, name='get_html_apr'),
     path('password_change', views.password_change, name = "password_change"),
 ]

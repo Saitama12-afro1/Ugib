@@ -31,7 +31,7 @@
         <a href = "{% url "crud:profile"%}">Профиль</a>
       {% endif %} 
         <a href = "{% url "crud:logout"%}"> Выйти</a>
-        {% if user.username == "vahrushev@tsnigri.ru" or user.username == "uvarova@tsnigri.ru"  or user.username == "test@mail.ru" %}
+        {% if super_users %}
         <a href = "{% url "crud:history"%}"> История</a>
         {% endif %}
 
@@ -125,9 +125,9 @@
     Создать
 </button>
 
-</div>
 
 {% endif %}
+</div>
 {% endif %}
 <div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-xl modal-custom " id = "custom_modal" role="document">

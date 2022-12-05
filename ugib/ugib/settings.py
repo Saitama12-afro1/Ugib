@@ -98,7 +98,11 @@ DATABASES = {
         "PASSWORD": "postgres",
         "HOST": "kastor.tsnigri.ru",
         "PORT": "5432",
-    }
+        'TEST':{
+            'NAME' :'test_db_for_tests'
+        },
+    },
+    
 }
 
 # Password validation

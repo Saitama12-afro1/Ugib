@@ -71,8 +71,6 @@ def get_html_grr_stage(request):
     iniz = iniz[0][0] + "." + iniz[1][0] + "."#Создание инициалов из Имени и Отчества
     context["iniz"] = iniz
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
-    date = context["current_date"].replace(".", "_")
-    buff = UdsMetaGrrStage.objects.order_by("-oid").first()  
     # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
     if 'oid' in request.GET:
         context["record"] = UdsMetaGrrStage.objects.get(oid = request.GET["oid"])
@@ -102,10 +100,10 @@ class UdsMetaGrrAccomHTMxTableView(UdsMetaHTMxTableView,SingleTableMixin, Filter
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # stor_phys_dict = {} 
-        # buff = UdsMetaGrrStage.objects.order_by("-oid")
+        stor_phys_dict = {} 
+        # buff = UdsMeta.objects.order_by("-oid")
         # for i in buff:
-        #     stor_phys_dict.update({i.obj_assoc_inv_nums: stor_phys_dict.get(i.obj_assoc_inv_nums, 0) + 1})
+        #     stor_phys_dict.update({i.stor_folder: stor_phys_dict.get(i.stor_folder, 0) + 1})
         # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
         # pprint(context["stor_phys_p"])
         context["choise"] = "grr_accom"

@@ -8,7 +8,6 @@ from crud.models import UdsMeta, UdsMetaApr
 
 
 def validate_pas(value):
-    
     if len(value) < 8:
         return ValidationError("Пароль долже содержать больше 7 символов", params={'value':value})
     try:
@@ -44,8 +43,8 @@ class WordDocFilling(forms.Form):
     task =  forms.ChoiceField(choices = CHOICES)
     
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Почта',max_length=100)
-    password = forms.CharField(label='Пароль',widget=forms.PasswordInput)
+    username = forms.CharField(label='Почта',max_length=100,)
+    password = forms.CharField(label='Пароль',widget=forms.PasswordInput(attrs={'id':'pas_id'}))
 
 
 class RegisterForm(forms.Form):
@@ -55,6 +54,8 @@ class RegisterForm(forms.Form):
     last_name = forms.CharField(label='Фамилия', max_length=100)
     departament = forms.CharField(label='Отдел',max_length = 200)
     position = forms.CharField(label='Должность',max_length = 200)
+    
+
     
     def is_valid(self, password) -> bool:
         super().is_valid()

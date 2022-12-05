@@ -1,9 +1,17 @@
-from copy import deepcopy, copy
-
-some_list = [[1],2,3,4]
-
-some_copy = copy(some_list)
-some_deepcopy = deepcopy(some_list)
-
-some_list[0][0] = 10
-print(some_list, some_copy, some_deepcopy)
+class Solution:
+    def levelOrder(self, root, answer = []):
+        while True:
+            answer.append(root.val)
+            answer.append(root.left)
+            answer.append(root.right)
+            if not root.left and not root.right:
+                break
+            if root.left.val:            
+                self.levelOrder(root = root.left)
+            if root.right.val:
+                self.levelOrder(root = root.right)
+            print(answer)
+            
+        return answer
+    
+a = None
