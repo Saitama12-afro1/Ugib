@@ -72,9 +72,13 @@ def get_html_grr_stage(request):
     context["iniz"] = iniz
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
     # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
+    print(request.GET)
     if 'oid' in request.GET:
         context["record"] = UdsMetaGrrStage.objects.get(oid = request.GET["oid"])
-        return render(request, 'crud/form/update.html', context=context)
+        return render(request, 'crud/form/update_apr.html', context=context)
+    if 'oid_accom' in request.GET:
+        context["record"] = UdsMetaGrrAccom.objects.get(oid = request.GET["oid_accom"])
+        return render(request, 'crud/form/update_apr.html', context=context)
     if "GRR-STAGE" == request.GET["choise"]:
         context["choise"] = "grr-stage"
         context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )

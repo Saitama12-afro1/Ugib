@@ -143,7 +143,7 @@
     <label for = "obj_main_min" class = "lbl">Иные дополнительные сведения</label> 
     <textarea class="form-control" name = "obj_supl_info" value = "" > </textarea>
     <div class = "dropright">
-        <label for = "obj_main_min" class = "lbl">'Полезные ископаемые основные</label> 
+        <label for = "obj_main_min" class = "lbl">Полезные ископаемые основные</label> 
         <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id = "obj_main_min_valid" name = "obj_main_min" value = ""> </textarea>
         <span class="error" aria-live="polite" id = "error_obj_main_min"></span> 
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -210,8 +210,14 @@
     <textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid"> </textarea>
     <label for = "inf_type" class = "lbl">Тип информации</label> 
     <textarea class="form-control" name = "inf_type" >Интерпретированная </textarea>
-    <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
-    <textarea class="form-control" name = "inf_media" value = "Электронный"> </textarea>
+    <div class = "dropright">
+        <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "inf_media" > </textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Электронный</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Бумажный</button>
+        </div>
+    </div>
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 

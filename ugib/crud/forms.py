@@ -48,9 +48,14 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['password'].help_text = "Пароль не должен содержать только цифры и должен содержать больше 7 символов"
+    
     username = forms.CharField(label='Почта',max_length=100)
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput, validators=[validate_pas])
-    first_name = forms.CharField(label='Имя Отчество', max_length=100)
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput, validators=[validate_pas], )
+    first_name = forms.CharField(label='Имя', max_length=100)
+    sur_name = forms.CharField(label='Отчество', max_length=100)
     last_name = forms.CharField(label='Фамилия', max_length=100)
     departament = forms.CharField(label='Отдел',max_length = 200)
     position = forms.CharField(label='Должность',max_length = 200)

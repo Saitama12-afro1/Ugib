@@ -188,7 +188,7 @@ function my_blur(event){
 
 
 function testik(event, record) {
-    $.get( "/get_html_grr_stage/", data = {'oid':record,}, function( data ) {
+    $.get( "/get_html_grr_stage/", data = {'oid_accom':record,}, function( data ) {
         $( ".upd_div" ).html( data );
       });
 }

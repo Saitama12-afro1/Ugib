@@ -89,6 +89,10 @@ class HistoryFilter(django_filters.FilterSet):
             date = f"{buff[2]}-{buff[1]}-{buff[0]}"
         else:
             date = ""
+        if value in ('01found', 'apr', 'grr-stage', 'grr-accom'):
+            return History.objects.filter(Q(fond__icontains=value))
+        if value in ('create', 'bascet', 'delete', 'update'):
+            return History.objects.filter(Q(typeAction__icontains=value))
         return History.objects.filter(
             Q(typeAction__icontains=value)| Q(my_user__last_name__icontains=value) | Q(my_user__first_name__icontains=value) 
             | Q(my_user__userinfo__departament__icontains=value) 

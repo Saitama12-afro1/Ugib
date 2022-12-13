@@ -1,5 +1,5 @@
 
-from django_tables2 import tables, TemplateColumn
+from django_tables2 import tables, TemplateColumn, Column
 
 from .models import UdsMeta, History, UdsMetaApr
 
@@ -18,11 +18,14 @@ class UdsMetaTable(tables.Table):
 
 class UdsMetaAprTable(UdsMetaTable,tables.Table):
 
+    # path_local_protocol = Column(accessor='path_local', verbose_name="path_local_protocol")
+    # path_cloud_protocol = Column(accessor='path_cloud', verbose_name="path_cloud_protocol")
+
     class Meta:
         model = UdsMetaApr
         template_name = "crud/index/apr/uds_meta_apr_table.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
-       
+        exclude = ('path_cloud_ref', 'path_local_ref')
 
 class HistoryTable(tables.Table):
     class Meta:

@@ -317,8 +317,12 @@
 .modal_form{
     margin-left: 100px;
 }
+#exampleModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
+}
 .boss_div{
-    width: 14050px;
+    width: 15800px;
     position: sticky;
     top: 0;
     background-color:#373737;

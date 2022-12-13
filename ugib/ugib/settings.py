@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'ugib.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "bd_reestr_test",
+        'NAME': "bd_reestr_v3",
         'USER': "postgres",
         "PASSWORD": "postgres",
         "HOST": "kastor.tsnigri.ru",
@@ -109,7 +109,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-   {'NAME':'crud.password_valid.ValidPas'}
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 

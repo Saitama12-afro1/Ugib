@@ -228,6 +228,9 @@ function my_blur(event){
     let path_cloud = document.getElementById("path_cloud")
     let obj_main_group = document.getElementById("obj_main_group")
     let obj_sub_group = document.getElementById("obj_sub_group")
+    let obj_assoc_inv_nums = document.getElementById("obj_assoc_inv_nums")
+    buff = stor_folder_data.split('-')[0]
+    $(obj_assoc_inv_nums).val(obj_assoc_inv_nums.value + buff)
     $(path_local).val("\\"+"\\pegas\\UDS\\" + obj_main_group.value + "\\" + obj_sub_group.value + "\\" + stor_folder_data)
     $(path_local_ref).val("\\"+"\\pegas\\UDS\\" + obj_main_group.value + "\\" + obj_sub_group.value + "_REF\\" + stor_folder_data)
     let choise = document.getElementById("select_sub").value

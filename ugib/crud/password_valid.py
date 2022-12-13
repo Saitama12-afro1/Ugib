@@ -6,7 +6,7 @@ class ValidPas:
         print(args)
         value = args[1]
         if len(value) < 8:
-            raise ValidationError("Пароль должен содержать больше 7 символов", params={'value':value})
+            raise ValidationError("Пароль должен содержать меньше 8 символов", params={'value':value})
         try:
             val = int(value)
         except ValueError:

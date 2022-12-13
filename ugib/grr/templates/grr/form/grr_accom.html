@@ -1,4 +1,5 @@
 {% load crud_extras %}
+
 <div>
     <label for = "uniq_id" class = "lbl" >Уникальный номер</label> 
     <textarea class="form-control" name = "uniq_id" id = "uniq_id_valid" value = "" novalidate>{{uniq_id}}</textarea>
@@ -83,7 +84,7 @@
     </div>
         <label for = "obj_sub_type" class = "lbl">Материалы ГРР</label> 
         <textarea class="form-control" name = "obj_sub_type" value = "" >Материалы ГРР</textarea>
-    <label for = "obj_assoc_inv_nums" class = "lbl" ></label> 
+    <label for = "obj_assoc_inv_nums" class = "lbl" >Инвентарные номера в каталогах учета </label> 
     <textarea class="form-control" name = "obj_assoc_inv_nums" value = ""  id = "obj_assoc_inv_nums"></textarea>
     <label for = "obj_date" class = "lbl">Дата составления объекта учета</label> 
     <textarea class="form-control" name = "obj_date" id ="obj_date" value = "" >{{current_date}}</textarea>
@@ -195,8 +196,14 @@
     <textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid"> </textarea>
     <label for = "inf_type" class = "lbl">Тип информации</label> 
     <textarea class="form-control" name = "inf_type" >Интерпретированная </textarea>
-    <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
-    <textarea class="form-control" name = "inf_media" value = "Электронный"> </textarea>
+    <div class = "dropright">
+        <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "inf_media" > </textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Электронный</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Бумажный</button>
+        </div>
+    </div>
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 

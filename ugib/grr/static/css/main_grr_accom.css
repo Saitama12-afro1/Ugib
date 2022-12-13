@@ -318,13 +318,18 @@
     margin-left: 100px;
 }
 .boss_div{
-    width: 14020px;
+    width: 16020px;
     position: sticky;
     top: 0;
     background-color:#373737;
     z-index: 3;
     height: 190px;
     /* margin-left: 20px; */
+}
+
+#exampleModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
 }
 .create_div{
     position: relative;

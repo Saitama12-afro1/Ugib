@@ -181,6 +181,7 @@ class History(models.Model):
     )
     udsMeta = models.TextField()
     order = models.BooleanField()
+    fond = models.CharField(max_length=50, default="01found")
     
     class Meta:
         db_table = 'history'

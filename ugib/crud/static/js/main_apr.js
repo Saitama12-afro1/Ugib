@@ -194,7 +194,16 @@ function my_blur(event){
     $(path_local).val("\\"+"\\pegas\\UDS\\13APR_PR\\01_APR_PR\\" + stor_folder_data)
     $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/13-01-" + "МАТЕРИАЛЫ%20К%20АПРОБАЦИИ%20ПРОГНОЗНЫХ%20РЕСУРСОВ/"+stor_folder_data)
 }
-
+function desc_blur(event) {
+    let data = event.target.value
+    let path_local_protocols = document.getElementById("path_local_protocol")
+    let path_cloud_protocols = document.getElementById("path_cloud_protocol")
+    $(path_local_protocols).val( "\\\pegas\\UDS\\13APR_PR\\01_PROTOCOLS\\"+ data)
+    reg = /\s/
+    data = data.replace(reg, '%20')
+    data = data.replace(reg, '%20')
+    $(path_cloud_protocols).val( "http://cloud.tsnigri.ru/apps/files/?dir=/13-01-ПРОТОКОЛЫ%20АПРОБАЦИИ%20ПР/"+ data)
+}
 
 function testik(event, record) {
     $.get( "/get_html_apr/", data = {'oid':record,}, function( data ) {

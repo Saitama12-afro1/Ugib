@@ -224,8 +224,14 @@
     <textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid"> </textarea>
     <label for = "inf_type" class = "lbl">Тип информации</label> 
     <textarea class="form-control" name = "inf_type" >Интерпретированная </textarea>
-    <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
-    <textarea class="form-control" name = "inf_media" value = "Электронный"> </textarea>
+    <div class = "dropright">
+        <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "inf_media" > </textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Электронный</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Бумажный</button>
+        </div>
+    </div>
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 

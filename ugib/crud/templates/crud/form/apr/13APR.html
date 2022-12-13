@@ -36,7 +36,7 @@
             </div>
         </div>
     <label for = "stor_desc" class = "lbl">Дополнительные сведения</label> 
-    <textarea class="form-control"  name = "stor_desc"  id = "stor_desc" >{{stor_desc}}</textarea>
+    <textarea class="form-control"  name = "stor_desc"  id = "stor_desc"  onblur = "desc_blur(event)">{{stor_desc}}</textarea>
     <span class="error" aria-live="polite" id = "error_stor_desc"></span>
     <label for = "stor_fmts" class = "lbl">Тип файлов</label> 
     <textarea class="form-control" name = "stor_fmts" value = "" ></textarea>
@@ -80,7 +80,7 @@
     </div>
         <label for = "obj_sub_type" class = "lbl">Условное название каталога учета</label> 
         <textarea class="form-control" name = "obj_sub_type" value = "" >Материалы к апробации прогнозных ресурсов</textarea>
-    <label for = "obj_assoc_inv_nums" class = "lbl" ></label> 
+    <label for = "obj_assoc_inv_nums" class = "lbl" >Инвентарные номера в каталогах учета</label> 
     <textarea class="form-control" name = "obj_assoc_inv_nums" value = ""  id = "obj_assoc_inv_nums"> ЦНИГРИ:</textarea>
     <label for = "obj_date" class = "lbl">Дата составления объекта учета</label> 
     <textarea class="form-control" name = "obj_date" id ="obj_date" value = "" >{{current_date}}</textarea>
@@ -193,7 +193,7 @@
     <label for = "inf_type" class = "lbl">Тип информации</label> 
     <textarea class="form-control" name = "inf_type" >Интерпретированная </textarea>
     <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
-    <textarea class="form-control" name = "inf_media" value = "Электронный"> </textarea>
+    <textarea class="form-control" name = "inf_media" >Электронный</textarea>
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 
@@ -204,6 +204,10 @@
     <textarea  class="form-control" name = "path_local" value = "" id = "path_local"> </textarea>
     <label for = "path_cloud" class = "lbl">path_cloud</label> 
     <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"> </textarea>
+    <label for = "path_local_protocol" class = "lbl">path_local_protocol</label> 
+    <textarea  class="form-control" name = "path_local_protocol" value = "" id = "path_local_protocol">{{path_local_protocol}}</textarea>
+    <label for = "path_cloud_protocol" class = "lbl">path_cloud_protocol</label> 
+    <textarea   class="form-control" name = "path_cloud_protocol" value = "" id = "path_cloud_protocol">{{path_cloud_protocol}}</textarea>
     <label for = "status" class = "lbl">Cтатус</label> 
     <textarea  class="form-control" name = "status" value = ""> </textarea>
     <label for = "timecode" class = "lbl">Дата изменения</label> 

@@ -318,7 +318,7 @@
     margin-left: 100px;
 }
 .boss_div{
-    width: 14000px;
+    width: 14500px;
     position: sticky;
     top: 0;
     background-color:#373737;
@@ -330,6 +330,11 @@
     position: relative;
     margin-left: 230px;
     top: -50px;
+}
+
+#exampleModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
 }
 
 #my_but{

@@ -15,7 +15,7 @@ all_columns = {'oid':'Номер','uniq_id':'Уникальный номер','s
         'spat_num_grid':'Номенклатуры листов НД', 'spat_coords_source':'Координаты контура материалов', 'spat_toponim':'Дополнительные сведения о местоположении',
         'inf_type':'Тип информации', 'inf_media':'Вид носителя информации', 'path_others':'Государственная регистрация', 'obj_main_group':'Формула', 
         'obj_sub_group':'obj_sub_group', 'path_local':'path_local', 'path_cloud':'path_cloud', 'status':'Cтатус', 'timecode':'Дата изменения', 
-        'obj_sub_group_ref':'obj_sub_group_ref', 'path_local_ref':'obj_sub_group_ref', 'path_cloud_ref':'path_cloud_ref', 'delete':'Удалить','Exel':'Exel', 
+        'obj_sub_group_ref':'obj_sub_group_ref', 'path_local_ref':'path_local_ref', 'path_cloud_ref':'path_cloud_ref', 'delete':'Удалить','Exel':'Exel', 
         'update':'Изменить','Bascet':'В корзину'}
 
 @register.filter
@@ -40,3 +40,15 @@ def translate_column_name(column):#переврдит названия
         return all_columns[column]
     except KeyError:
         return column
+
+@register.filter
+def replace_none_on_str(cell):
+    if cell == None:
+        return ''
+    return cell
+
+@register.simple_tag
+def create_href_for_history(uniq_id, fond):
+    if fond == "01found":
+        return f"http://gis311k1:8000/?query={uniq_id}"
+    return f"http://gis311k1:8000/{fond}/?query={uniq_id}"

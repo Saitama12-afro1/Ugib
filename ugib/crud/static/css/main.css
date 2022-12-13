@@ -409,9 +409,7 @@ body{
 #csv_button{
     color : #e6e6ff;
 }
-.modal-content.modal-custom-upd{
-    width: 115%;
-}
+
 .row.my_row{
     margin-right: -100px; 
     margin-left: -100px;
@@ -421,7 +419,10 @@ body{
     padding-right: 40% !important;
     padding-left: 5% !important;
 }
-
+#exampleModalLong.modal.fade.show{
+    padding-right: 40% !important;
+    padding-left: 5% !important;
+}
 #my_table{
     position: sticky;
     top: 10%;

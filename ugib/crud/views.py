@@ -1,5 +1,6 @@
 from datetime import datetime
 from pprint import pprint
+from copy import deepcopy
 import csv
 import re
 import requests
@@ -22,13 +23,13 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import AdminPasswordChangeForm
-from django.db.models import Q
+from django.db.models import Q, F
 from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin, Table
 from django_filters.views import FilterView
 from django.db.models.query import QuerySet
 
-from grr.models import UdsMetaGrrAccom, UdsMetaGrrStage
+from grr.models import UdsMetaGrrAccom, UdsMetaGrrStage, UdsMetaProtocols
 from .models import History, UdsMeta, Bascet, Order, UserInfo,UdsMetaApr
 from .HelperUdsMeta import HelperUdsMet, HelperUdsMetApr
 from .forms import LoginForm, UdsMetaForm, WordDocFilling, RegisterForm, MyChangePassword, UdsMetaAprForm
@@ -202,13 +203,15 @@ def history_views(request):
     iniz = iniz[0][0] + "." + iniz[1][0] + "."
     context["iniz"] = iniz
     # context["table"] = HistoryTable(context["history"])
-    if user.username not in ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru", "test@mail.ru"):
+    print(request.user.is_superuser)
+    if not  user.is_superuser:
         return page_not_found(request,404)
     if user.groups.filter(name = "common_user"):
         template ="crud/history/history_for_common_user.html"
         context["history"] = user.histories.all()
     else:
         template ="crud/history/history.html"
+    
     return render(request, template, context)
 
 def test(request):
@@ -252,6 +255,7 @@ def test(request):
     
     
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представление для базовой страницы
+   
     table_class = UdsMetaTable
     data_models = UdsMeta
     def get_queryset(self):
@@ -291,14 +295,24 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
         register_form = RegisterForm(request.POST)
-        super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru", "gening@tsnigri.ru", "uscharova@tsnigri.ru", "test@mail.ru", "mukhina@tsnigri.ru", "t1@mail.ru") # пользователи с доступ к CRUD-операциям
+        super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "test@mail.ru","chernyshov@tsnigri.ru") # пользователи с доступ к CRUD-операциям
         user = request.user
+        if self.data_models is UdsMeta:
+            choise = '01found'
+        if self.data_models is UdsMetaApr:
+            choise = 'apr'
+        if self.data_models is UdsMetaGrrStage:
+            choise = 'grr-stage'
+        if self.data_models is UdsMetaGrrAccom:
+            choise = 'grr-accom'
+            
+        
         if 'del' in request.POST:
             try:
                 udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
                 @decor 
                 def arr():
-                    return "del"
+                    return "del", choise
                 arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
                 udsMetaObj.delete()
             except ObjectDoesNotExist:
@@ -372,9 +386,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 if register_form.cleaned_data["username"] in super_user_username:
                     try:
                         user = User(username = register_form.cleaned_data["username"], 
-                                    first_name = request.POST["first_name"], last_name = request.POST["last_name"], \
-                                    is_staff = True
+                                    first_name = request.POST["first_name"] +" "+ request.POST["sur_name"], last_name = request.POST["last_name"], \
+                                    is_staff = True, is_superuser = True
                         )
+                        
                         user.set_password(register_form.cleaned_data["password"])
                         user.save()
                         user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
@@ -382,7 +397,8 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     except:
                         pass
                 else:
-                    user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"], last_name =request.POST["last_name"],
+                    user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"] + " " + request.POST["sur_name"],
+                                last_name =request.POST["last_name"],
                                  is_superuser = False)
                     user.set_password(register_form.cleaned_data["password"])
                     user.save()
@@ -400,13 +416,21 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     
                     
         elif 'create' in request.POST:
-            try:          
+            try:                          
                 form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
-                self.data_models.objects.create(**form_data)
-        
+                if choise == 'apr':
+                    buff: dict = deepcopy(form_data)
+                    buff.pop('path_cloud_protocol')
+                    buff.pop('path_local_protocol')
+                    self.data_models.objects.create(**buff)
+                    form_data['path_local'] = form_data.pop('path_local_protocol')
+                    form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
+                    UdsMetaProtocols.objects.create(**form_data)
+                else:
+                    self.data_models.objects.create(**form_data)
                 @decor
                 def arr():
-                    return "create"
+                    return "create", choise
                 arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
                 
             except IntegrityError:
@@ -416,21 +440,38 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
             try:
+                if choise == 'apr':
+                    try:
+                        buff =  self.data_models.objects.get(oid = request.POST["oid"])
+                        UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**form_data)
+                    except:
+                        pass
                 self.data_models.objects.filter(oid = form_data["oid"]).update(**form_data)  
+                
                 @decor
                 def arr():
-                    return "update"
+                    return "update", choise
+
                 arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
             except ObjectDoesNotExist:
                 return redirect(self.redirect_url)
         
         elif 'upd_one' in request.POST:
             try:
+                if choise == 'apr':
+                    try:
+                        buff =  self.data_models.objects.get(oid = request.POST["oid"])
+                        UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**{request.POST['cls']:request.POST['upd_val']})
+                    except ObjectDoesNotExist:
+                        return redirect(self.redirect_url)
+                    
                 self.data_models.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
+                
                 @decor
                 def arr():
-                        return "update"
+                        return "update", choise
                 arr(user, self.data_models.objects.get(oid =  int(request.POST["oid"])))
+                
                 return redirect(self.redirect_url)
             except ObjectDoesNotExist:
                 return redirect(self.redirect_url)
@@ -443,7 +484,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             
             @decor
             def arr():
-                return "bascet"
+                return "bascet", choise
             arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
             
             return redirect(self.redirect_url) 
@@ -453,10 +494,11 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # stor_phys_dict = {} 
         buff = self.data_models.objects.order_by("-oid").first()
-        # for i in buff:
-        #     stor_phys_dict.update({i.obj_orgs: stor_phys_dict.get(i.obj_orgs, 0) + 1})
+        # stor_phys_dict = {} 
+        # buff_2 = self.data_models.objects.all()
+        # for i in buff_2:
+        #     stor_phys_dict.update({i.stor_desc: stor_phys_dict.get(i.stor_desc, 0) + 1})
         # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
         # print(context["stor_phys_p"])
         context["form"] = self.login_form
@@ -465,7 +507,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
         context["choise"] = "01FOUND"
-        context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "test@mail.ru")
+        context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "chernyshov@tsnigri.ru")
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
         old_uniq = buff.uniq_id
         old_date = buff.stor_date
@@ -530,14 +572,22 @@ def get_html_apr(request):
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
     date = context["current_date"].replace(".", "_")
     buff = UdsMetaApr.objects.order_by("-oid").first() 
-    last_count_stor_desc =  int(buff.stor_desc[len(buff.stor_desc) - 2:]) + 1
-    if last_count_stor_desc % 10 == last_count_stor_desc:
-        last_count_stor_desc = "0" + str(last_count_stor_desc)
-    context["stor_desc"] = f"{date} Протокол {last_count_stor_desc}" 
+    try:
+        last_count_stor_desc =  int(buff.stor_desc[len(buff.stor_desc) - 2:]) + 1
+        if last_count_stor_desc % 10 == last_count_stor_desc:
+            last_count_stor_desc = "0" + str(last_count_stor_desc)
+    except ValueError:
+        last_count_stor_desc = ''
+    date = date.split("_")
+    date = date[2] + "_" + date[1] + "_" + date[0]
+    stor_desc = context["stor_desc"] = f"{date} Протокол " 
+    context["path_local_protocol"] = f"\\\pegas\\UDS\\13APR_PR\\01_PROTOCOLS\\"
+    stor_desc = stor_desc.replace(" ", "%20")
+    context["path_cloud_protocol"] = f"http://cloud.tsnigri.ru/apps/files/?dir=/13-01-ПРОТОКОЛЫ%20АПРОБАЦИИ%20ПР/"
     # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
     if 'oid' in request.GET:
         context["record"] = UdsMetaApr.objects.get(oid = request.GET["oid"])
-        return render(request, 'crud/form/update.html', context=context)
+        return render(request, 'crud/form/update_apr.html', context=context)
     if "APR" == request.GET["choise"]:
         context["choise"] = "apr"
         context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
@@ -604,7 +654,9 @@ def password_change(request):
     return render(request, "crud/password_change.html" ,context=context )
    
    
-class UdsMetaAprHTMxTableView(UdsMetaHTMxTableView,SingleTableMixin, FilterView): # представление для базовой страницы
+class UdsMetaAprHTMxTableView(UdsMetaHTMxTableView,SingleTableMixin, FilterView):
+    
+   
     table_class = UdsMetaAprTable
     data_models = UdsMetaApr
     redirect_url = "/apr/"
