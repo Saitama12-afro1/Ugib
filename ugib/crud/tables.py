@@ -1,10 +1,15 @@
-
-from django_tables2 import tables, TemplateColumn, Column
+from django.utils.html import format_html
+from django_tables2 import tables, TemplateColumn, Column, A
+from django.db.models import Subquery, OuterRef
+from django.db import models
+import django_tables2
 
 from .models import UdsMeta, History, UdsMetaApr
+from grr.models import UdsMetaProtocols
+
 
 class UdsMetaTable(tables.Table):
-
+    
     Update = TemplateColumn(template_name = "crud/tables_utilits/update_button_with_modal_wind.html")
     Delete = TemplateColumn(template_name = "crud/tables_utilits/delete_button.html")
     Bascet = TemplateColumn(template_name="crud/tables_utilits/bascet_button.html")
@@ -17,15 +22,13 @@ class UdsMetaTable(tables.Table):
 
 
 class UdsMetaAprTable(UdsMetaTable,tables.Table):
-
-    # path_local_protocol = Column(accessor='path_local', verbose_name="path_local_protocol")
-    # path_cloud_protocol = Column(accessor='path_cloud', verbose_name="path_cloud_protocol")
-
+    
     class Meta:
         model = UdsMetaApr
         template_name = "crud/index/apr/uds_meta_apr_table.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
         exclude = ('path_cloud_ref', 'path_local_ref')
+
 
 class HistoryTable(tables.Table):
     class Meta:

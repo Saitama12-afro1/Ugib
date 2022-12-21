@@ -171,39 +171,6 @@ function current_height(area){
             error.className = 'error active';
         }
     })
-    let obj_supl_min = document.getElementById("obj_supl_min_valid");
-    obj_supl_min.addEventListener("input", (event) => {
-        fixTextareaSize(obj_supl_min);
-        var pattern =/[А-я\s]+\,\s?/
-        const error = document.querySelector("#error_obj_supl_min");
-        if (pattern.test(obj_supl_min.value)){
-            error.textContent = "";
-            error.className = "error";
-        }else{
-            showError()
-        }        
-        function showError() {
-            error.textContent = "Не соответствует шаблону"
-            error.className = 'error active';
-        }
-    })
-    
-    let obj_group_min = document.getElementById("obj_group_min_valid");
-    obj_group_min.addEventListener("input", (event) => {
-        fixTextareaSize(obj_group_min);
-        var pattern =/[А-я\s]+\,\s?/
-        const error = document.querySelector("#error_obj_group_min");
-        if (pattern.test(obj_group_min.value)){
-            error.textContent = "";
-            error.className = "error";
-        }else{
-            showError()
-        }        
-        function showError() {
-            error.textContent = "Не соответствует шаблону"
-            error.className = 'error active';
-        }
-    })
     let obj_rdoc_name = document.getElementById("obj_rdoc_name_valid");
     obj_rdoc_name.addEventListener("input", (event) => {
         fixTextareaSize(obj_rdoc_name);

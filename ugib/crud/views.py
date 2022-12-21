@@ -23,7 +23,8 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import AdminPasswordChangeForm
-from django.db.models import Q, F
+from django.db.models import Q, F, Count, Subquery, OuterRef
+from django.db import models
 from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin, Table
 from django_filters.views import FilterView
@@ -187,30 +188,51 @@ def bascet(request):
 def page_not_found(request, exception):
     return render(request,'crud/errors/404.html', {'path': request.path}, status = 404 )
 
+class HistoryView(FilterView):
+    filterset_class = HistoryFilter
+    template_name = "crud/history/history.html"
+    paginate_by = 20
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context["history"] = History.objects.all().order_by("-id")
+        f = HistoryFilter(self.request.GET, queryset= context["history"])
+        context["filter"] = f
+        p = Paginator(f.qs, 20)
+        page_number = self.request.GET.get('page')
+        page_obj = p.get_page(page_number)
+        context["page_obj"] = page_obj
+
+        iniz = self.request.user.first_name.split(" ")
+        iniz = iniz[0][0] + "." + iniz[1][0] + "."
+        context["iniz"] = iniz
+        # context["table"] = HistoryTable(context["history"])
+        if not  user.is_superuser:
+            return page_not_found(self.request,404)
+        return context
+    
+
 @login_required(login_url="/")
 def history_views(request):
     context = {}
     user = request.user
-    user_info = UserInfo.objects.get(user_id = user.id)
+    
     context["history"] = History.objects.all().order_by("-id")
-    p = Paginator(context["history"], 20)
+    f = HistoryFilter(request.GET, queryset= context["history"])
+    context["filter"] = f
+    p = Paginator(f.qs, 20)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
     context["page_obj"] = page_obj
-    f = HistoryFilter(request.GET, queryset= context["history"])
-    context["filter"] = f
+
     iniz = request.user.first_name.split(" ")
     iniz = iniz[0][0] + "." + iniz[1][0] + "."
     context["iniz"] = iniz
     # context["table"] = HistoryTable(context["history"])
-    print(request.user.is_superuser)
     if not  user.is_superuser:
         return page_not_found(request,404)
-    if user.groups.filter(name = "common_user"):
-        template ="crud/history/history_for_common_user.html"
-        context["history"] = user.histories.all()
-    else:
-        template ="crud/history/history.html"
+    
+    template ="crud/history/history.html"
     
     return render(request, template, context)
 
@@ -238,19 +260,6 @@ def test(request):
     if request.method == "POST":
         print(request.POST)
     return redirect("/")
-
-
-# class HistoryView(SingleTableMixin, FilterView):
-#     table_class = HistoryTable
-#     queryset = History.objects.all()
-#     filterset_class = HistoryFilter
-#     paginate_by = 25
-#     def get_template_names(self): 
-#         if self.request.htmx:
-#             template_name = "crud/history/history.html"
-#         else:
-#             template_name = "crud/history/history.html"
-#         return template_name
     
     
     
@@ -268,7 +277,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         for i in bascet:
             uds_meta = uds_meta.filter(~Q(oid = i.oid))
         return uds_meta.order_by("-oid")
-    
+
     filterset_class = UdsMetaFilters
     paginate_by = 25
     login_form = LoginForm()
@@ -290,7 +299,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             return {
                     'exclude':('Bascet','Delete','Update')
                     }    
-            
+    
     
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
@@ -305,7 +314,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             choise = 'grr-stage'
         if self.data_models is UdsMetaGrrAccom:
             choise = 'grr-accom'
-            
         
         if 'del' in request.POST:
             try:
@@ -488,6 +496,14 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
             
             return redirect(self.redirect_url) 
+        elif 'export_exel_partially' in request.POST:
+            filename = 'result_query.xlsx'
+            response = FileResponse(open(filename, 'rb'))
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['X-Sendfile'] = filename
+            return response
+
+            
             
         return redirect(self.redirect_url)
     
@@ -653,16 +669,30 @@ def password_change(request):
     context["form"] = form
     return render(request, "crud/password_change.html" ,context=context )
    
+# queryset = UdsMetaApr.objects.annotate(test = Subquery(UdsMetaProtocols.objects.filter(
+#                                                             uniq_id = OuterRef('uniq_id')).values("path_local")
+#                                                        , output_field = models.TextField()
+#                                                     ))
+# table = UdsMetaAprTable(queryset)
+# print(", ".join(map(str, table.rows[0])))
+# h = 2
+# for item in table.as_values():
+#     print(item)
+#     h += 1
+#     if h == 4: break
    
 class UdsMetaAprHTMxTableView(UdsMetaHTMxTableView,SingleTableMixin, FilterView):
-    
-   
+    queryset = UdsMetaApr.objects.annotate(path_cloud_protocols = Subquery(UdsMetaProtocols.objects.filter(
+                                                            uniq_id = OuterRef('uniq_id')).values("path_local")
+                                                       , output_field = models.TextField()
+                                                    ))
     table_class = UdsMetaAprTable
     data_models = UdsMetaApr
     redirect_url = "/apr/"
 
-    
+
     filterset_class = UdsMetaAprFilters
+    
     paginate_by = 25
     login_form = LoginForm()
     register_form =  RegisterForm()

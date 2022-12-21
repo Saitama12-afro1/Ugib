@@ -187,7 +187,7 @@ class History(models.Model):
         db_table = 'history'
 
     def __str__(self) -> str:
-        return str(self.date)
+        return str(self.my_user)
 
 
 class Test(models.Model):

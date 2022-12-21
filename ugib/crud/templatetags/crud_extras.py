@@ -52,3 +52,13 @@ def create_href_for_history(uniq_id, fond):
     if fond == "01found":
         return f"http://gis311k1:8000/?query={uniq_id}"
     return f"http://gis311k1:8000/{fond}/?query={uniq_id}"
+
+
+@register.simple_tag(takes_context=True)
+def param_replace(context, **kwargs):
+    d = context['request'].GET.copy()
+    for k, v in kwargs.items():
+        d[k] = v
+    for k in [k for k, v in d.items() if not v]:
+        del d[k]
+    return d.urlencode()

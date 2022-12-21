@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from crud.views import UdsMetaHTMxTableView, UdsMetaAprHTMxTableView
+from crud.views import UdsMetaHTMxTableView, UdsMetaAprHTMxTableView, HistoryView
 
 app_name='crud'
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('logout/', views.logout, name='logout'),
     path('profile/bascet/', views.bascet, name='bascet'),
-    path('profile/history/', views.history_views, name='history'),
+    path('profile/history/', HistoryView.as_view(), name='history'),
     path('test/', views.test, name='test'),
     path('get_html_uds/', views.get_html_uds, name='get_html_uds'),
     path('get_html_apr/', views.get_html_apr, name='get_html_apr'),
