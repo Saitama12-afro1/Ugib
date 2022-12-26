@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'django_static_jquery',
-    'dbbackup',
 ]
 
 MIDDLEWARE = [
