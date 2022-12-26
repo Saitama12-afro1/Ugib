@@ -73,7 +73,6 @@ class UdsMetaGrrAccomFilter(django_filters.FilterSet):
             result_query =  UdsMetaGrrAccom.objects.filter(
                 Q(oid__icontains=value)
             )
-
         else:
             result_query =  UdsMetaGrrAccom.objects.filter(
             Q(obj_authors__icontains=value) | Q(stor_folder__icontains=value) | Q(uniq_id__icontains=value)
@@ -106,6 +105,3 @@ class UdsMetaGrrAccomFilter(django_filters.FilterSet):
                         worksheet.write(r, c, col)
             workbook.close()
         return result_query
-      
-      
-        

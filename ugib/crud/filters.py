@@ -138,13 +138,16 @@ class HistoryFilter(django_filters.FilterSet):
             else:
                 date = ""
             if value in ('01found', 'apr', 'grr-stage', 'grr-accom'):
-                query =  History.objects.filter(Q(fond__icontains=value)).order_by("-id")
+                query =  History.objects.filter(Q(fond__icontains=value)
+                                            ).order_by("-id")
             if value in ('create', 'bascet', 'delete', 'update'):
-                query = History.objects.filter(Q(typeAction__icontains=value)).order_by("-id")
+                query = History.objects.filter(Q(typeAction__icontains=value)
+                                            ).order_by("-id")
             if User.objects.filter(last_name=value).exists():
-                query =  History.objects.filter(Q(my_user__last_name__icontains=value)).order_by("-id")
+                query =  History.objects.filter(Q(my_user__last_name__icontains=value)
+                                            ).order_by("-id")
             query = History.objects.filter(Q(date__icontains=date)
-                ).order_by("-id")
+                                    ).order_by("-id")
         if query:
             return query
         else:
