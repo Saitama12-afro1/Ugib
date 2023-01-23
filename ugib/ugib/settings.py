@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_htmx",
+    "corsheaders",
     'django_tables2',
     'django_filters',
     'crispy_forms',
@@ -49,12 +51,39 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_htmx.middleware.HtmxMiddleware",
+]
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOWED_ORIGINS  = ["http://localhost:8080","http://127.0.0.1:8080" ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8080",
 ]
 
 ROOT_URLCONF = 'ugib.urls'
@@ -83,6 +112,12 @@ TEMPLATES = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'ugib.MyHasher.MyHasher',
+    # 'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
+
+
 WSGI_APPLICATION = 'ugib.wsgi.application'
 
 
@@ -101,7 +136,6 @@ DATABASES = {
             'NAME' :'test_db_for_tests'
         },
     },
-    
 }
 
 # Password validation

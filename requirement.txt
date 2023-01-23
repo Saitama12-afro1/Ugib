@@ -10,3 +10,4 @@ django_htmx
 psycopg2
 requests
 django_static_jquery
+jinja2

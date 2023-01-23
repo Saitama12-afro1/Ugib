@@ -15,4 +15,5 @@ urlpatterns = [
     path('get_html_uds/', views.get_html_uds, name='get_html_uds'),
     path('get_html_apr/', views.get_html_apr, name='get_html_apr'),
     path('password_change', views.password_change, name = "password_change"),
+    path('refresh', views.refresh_view, name = "refresh_view")
 ]

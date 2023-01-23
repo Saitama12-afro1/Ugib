@@ -176,64 +176,71 @@ function current_height(area){
         fixTextareaSize(obj_rdoc_name);
         let mas = right_bracket(obj_rdoc_name.value)
         const error = document.querySelector("#error_obj_rdoc_name");
-        if (mas.length == 0){
+        if (mas.length == 0 && obj_rdoc_name.value.search(pattern1) == -1  && obj_rdoc_name.value.search(pattern2) == -1){
             error.textContent = "";
             error.className = "error";
         }else{
             showError()
         }        
         function showError() {
-            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
+            error.textContent = "Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"
             error.className = 'error active';
         }
     })
+
     let obj_rdoc_num = document.getElementById("obj_rdoc_num_valid");
     obj_rdoc_num.addEventListener("input", (event) => {
         fixTextareaSize(obj_rdoc_num);
         let mas = right_bracket(obj_rdoc_num.value)
         const error = document.querySelector("#error_obj_rdoc_num");
-        if (mas.length == 0){
+        if (mas.length == 0  && obj_rdoc_num.value.search(pattern1) == -1  && obj_rdoc_num.value.search(pattern2) == -1){
             error.textContent = "";
             error.className = "error";
         }else{
             showError()
         }        
         function showError() {
-            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
+            error.textContent = "Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"
             error.className = 'error active';
         }
     })
-    let obj_name = document.getElementById("obj_name_valid");
+
+   let obj_name = document.getElementById("obj_name_valid");
     obj_name.addEventListener("input", (event) => {
         fixTextareaSize(obj_name);
         let mas = right_bracket(obj_name.value)
         const error = document.querySelector("#error_obj_name");
-        if (mas.length == 0){
+        if (mas.length == 0  && obj_name.value.search(pattern1) == -1  && obj_name.value.search(pattern2) == -1){
             error.textContent = "";
             error.className = "error";
         }else{
             showError()
         }        
         function showError() {
-            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
+            error.textContent = "Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"
             error.className = 'error active';
         }
     })
+
     let obj_orgs = document.getElementById("obj_orgs_valid");
     obj_orgs.addEventListener("input", (event) => {
-        let mas = right_bracket(obj_orgs.value)
+        let mas = right_bracket(obj_orgs.value);
         const error = document.querySelector("#error_obj_orgs");
-        if (mas.length == 0){
+        pattern1 = /<</;
+        pattern2 = />>/;
+
+        if (mas.length == 0 && obj_orgs.value.search(pattern1) == -1  && obj_orgs.value.search(pattern2) == -1){
             error.textContent = "";
             error.className = "error";
         }else{
             showError()
         }        
         function showError() {
-            error.textContent = "Не соответствует шаблону не закрыта скобочка или кавычка"
+            error.textContent = "Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"
             error.className = 'error active';
         }
     })
+    
     let spat_atd_ate = document.getElementById("spat_atd_ate_valid");
     obj_orgs.addEventListener("input", (event) => {
         fixTextareaSize(spat_atd_ate);

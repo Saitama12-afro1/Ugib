@@ -19,6 +19,8 @@ from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django_tables2 import SingleTableMixin
 from django_filters.views import FilterView
+from django.contrib.auth.hashers import PBKDF2PasswordHasher
+
 
 from crud.views import create_uniq_id, UdsMetaHTMxTableView
 from crud.models import History, UdsMeta, Bascet, Order, UserInfo
@@ -61,6 +63,9 @@ class UdsMetaGrrStageHTMxTableView(UdsMetaHTMxTableView, SingleTableMixin, Filte
         else:
             template_name = "grr/index/grr_stage/index_table_grr_stage_htmx.html"
         return template_name
+
+
+
 
 
 def get_html_grr_stage(request):

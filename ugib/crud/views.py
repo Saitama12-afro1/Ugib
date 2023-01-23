@@ -29,6 +29,9 @@ from django.core.mail import send_mail
 from django_tables2 import SingleTableMixin, Table
 from django_filters.views import FilterView
 from django.db.models.query import QuerySet
+from django.db import connection, transaction
+
+
 
 from grr.models import UdsMetaGrrAccom, UdsMetaGrrStage, UdsMetaProtocols
 from .models import History, UdsMeta, Bascet, Order, UserInfo,UdsMetaApr
@@ -37,8 +40,29 @@ from .forms import LoginForm, UdsMetaForm, WordDocFilling, RegisterForm, MyChang
 from .history import decor
 from .tables import UdsMetaTable, UdsMetaAprTable
 from .filters import  UdsMetaFilters, HistoryFilter, UdsMetaAprFilters
+from ugib.MyHasher import MyHasher
+
+MyHasher = MyHasher()
 
 
+@login_required(login_url="/")
+@transaction.atomic
+def refresh_view(request):
+    with connection.cursor() as cursor:
+        # # cursor.execute("REFRESH MATERIALIZED VIEW public.mat_view_v3 WITH data")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_apr_geom_mat_view_v1  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_geom_mat_view  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_mat_view  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view  WITH data;")
+        # # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view_test  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_geom_mat_view  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_mat_view  WITH data;")
+        # # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_ntb_final  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_protocols_geom_mat_view_v1  WITH data;")
+        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_view_mat_v4  WITH data;")
+        cursor.execute("select diagnostic.refresh_mat_view()")
+    return redirect('/')
+            
 
 @login_required(login_url="/")
 def profile(request):
@@ -300,7 +324,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     'exclude':('Bascet','Delete','Update')
                     }    
     
-    
     def post(self, request,*args, **kwargs):
         login_form = LoginForm(request.POST)
         register_form = RegisterForm(request.POST)
@@ -384,10 +407,17 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         elif 'login' in request.POST:
             if login_form.is_valid():
                 user = authenticate(username = login_form.cleaned_data["username"], password = login_form.cleaned_data["password"])
-            
                 if user is not None:
                     login(request, user)
                     return redirect(self.redirect_url)
+                try:
+                    user = User.objects.get(username = login_form.cleaned_data["username"])
+                    if MyHasher.check_password(login_form.cleaned_data["password"], user.password):
+                        login(request, user)
+                        return redirect(self.redirect_url)
+
+                except ObjectDoesNotExist:
+                    print("Oshibka")
                 
         elif 'register' in request.POST:
             if register_form.is_valid(password=request.POST["password"]):
@@ -402,8 +432,8 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         user.save()
                         user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
                         user_info.save()
-                    except:
-                        pass
+                    except ObjectDoesNotExist:
+                        print(3232323)
                 else:
                     user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"] + " " + request.POST["sur_name"],
                                 last_name =request.POST["last_name"],
@@ -523,7 +553,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
         context["choise"] = "01FOUND"
-        context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "chernyshov@tsnigri.ru")
+        context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "chernyshov@tsnigri.ru", 'test@mail.ru')
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
         old_uniq = buff.uniq_id
         old_date = buff.stor_date
@@ -662,8 +692,10 @@ def password_change(request):
             form.test_pas()
             form.test_mail(all_mails)
             password = form.cleaned_data["password"]
-            request.user.set_password(password)
-            request.user.save()
+            user = User.objects.get(username = form.cleaned_data["mail"])
+            user.set_password(password)
+            user.save()
+            login(request, user)
             return redirect("/")
     context = {}
     context["form"] = form
