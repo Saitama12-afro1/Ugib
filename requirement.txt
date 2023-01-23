@@ -1,0 +1,13 @@
+django
+xlsxwriter
+django-crispy-forms
+django-tables2
+docxcompose
+docxtpl
+django_crispy_forms
+django_filter
+django_htmx
+psycopg2
+requests
+django_static_jquery
+jinja2

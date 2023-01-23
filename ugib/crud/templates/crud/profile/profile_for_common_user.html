@@ -1,0 +1,32 @@
+{% extends 'crud/base.html' %}
+{% load static %}
+{%block script%}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>  
+{%endblock%}
+{% block title %}
+
+{% endblock%}
+{% block body %}
+<a href = "/"> Назад</a>
+<a href = "{% url "crud:bascet"%}"> Корзина </a>
+<a href = "/profile/history">История</a>
+
+<button  onClick = "window_form_order()" id = "loginButton"> Отправить зявки на согласование </button>
+<div hidden id = "order" class = "window_order">  
+<form method = "POST" name = "order" id = "order" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type = "submit" name = "create_order" value = "Отправить зявку на согласование" > </input>
+    <button  onClick = "window_form_order()" id = "closeButton" hidden> Закрыть </button>
+</form>
+</div>
+<h3> В корзине лежит {{count_elements_in_bascet}}</h3>
+{% for el in orders %}
+    {% if el.status == False %}
+        Не подтверждена {{el.datetimeAppend}} {{el.udsMeta}} <br>
+    {% else %}
+        Подтверждена {{el.datetimeAppend}} {{el.udsMeta}} <br>
+    {% endif %}
+{% endfor %}
+{% endblock body %}

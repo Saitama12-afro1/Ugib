@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,34 +26,77 @@ SECRET_KEY = 'django-insecure-fpc@etuu-s8+ur02!9ji=yb#q)ra93$^&)ktyqiq%t5xqc14=(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'crud',
+    'grr',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_htmx",
+    "corsheaders",
+    'django_tables2',
+    'django_filters',
+    'crispy_forms',
+    'django_static_jquery',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_htmx.middleware.HtmxMiddleware",
+]
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOWED_ORIGINS  = ["http://localhost:8080","http://127.0.0.1:8080" ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8080",
 ]
 
 ROOT_URLCONF = 'ugib.urls'
 
 TEMPLATES = [
+     {
+   'BACKEND': 'django.template.backends.jinja2.Jinja2',
+   'DIRS': ['ugib/crud'],
+   'APP_DIRS': True,
+   'OPTIONS': {
+     'environment': 'ugib.jinja2.environment'
+   },
+ },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -68,6 +112,12 @@ TEMPLATES = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'ugib.MyHasher.MyHasher',
+    # 'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
+
+
 WSGI_APPLICATION = 'ugib.wsgi.application'
 
 
@@ -77,12 +127,15 @@ WSGI_APPLICATION = 'ugib.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "bd_reestr_test",
+        'NAME': "bd_reestr_v3",
         'USER': "postgres",
         "PASSWORD": "postgres",
         "HOST": "kastor.tsnigri.ru",
         "PORT": "5432",
-    }
+        'TEST':{
+            'NAME' :'test_db_for_tests'
+        },
+    },
 }
 
 # Password validation
@@ -125,3 +178,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGOUT_REDIRECT_URL = "/"
+
+
+
+ACCOUNT_ACTIVATION_DAYS = 3
+EMAIL_HOST = ""
+EMAIL_PORT = "8000"
+
+EMAIL_HOST_USER = "chernyshov@tsnigri.ru"
+EMAIL_HOST_PASSWORD = "1012Chern1012"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# AUTH_USER_MODEL = "crud.User" 
+
+
+CORS_REPLACE_HTTPS_REFERER      = False
+HOST_SCHEME                     = "http://"
+SECURE_PROXY_SSL_HEADER         = None
+SECURE_SSL_REDIRECT             = False
+SESSION_COOKIE_SECURE           = False
+CSRF_COOKIE_SECURE              = False
+SECURE_HSTS_SECONDS             = None
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
+SECURE_FRAME_DENY               = False
+SECURE_SSL_REDIRECT             = False
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': 'E:/Новая папка/Ugib/ugib/ugib/backups'}

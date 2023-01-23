@@ -1,0 +1,5 @@
+<form method = "POST">
+    {% csrf_token %}
+    <input value = "{{record.oid}}" hidden name = "oid">
+<button type = 'submit'  value = "{{record.oid}}" name = "exc" id = "csv_button"> Exel </button>
+</form>
