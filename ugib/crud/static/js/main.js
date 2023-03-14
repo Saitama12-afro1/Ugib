@@ -5,6 +5,15 @@ function window_form(){
     tag3.hidden = !tag3.hidden    
     };
 
+function refresh_meta(event){
+        let current_page = document.querySelector(".page-item.active").innerText;
+        let cookie = document.cookie;
+        let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+        $.post('/refresh', {'cur_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
+        });
+       
+    };
+
 
 function window_form_order(){
     var tag_visable = document.getElementById("order");
@@ -63,9 +72,9 @@ function update_one_cell(event){
     let oid = but_val.getElementsByClassName("oid")[0].innerText;
 
     if (event.target.tagName == "IMG"){
-     cell = event.target.parentNode.parentNode.parentNode.innerText;
+        cell = event.target.parentNode.parentNode.parentNode.innerText;
     } else{
-         cell = event.target.parentNode.parentNode.innerText;
+        cell = event.target.parentNode.parentNode.innerText;
     }
 
     let area = document.getElementById("modal_area")
@@ -76,6 +85,7 @@ function update_one_cell(event){
     area.style.height = count_row * 30 + "px";
     let cls = event.target.closest("td").className;
     $('#close_btn').val(cls)
+    // area.style.zIndex = 1051;
 }
 
 
@@ -89,6 +99,9 @@ function upd_post(event){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });
+
+    // area.style.zIndex = -1;
+    // window.location.reload();
 }
   
 
@@ -239,7 +252,7 @@ function my_blur(event){
     $(path_local_ref).val("\\"+"\\pegas\\UDS\\" + obj_main_group.value + "\\" + obj_sub_group.value + "_REF\\" + stor_folder_data)
     let choise = document.getElementById("select_sub").value
     let stor_desc = document.getElementById('stor_desc')
-    d = {"01TSNIGRI" :"Цнигри:", '02RFGF:':'Росгеолфонд:'}
+    d = {"01TSNIGRI" :"ЦНИГРИ:", '02RFGF:':'Росгеолфонд:'}
     $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value)
 
     if (choise == "01TSNIGRI"){
@@ -267,6 +280,7 @@ function change_style(event){
     let div = document.getElementsByClassName("boss_div")[0]
     div.style = " position: revert;";
     modal = document.getElementById("ModalLong")
+    
     
 }
 function unchange_style(event){

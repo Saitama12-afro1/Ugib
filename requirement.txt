@@ -11,3 +11,5 @@ psycopg2
 requests
 django_static_jquery
 jinja2
+bcrypt
+django-cors-headers

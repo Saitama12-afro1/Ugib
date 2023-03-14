@@ -1,0 +1,716 @@
+[{
+  "name": "Иванов Анатолий Иннокентьевич",
+  "email": "a.ivanov@tsnigri.ru",
+  "password": "$2b$10$VctR7tMRzAM8aKb9I1qwtO1SiAvg61FSJf7oKkxGToc4KpV7kn3bK",
+  "role": "chief"
+},{
+  "name": "Андреев Антон Вадимович",
+  "email": "aandreev@tsnigri.ru",
+  "password": "$2b$10$mBFrwl9Jjl1flyJof.k9KOLYfoGlDUHezQe.1sgudhhcIjR/S5TrK",
+  "role": "restricted"
+},{
+  "name": "Агибалов Олег Анатольевич",
+  "email": "agibalov@tsnigri.ru",
+  "password": "$2b$10$6zXeyFdyiioRkH1cLcyvROvMuKxVjj0Y2Az1G9sKZMWCWsvvfWorG",
+  "role": "restricted"
+},{
+  "name": "Конкина Анастасия Александровна",
+  "email": "akonkina@tsnigri.ru",
+  "password": "$2b$10$LpGa9cAdlHOSrpSUrHbzPeY4.P6SSgUgskSi6g4Mzjc.yJJ40ZoNC",
+  "role": "restricted"
+},{
+  "name": "Александрова Александра Евгеньевна",
+  "email": "aleksandrova@tsnigri.ru",
+  "password": "$2b$10$cJqiWboyxzZHzgkz2gdVuOyO396UziNcqBkw0bc3feRjqwi18CEZO",
+  "role": "restricted"
+},{
+  "name": "Алферова Валерия Алексеевна",
+  "email": "alferova@tsnigri.ru",
+  "password": "$2b$10$j8sBQCG3OXzEI2UvDlxXRuDgqfItiS4spBfSSA5QNABq9kicyROdW",
+  "role": "restricted"
+},{
+  "name": "Анашкина Наталия Евгеньевна",
+  "email": "anashkina@tsnigri.ru",
+  "password": "$2b$10$0MKFAedDe/9JsN3WYwkEheYpQ4/zagUoRbdpKDlm7LDqRNiZkIfxq",
+  "role": "restricted"
+},{
+  "name": "Антонец Анастасия Владимировна",
+  "email": "antonetc@tsnigri.ru",
+  "password": "$2b$10$YiP1RL0dhMp/GHLNNIJ7xOEKLqkrvIGyfI6AUW.t0V9UUIGDRJB8S",
+  "role": "restricted"
+},{
+  "name": "Ожерельева Анна Владимировна",
+  "email": "aozhereleva@tsnigri.ru",
+  "password": "$2b$10$gy5xBBUvSD34JJC4jDfYrOujZX9HVIqNdaYbimHyfPOqVfVQayD1.",
+  "role": "restricted"
+},{
+  "name": "Арсентьева Ирина Викторовна",
+  "email": "arsenteva@tsnigri.ru",
+  "password": "$2b$10$bBZJYbShq7WF.9rWmhYJHOQmV9HvqN9OruKeWIc.MveJMiqbBV29G",
+  "role": "restricted"
+},{
+  "name": "Артемова Ольга Александровна",
+  "email": "artemova@tsnigri.ru",
+  "password": "$2b$10$qN8AZlKtMfqhjr.uCGXr4OVF3BQyzfOnj5mvfP4QT9cujVdIpxEt2",
+  "role": "restricted"
+},{
+  "name": "Самойленко Максим Викторович",
+  "email": "asamoilenko@tsnigri.ru",
+  "password": "$2b$10$9cQM/y3radWfli.7KAr.VukgQ9kHDQg9xhfiV0yZdYs1pLnx0oD0S",
+  "role": "restricted"
+},{
+  "name": "Авилова Ольга Владимировна",
+  "email": "avilova@tsnigri.ru",
+  "password": "$2b$10$/EAtDmbJ6BEGAHSJhWicIOEnFsuuC/.2wOZss1fasY2IS7dW4Xite",
+  "role": "restricted"
+},{
+  "name": "Захаров Александр Павлович",
+  "email": "azakharov@tsnigri.ru",
+  "password": "$2b$10$JlLa8IQ6WtRhcLjWjuC.MemccXpsilIVPqena9T4.ZF.GyrYTIPjm",
+  "role": "restricted"
+},{
+  "name": "Бечвая Анастасия Джемаловна",
+  "email": "bechvaya@tsnigri.ru",
+  "password": "$2b$10$uFpEbg.x9d3sfCpcydvdtuEyyN103GJc56bwV8OBrMQHS2YN8U2Ti",
+  "role": "restricted"
+},{
+  "name": "Богославец Николай Николаевич",
+  "email": "bogoslavets@tsnigri.ru",
+  "password": "$2b$10$xYS9n6.AraQw74budthLneJ03Q2lTtaq4tjuXvYyuHSoRHz/1K/hi",
+  "role": "restricted"
+},{
+  "name": "Болонин Александр Васильевич",
+  "email": "bolonin@tsnigri.ru",
+  "password": "$2b$10$ufh2UeDj0kqnG2M9BaLqVuyNjTWeC.2fafRqsK4ThygpL80PxMT0S",
+  "role": "restricted"
+},{
+  "name": "Бужинская Екатерина Валерьевна",
+  "email": "bujinskaya@tsnigri.ru",
+  "password": "$2b$10$r7XWXWXl43bt/1gc9MkmXOj6zKxSYwAbinJFUtfUemPuZk045Kt4y",
+  "role": "restricted"
+},{
+  "name": "Черемисина Екатерина Алексеевна",
+  "email": "cheremisina@tsnigri.ru",
+  "password": "$2b$10$YEJ1EwvXg0d.6blSqwxvu.G9jOEUBHrd0MfHKH4fhFLLJS0YZzzM2",
+  "role": "restricted"
+},{
+  "name": "Черных Александр Иванович",
+  "email": "chernykh@tsnigri.ru",
+  "password": "$2b$10$NInA5hIxqDlFNJT6kyBGHup.ouBlxHqHSb/o357I2/gJqxL3W8LK6",
+  "role": "chief"
+},{
+  "name": "Чурилова Татьяна Александровна",
+  "email": "churilova@tsnigri.ru",
+  "password": "$2b$10$j9hnBadRacpMpmMkcGfE6OiY2umT4dTvMH1Pe4AJMqy7wI9l4G4cC",
+  "role": "restricted"
+},{
+  "name": "Двуреченская Светлана Степановна",
+  "email": "dvurechenskaya@tsnigri.ru",
+  "password": "$2b$10$UjqU75DoVhd33eBJMIyKjOFb9xxBQMphG5TwB/HAOwu8p/UfehqdG",
+  "role": "restricted"
+},{
+  "name": "Елшина Светлана Львовна",
+  "email": "elshina@tsnigri.ru",
+  "password": "$2b$10$e21GKwisNINMtQKa6l3Qc.V1e5rZFCWxM/9kX25n4AlSajU9paCmq",
+  "role": "restricted"
+},{
+  "name": "Федоренко Сергей Владимирович",
+  "email": "fedorenko@tsnigri.ru",
+  "password": "$2b$10$BvZpcgMlwoo90sGh1qUFX.gc9f6F.jCnoHkjf3AmSI6xcdfDiCa9W",
+  "role": "restricted"
+},{
+  "name": "Фильцев Михаил Юрьевич",
+  "email": "filcev@tsnigri.ru",
+  "password": "$2b$10$4tfeBomxID5OGvyQmwKG7u6X21T9tjuYKp2qHUU9fZYxb7t/Q3CVi",
+  "role": "restricted"
+},{
+  "name": "Фролова Анастасия Сергеевна",
+  "email": "frolova@tsnigri.ru",
+  "password": "$2b$10$9ecJZtHXtAOuPIJxnXXituPmZqtDOoh7gxcOZlp7UWe4BKQhvYFU2",
+  "role": "restricted"
+},{
+  "name": "Генинг Ксения Сергеевна",
+  "email": "gening@tsnigri.ru",
+  "password": "$2b$10$RBdCawzD/PkEUhiFlPPJe.m//cMH5SAukHg3DsWH3B7KzjJuU9.N6",
+  "role": "restricted"
+},{
+  "name": "Гирфанов Михаил Миргалимович",
+  "email": "girfanov@tsnigri.ru",
+  "password": "$2b$10$N9NdrzPgPjE299zKubUjE.LqiA3.MtGAl.I9LC.P1zMWuOXYF.bCG",
+  "role": "restricted"
+},{
+  "name": "Голубева Юлия Юрьевна",
+  "email": "golubeva@tsnigri.ru",
+  "password": "$2b$10$yKSWh1yhe5.DCZslkXR8V.UHvHf8Iv4lDMiS2NHRVuH6VyDnN6stO",
+  "role": "restricted"
+},{
+  "name": "Грачев Василий Александрович",
+  "email": "grachev@tsnigri.ru",
+  "password": "$2b$10$9jczPPJcYHPOFcg/0Aln9uRhMVVRT3UeNHyiSR5JrmVbM91OZZYna",
+  "role": "restricted"
+},{
+  "name": "Громцев Кирилл Владимирович",
+  "email": "gromtsev@tsnigri.ru",
+  "password": "$2b$10$evVq.953uOUL.5iGJ38lNeX5UKqz1zanZasLn5CwCK16E7wfHbyLG",
+  "role": "restricted"
+},{
+  "name": "Хромов Василий Михайлович",
+  "email": "hromov@tsnigri.ru",
+  "password": "$2b$10$Pr1Vc/Mj1rbwkMU72ID2NucuNmLKaET6yha1y.FS5Ppk1labunBxm",
+  "role": "restricted"
+},{
+  "name": "Инякин Алексей Валерьевич",
+  "email": "inyakin@tsnigri.ru",
+  "password": "$2b$10$XPFptZXWn/WhDo5Wn6JQAue3kedzCVqmEZa0dbgwpaQuLxADL9FMq",
+  "role": "restricted"
+},{
+  "name": "Истомин Валерий Александрович",
+  "email": "istomin@tsnigri.ru",
+  "password": "$2b$10$yuJWTacCJZD6tQbsKctrquLmS3LyWaw4Y5OEQt8NyOYkpVZ1Xj9ai",
+  "role": "restricted"
+},{
+  "name": "Третьякова Ирина Геннадьевна",
+  "email": "itretiakova@tsnigri.ru",
+  "password": "$2b$10$ckjt4gBaFIi22ALhUtqc1O9k/e8CharHdYbR20J4PuYUVn.jAfKDS",
+  "role": "restricted"
+},{
+  "name": "Иваненкова Елена Владимировна",
+  "email": "ivanenkova@tsnigri.ru",
+  "password": "$2b$10$wzDGDtlV2qMq7Rk8/zv76up/Jg3P9QHg7BhIAH4pGCxqFfHKhWijK",
+  "role": "restricted"
+},{
+  "name": "Иванова Наталья Дмитриевна",
+  "email": "ivanova@tsnigri.ru",
+  "password": "$2b$10$gjsfvt0InYolrUzspHNugOGH9e2eRix8EdQOag7UjBqGOPeZ82Zp.",
+  "role": "restricted"
+},{
+  "name": "Калита Валерий Антонович",
+  "email": "kalita@tsnigri.ru",
+  "password": "$2b$10$6o/e8HqhM5xPv.Z1wFNZ5.RKC4XumVP13sG5fxtGeZRYSUQ1ysIL6",
+  "role": "restricted"
+},{
+  "name": "Карась Сергей Анатольевич",
+  "email": "karas@tsnigri.ru",
+  "password": "$2b$10$QfAJXAGEpWiU/wa0VLcdCO4n3trcS2qaW.0o.3ap.6IEGjPH2j2MK",
+  "role": "restricted"
+},{
+  "name": "Карпухина Мария Викторовна",
+  "email": "karpukhina@tsnigri.ru",
+  "password": "$2b$10$jfs98epFhHSp0pcVtaF/YuhSs4qxFqSjmwIMaCLgTzCMGaIJ6fNDy",
+  "role": "restricted"
+},{
+  "name": "Хачатрян Галина Карленовна",
+  "email": "khachatryan@tsnigri.ru",
+  "password": "$2b$10$34rfaBHFq7TnG.44d.pChuiwFbGixw.psoAXEzETUiFJ1gutDrL3S",
+  "role": "restricted"
+},{
+  "name": "Кочетова Ксения Николаевна",
+  "email": "kochetova@tsnigri.ru",
+  "password": "$2b$10$wQHeWmDjiqGK9kNGMrqaSuD0oYGHzVEVQK436msbKfEED.WAcU6oy",
+  "role": "restricted"
+},{
+  "name": "Конкин Виктор Дмитриевич",
+  "email": "konkin@tsnigri.ru",
+  "password": "$2b$10$FOKh48a51/cDArqljUFVoOO6rVg5T1GjrInlMqQLJYDpkHfLg8mRW",
+  "role": "restricted"
+},{
+  "name": "Конышев Вилли Оттович",
+  "email": "konyshev@tsnigri.ru",
+  "password": "$2b$10$8zNPfnexCOPrJcY0IGHCKOwpuTnqIuqi0D/HSM6ihAk1u/3Iudz9u",
+  "role": "restricted"
+},{
+  "name": "Корчагина Дарья Александровна",
+  "email": "korchagina@tsnigri.ru",
+  "password": "$2b$10$KzBCIyEjZ4EpDkW//qEmDeSiFhvUh0MfaG2GZWe9O/uY5HTVHKg9m",
+  "role": "restricted"
+},{
+  "name": "Костина Елизавета Дмитриевна",
+  "email": "kostina@tsnigri.ru",
+  "password": "$2b$10$OHgHFenrDhPie9MkzoronupYoKrSJUP1E0nW2mFHfmw7zsSCTLRA2",
+  "role": "restricted"
+},{
+  "name": "Кузин Иван Николаевич",
+  "email": "kuzin@tsnigri.ru",
+  "password": "$2b$10$6SAdh4qt5e2ZEB/CV8JA9.Xm437Fxo9uNpgPeHHy13rlhMB.RPlyy",
+  "role": "restricted"
+},{
+  "name": "Кузнецова Татьяна Петровна",
+  "email": "kuznetsova@tsnigri.ru",
+  "password": "$2b$10$NAGF34bFNx.VsOWf89fstOGt39JwyDIGqlz3LGNv06DUqPGh4B31a",
+  "role": "restricted"
+},{
+  "name": "Лаптев Михаил Михайлович",
+  "email": "laptev@tsnigri.ru",
+  "password": "$2b$10$liybjYGQX9HN3nATSlUvZ.AvcQfCGq3XquH9emQR9CI00Wq9Rsdrm",
+  "role": "restricted"
+},{
+  "name": "Лейбгам Полина Никодимовна",
+  "email": "leibham@tsnigri.ru",
+  "password": "$2b$10$5X3/Xxrt/b3iFIcXuE8cjeFcJOoVh9fl4562M8j/.oDkv7xI3Vhde",
+  "role": "restricted"
+},{
+  "name": "Лоренц Денис Александрович",
+  "email": "lorents@tsnigri.ru",
+  "password": "$2b$10$Mlbw2tLzvDQa5GS7F4XA1.dm2zjdBFUEb3WjpNxzZ5wkX0BS8kt4K",
+  "role": "restricted"
+},{
+  "name": "Горячева Алена Сергеевна",
+  "email": "loshakova@tsnigri.ru",
+  "password": "$2b$10$wypNmInGGTQT.F9kMPwKree8fhW.HN8GAG2CbWIMF/53wmVsH24j6",
+  "role": "restricted"
+},{
+  "name": "Марченко Дарья Романовна",
+  "email": "marchenko@tsnigri.ru",
+  "password": "$2b$10$xywrGj93yLCgWGsJG/nvDOGLQmYS1NvQ0uYHvgef9sjt8IFwgUkbq",
+  "role": "restricted"
+},{
+  "name": "Меркулов Владислав Васильевич",
+  "email": "merkulov@tsnigri.ru",
+  "password": "$2b$10$nhmt95m7JcvqrYu5nf6QdelRRV1VyBGbC3fawJwsgtvijlAowWxSy",
+  "role": "restricted"
+},{
+  "name": "Мерзликин Андрей Анатольевич",
+  "email": "merzlikin@tsnigri.ru",
+  "password": "$2b$10$3GyQMi8cvvczWKbA88LXqOqYNR3gTWx/F.7/NSoBDEmKk3HKTR0lG",
+  "role": "restricted"
+},{
+  "name": "Мигачев Игорь Федорович",
+  "email": "migatchev@tsnigri.ru",
+  "password": "$2b$10$qWdGnEXIpk2DVpN40gio..8YguP4peghaqXOjKmjj.issTebCf3Oy",
+  "role": "restricted"
+},{
+  "name": "Михайлов Сергей Николаевич",
+  "email": "mihailov@tsnigri.ru",
+  "password": "$2b$10$7/9pkAyeVDH20NEowPwM0ugCgi.pq2lWg9nT5pjXgN7FZpf3RSkBC",
+  "role": "restricted"
+},{
+  "name": "Микоев Игорь Иванович",
+  "email": "mikoyev@tsnigri.ru",
+  "password": "$2b$10$CKj/OTHk1Aw1AeFaegrmQeufoduhTRrVLhQmBYTz1Idlu0l.spLeq",
+  "role": "restricted"
+},{
+  "name": "Миляев Сергей Анатольевич",
+  "email": "milyaev@tsnigri.ru",
+  "password": "$2b$10$CUurpNfK..pkuhIl4l0xCeTvLVE5PMTXgM6VlPQo6CwLKI9jk98wG",
+  "role": "restricted"
+},{
+  "name": "Минаева Светлана Викторовна",
+  "email": "minaeva@tsnigri.ru",
+  "password": "$2b$10$e553KX6Fw15gaoNsJWwY.up9jsz/AEVTp2QCKEWQZmkI0AL0mCMUO",
+  "role": "restricted"
+},{
+  "name": "Минина Ольга Васильевна",
+  "email": "minina@tsnigri.ru",
+  "password": "$2b$10$DAvXB3uZBVzEDO18HPjYQuZtAbIYmo7CF2I1kko9LENQELGNISM9u",
+  "role": "restricted"
+},{
+  "name": "Минькин Константин Матвеевич",
+  "email": "minkin@tsnigri.ru",
+  "password": "$2b$10$PkMrsOXsqN6/ceJYKR2Li.TvfQw6pr01d9lwhJ33cD78MVZ4bQYhe",
+  "role": "restricted"
+},{
+  "name": "Нескучаева Елена Евгеньевна",
+  "email": "neskuchaeva@tsnigri.ru",
+  "password": "$2b$10$faLl/n90HYvWWd5SzDt1BOSu.KtpGmRsOYCFnr1DqOcG3fBypoyIG",
+  "role": "restricted"
+},{
+  "name": "Иванов Николай Михайлович",
+  "email": "nivanov@tsnigri.ru",
+  "password": "$2b$10$zZ92AaY3IIYM4ricl8ehI.DdjwlS7MWuPFpLUd35g5PGrJFDFhMzm",
+  "role": "restricted"
+},{
+  "name": "Конкина Ольга Михайловна",
+  "email": "okonkina@tsnigri.ru",
+  "password": "$2b$10$Pq7gIFe4U0EE7MpXA2qb5OV0BTtYCVRIE2adCCDFqkQ1cn7vNFgJ6",
+  "role": "restricted"
+},{
+  "name": "Окулов Алексей Вячеславович",
+  "email": "okulov@tsnigri.ru",
+  "password": "$2b$10$gZ/jCdBkcP5xHTc9SMIWpOWfCaCZRfoTq7uRn5ZIRR1J74yOXHcBC",
+  "role": "restricted"
+},{
+  "name": "Орлов Михаил Викторович",
+  "email": "orlov@tsnigri.ru",
+  "password": "$2b$10$a/VRy4ONQBAJ82PM7jGjROE6Kv6BipcEWLf5s5cyn8nsTEQL/FYa.",
+  "role": "restricted"
+},{
+  "name": "Пачерский Николай Викторович",
+  "email": "pacherskiy@tsnigri.ru",
+  "password": "$2b$10$2hO9nfeQUjrmC7bz0Y1l3exPqhE1lSs0.7rYb03kh2a58RP7shg6W",
+  "role": "restricted"
+},{
+  "name": "Панасенко Юрий Максимович",
+  "email": "panasenko@tsnigri.ru",
+  "password": "$2b$10$gTJuqWOYlTB9bvLCNT4kieOV2u/rP2Ha.ANb9QOcHXknA.dxIJyUy",
+  "role": "restricted"
+},{
+  "name": "Печников Виктор Алексеевич",
+  "email": "pechnikov@tsnigri.ru",
+  "password": "$2b$10$BiYHHIMOpP9Pew.XdnjvkePjV4voiBTjgwPv9bXqk9KcWUwUlIWAu",
+  "role": "restricted"
+},{
+  "name": "Перуненко Анастасия Владимировна",
+  "email": "perunenko@tsnigri.ru",
+  "password": "$2b$10$LB9Nb4BYOpOzvbaYgVcZpuqbwEnPhlnplcHZt3vjn90tfqLQT1Zcy",
+  "role": "restricted"
+},{
+  "name": "Петухов Алексей Андреевич",
+  "email": "petukhov@tsnigri.ru",
+  "password": "$2b$10$3iXe52k/45KZiXRTRtHlLOPEV7Rh1GkcSb.Z2hvO.N.VGDOPdsLNe",
+  "role": "restricted"
+},{
+  "name": "Пивоварова Татьяна Анатольевна",
+  "email": "pivovarova@tsnigri.ru",
+  "password": "$2b$10$QlpZYKA9dnDb6WjC/0hRJu.5OKXy0LON/8N3IAA97EKXNaOe/0dmO",
+  "role": "restricted"
+},{
+  "name": "Попов Иван Владимирович",
+  "email": "popov@tsnigri.ru",
+  "password": "$2b$10$.rj2IlpVfKvxbRBHk3yaYu4FO08aX75o2S.BkjQPwaeoiS8/Gv2PK",
+  "role": "restricted"
+},{
+  "name": "Позднякова Наталья Николаевна",
+  "email": "pozdnyakova@tsnigri.ru",
+  "password": "$2b$10$bxVU7Z9/tvh3.lT2.SslyucCr3vcQ0a63J7f9MiEprXfN/X/nmTd6",
+  "role": "restricted"
+},{
+  "name": "Прусакова Наталья Александровна",
+  "email": "prusakova@tsnigri.ru",
+  "password": "$2b$10$RoU4ggUvY5k6eq8VMQ0EjuWqgWrufmmIsB.KNdsE1tWeCXbP7pkJK",
+  "role": "restricted"
+},{
+  "name": "Рябошапко Алексей Геннадьевич",
+  "email": "ryaboshapko@tsnigri.ru",
+  "password": "$2b$10$WloTq505RjZ0FPf4rItk4.Yu3B6XZgOGzM14SSIECFeiFbdt3ROC.",
+  "role": "restricted"
+},{
+  "name": "Селиванов Павел Владимирович",
+  "email": "selivanov@tsnigri.ru",
+  "password": "$2b$10$2U8.c5l3A8fp8LiV/JZkHuD0duQuMH0WHF92OMl7T7JnuZp7C9eFy",
+  "role": "restricted"
+},{
+  "name": "Серавина Татьяна Валерьевна",
+  "email": "seravina@tsnigri.ru",
+  "password": "$2b$10$repoL8Dzg7ZbEzrznjkZhutKqB9OGAKZbpzdQwhvWF32IgRpD2WoK",
+  "role": "restricted"
+},{
+  "name": "Голубев Сергей Юрьевич",
+  "email": "sgolubev@tsnigri.ru",
+  "password": "$2b$10$pMJ/E8rMTy2KwnSQtnl8Bed8S9f7eiva6BbeEkz6QYD9KK1AZRDDu",
+  "role": "restricted"
+},{
+  "name": "Шатилова Людмила Викторовна",
+  "email": "shatilova@tsnigri.ru",
+  "password": "$2b$10$JzwbI75JXXf3eaNJWU1J1eiKFyJMAjx/PzimWFh9X.EApqHUtANZG",
+  "role": "restricted"
+},{
+  "name": "Шумилин Дмитрий Александрович",
+  "email": "shumilin@tsnigri.ru",
+  "password": "$2b$10$xMKWS31jQrNieOVKEx.JoeQzqctBjjqDlygbtFlwokNIFI16x8ycm",
+  "role": "restricted"
+},{
+  "name": "Старостин Иван Александрович",
+  "email": "starostin@tsnigri.ru",
+  "password": "$2b$10$JHDFwePUg.5A8//qDBnNqeqvjAzHvpYnDVsKgnTmB0am594pcPRL2",
+  "role": "restricted"
+},{
+  "name": "Столяренко Владимир Валентинович",
+  "email": "stolyarenko@tsnigri.ru",
+  "password": "$2b$10$lRO3Z.hAx2sjDbyXkDe8HOfd9aqTzhNgENndC.g8vjaiogjEq6eS2",
+  "role": "restricted"
+},{
+  "name": "Тамбовцева Елена Александровна",
+  "email": "tambovtseva@tsnigri.ru",
+  "password": "$2b$10$DjZzYOSTFwXn1.NCgcpbpe2hIH4ab/7N.vdOlFW4RBOwvZr.7D5oS",
+  "role": "restricted"
+},{
+  "name": "Тарасова Елена Владимировна",
+  "email": "tarasova@tsnigri.ru",
+  "password": "$2b$10$Cpdb7TJUu33KrIL1nUAHw.EtTUSqiZUPfzwkpX4fo1q9vINEbVR1K",
+  "role": "restricted"
+},{
+  "name": "Харченко Татьяна Николаевна",
+  "email": "tharchenko@tsnigri.ru",
+  "password": "$2b$10$u9d7adL.kl7ccHG9iBg7ZuldGC798JhY7F5Jf5hJlc7CzHUBxnDc2",
+  "role": "restricted"
+},{
+  "name": "Нигмаджанов Тимур Искандарович",
+  "email": "tnigmadzhanov@tsnigri.ru",
+  "password": "$2b$10$b4GxRmN4aExOAp4jaWXJTObQGQprvsVE9VlnFfqu12LS4EwMUGdjy",
+  "role": "restricted"
+},{
+  "name": "Токарева Екатерина Анатольевна",
+  "email": "tokareva@tsnigri.ru",
+  "password": "$2b$10$IRgaTYz/4D.E9Uect.GSvejZShsFWZ2eebogDety5UCXOGkLjSekO",
+  "role": "restricted"
+},{
+  "name": "Трач Галина Николаевна",
+  "email": "trach@tsnigri.ru",
+  "password": "$2b$10$3zNtxbWwmgOAXAkyM8JcvegfeSQZ2z9AWJN.NA0kyrbAVJE5q7bm6",
+  "role": "restricted"
+},{
+  "name": "Туровский Драгомир Сергеевич",
+  "email": "turovsky@tsnigri.ru",
+  "password": "$2b$10$didUOdr0H/b/DkIcZFgW8O9kdfi9nSIW8CRvyZtyChI.fhfdnn9kG",
+  "role": "restricted"
+},{
+  "name": "Ушарова Анна Борисовна",
+  "email": "uscharova@tsnigri.ru",
+  "password": "$2b$10$8Yz341mNOscAYE6bbGZa9.f7P5VjjlqY412u56a0JHPFUEcfBnX4q",
+  "role": "restricted"
+},{
+  "name": "Уварова Екатерина Александровна",
+  "email": "uvarova@tsnigri.ru",
+  "password": "$2b$10$CAVzlBZQHJK0DTFb8o0Qx.gJg10d0K9tsx1yPtYCsxWMUHTMz8hoa",
+  "role": "chief"
+},{
+  "name": "Васюков Владислав Евгеньевич",
+  "email": "vasyukov@tsnigri.ru",
+  "password": "$2b$10$kfe/irnhTZzYW4IhT8XNU.y5HzPvwKMQzUc3EiNHzbVgGTM.8dnyy",
+  "role": "restricted"
+},{
+  "name": "Видавский Владимир Витальевич",
+  "email": "vidavsky@tsnigri.ru",
+  "password": "$2b$10$quRcQDpWH063iFtcIvFlR.WmjTOz6v8VxeWERrdGfjSYL0h/10T.u",
+  "role": "restricted"
+},{
+  "name": "Виленкина Юлия Владимировна",
+  "email": "vilenkina@tsnigri.ru",
+  "password": "$2b$10$QKE4i97aMVs7rXeUK8razebPrDC1AwS5C49M2PNjn2Su2mcfnt33C",
+  "role": "restricted"
+},{
+  "name": "Витковская Лариса Игоревна",
+  "email": "vitkovskaya@tsnigri.ru",
+  "password": "$2b$10$roEwCRsS6c43Z41AhSUtRuj4RvzpAhRdTVVezFjLaYOhRMvjk8Eim",
+  "role": "restricted"
+},{
+  "name": "Воробьев Сергей Николаевич",
+  "email": "vorobev@tsnigri.ru",
+  "password": "$2b$10$fe6tZIQuBoErZtsk0syDxuCZnIw.Wfc8LKATSVce3Zb2QQmNBNdWq",
+  "role": "restricted"
+},{
+  "name": "Яворская Гелена Здиславовна",
+  "email": "yavorskaya@tsnigri.ru",
+  "password": "$2b$10$TUugL/M4cWbtQNv.MDzhZuMG8B0DMFOWpRqJ8yic6XEInqvQ6WR0S",
+  "role": "restricted"
+},{
+  "name": "Голубев Юрий Конкордьевич",
+  "email": "yugolubev@tsnigri.ru",
+  "password": "$2b$10$HWWKyz.drvorcMyxxxvSe.UlxRMUIXr3Fb8tdTC7SFlLTt.8KBAvi",
+  "role": "restricted"
+},{
+  "name": "Закиева Элина Владимировна",
+  "email": "zakieva@tsnigri.ru",
+  "password": "$2b$10$Bv6VMIski6aWVBJwmAO7MOmHncdKOEF0Rkso5LDTLw3U2/gNq4K0y",
+  "role": "restricted"
+},{
+  "name": "Зайцева Мария Николаевна",
+  "email": "zaytseva@tsnigri.ru",
+  "password": "$2b$10$JFY5HL8mPRr6nX3ELHs7i.aFhbAYDcKzL1MmI5QiE5qTTFqblLp.m",
+  "role": "restricted"
+},{
+  "name": "Жумадилова Диана Владимировна",
+  "email": "zhumadilova@tsnigri.ru",
+  "password": "$2b$10$YocXwdH1/1w2iBwq3p7Wquw751CVdkA/t4by87pgTYrdaAe5UU4pe",
+  "role": "restricted"
+},{
+  "name": "Зубова Татьяна Петровна",
+  "email": "zubova@tsnigri.ru",
+  "password": "$2b$10$OVq/DLvCZ8HCp6eozd9W5.13QprIwG94Owz7Nui/.LdrZV6mFk0Ni",
+  "role": "restricted"
+},{
+  "name": "Филатова Людмила Константиновна",
+  "email": "filatova@tsnigri.ru",
+  "password": "$2b$10$zPHUc0WwhWr9fCUyVvZYl.cSAt9gFLKeBbbdE1J33ynZbkMOaRiuC",
+  "role": "restricted"
+},{
+  "name": "Филиппова Светлана Сергеевна",
+  "email": "filippova@tsnigri.ru",
+  "password": "$2b$10$YRy/dAVxFh0FbUCLo2pmmu7/gobo/cTlNsQ8PXsGDoL1gQIjGwmdS",
+  "role": "restricted"
+},{
+  "name": "Гудкова Ирина Викторовна",
+  "email": "gudkova@tsnigri.ru",
+  "password": "$2b$10$xrNhmqlOk41FxsL5e3Ynme3Uyx9LXv6jOACfsnVL92tQfElMVja9.",
+  "role": "restricted"
+},{
+  "name": "Хачатуров Мартын Михайлович",
+  "email": "hachaturov@tsnigri.ru",
+  "password": "$2b$10$CB6JqUkNI1H7/RuNkw7shOZs1YTBpD8LNNwI0/9gga58LXg7vxFhO",
+  "role": "restricted"
+},{
+  "name": "Касикова Татьяна Игоревна",
+  "email": "kasikova@tsnigri.ru",
+  "password": "$2b$10$h8oVcpwvl3FE0HXkbTOaaOAzUEkeb00SaqO9yNjSlguK5fcJVTGli",
+  "role": "restricted"
+},{
+  "name": "Колесникова Татьяна Ивановна",
+  "email": "kolesnikova@tsnigri.ru",
+  "password": "$2b$10$1ZALjOdz08uDIt2YYjuNJ.Bq2muqHu3nwIdXe8SqDp6kLuDiwa8Yu",
+  "role": "restricted"
+},{
+  "name": "Лихачев Александр Петрович",
+  "email": "likhachev@tsnigri.ru",
+  "password": "$2b$10$zNE0Ju8LyBxFErjisQVzVuBswNMr9Wh08.cBpVTJ7rgAN36CmdfIa",
+  "role": "restricted"
+},{
+  "name": "Кудрявцева Нелли Георгиевна",
+  "email": "ngkudryavtseva@tsnigri.ru",
+  "password": "$2b$10$EuiQFm9RwO22qE254TQc7ulu8CsS8jTp6AgmaAT1AE1pn.Quj8ZIa",
+  "role": "restricted"
+},{
+  "name": "Кудрявцева Надежда Павловна",
+  "email": "nkudryavtseva@tsnigri.ru",
+  "password": "$2b$10$OKX0crAm.GSpNC2hMIWe9u4mtV581eZsL6lwdJ17l4apSxKg6WMwS",
+  "role": "restricted"
+},{
+  "name": "Толкушкина Елена Александровна",
+  "email": "tolkushkina@tsnigri.ru",
+  "password": "$2b$10$H5ncvJCXDgxBy0ynYpNdauCiSFlUnJbeOt7HtzIY6xbpY8JDKCOf2",
+  "role": "restricted"
+},{
+  "name": "Муравьев Владимир Сергеевич",
+  "email": "vmuravev@tsnigri.ru",
+  "password": "$2b$10$j2pAwfxiiwJUOaKVEyMFSO8DazhlDCu64YQ8EwYkphjr8gfgLIqmW",
+  "role": "chief"
+},{
+  "name": "Вахрушев Андрей Михайлович",
+  "email": "vahrushev@tsnigri.ru",
+  "password": "$2b$10$rkMhQ7hctRuHXKYmC5Grju3U4./LSytKyiwkg1dX6G9wWWrcbc/Ca",
+  "role": "chief"
+},{
+  "name": "admin",
+  "email": "admin@tsnigri.ru",
+  "password": "$2b$10$ePQ6ry0mulM1MOzAjzzo2uYUSU4mHDO3239CdZf.Xz1ZVAgnGKc7C",
+  "role": "admin"
+},{
+  "name": "Наумов Евгений Анатольевич",
+  "email": "naumov@tsnigri.ru",
+  "password": "$2b$10$Ooy0y2Lag31bUWKG9ZFsFemYW46xMt1GjvMYuFaQyr0ht2VaRtWmu",
+  "role": "chief"
+},{
+  "name": "Тарасов Александр Сергеевич",
+  "email": "tarasov@tsnigri.ru",
+  "password": "$2b$10$cBDg6h846LKhQ8CtVcQRcuNo7gCqsfAK7cOgiDeEHtZxjkhKACflu",
+  "role": "restricted"
+},{
+  "name": "Бондаренко Николай Викторович",
+  "email": "bondarenko@tsnigri.ru",
+  "password": "$2b$10$IoD8ZTTpU0sQ1gwstrjnG.upyUb5lJ9HqOKgKgmJJHbWB3dX9Sm8C",
+  "role": "restricted"
+},{
+  "name": "Кузнецов Владимир Вениаминович",
+  "email": "okt@tsnigri.ru",
+  "password": "$2b$10$b0YQIIDEoIq8Wt5tarF3ye.mcBs12.YK3l2KrC3ktk1cekPuhIhOi",
+  "role": "restricted"
+},{
+  "name": "Голубев Юрий Конкордьевич",
+  "email": "diamond@tsnigri.ru",
+  "password": "$2b$10$SWDsOXwS5G3EhEzbpjm7Vues30yb0Cp94f8Ku7Sv5dv.u7UBKTTi.",
+  "role": "restricted"
+},{
+  "name": "Мишенин Сергей Григорьевич",
+  "email": "mishenin@tsnigri.ru",
+  "password": "$2b$10$0QoN9TR9ow7PMHcgLswnJ.0WvtfOpbM1DBd6O7PnoBGc25WUbUZKS",
+  "role": "restricted"
+},{
+  "name": "Краснов Антон Николаевич",
+  "email": "krasnov@tsnigri.ru",
+  "password": "$2b$10$rugsE42cD5iSjUtVkogQ5urNX.nu09XEN5BbTgXm9JdK6Kn0zhX7W",
+  "role": "restricted"
+},{
+  "name": "Волчков Алексей Гордеевич",
+  "email": "dnms@tsnigri.ru",
+  "password": "$2b$10$gs2ZfO0QYQyK19gZJlkLAO3mo4J7uU0ySJ3/FNwHkI9g.kvDFCBMq",
+  "role": "restricted"
+},{
+  "name": "Хасанов Владислав Наилович",
+  "email": "khasanov@tsnigri.ru",
+  "password": "$2b$10$TsNTIgwjpdn1LpWdl.5hgewuvzMT.ekN9rqyDgUzftj0aOMHiKTNu",
+  "role": "restricted"
+},{
+  "name": "Кряжев Сергей Гаврилович",
+  "email": "kryazhev@tsnigri.ru",
+  "password": "$2b$10$owdCpL6xmhg1gElWuTChy.oSzlk1JXT2HeqfvXThNjQ5m4/musdAm",
+  "role": "restricted"
+},{
+  "name": "Звездов Вадим Станиславович",
+  "email": "metallogeny@tsnigri.ru",
+  "password": "$2b$10$63mqRcT9G1H6JML6w98xEetMLMNf0I3iRNm8SHnm7lWO.aZ.fIZo2",
+  "role": "restricted"
+},{
+  "name": "Куликов Данила Алексеевич",
+  "email": "kulikov@tsnigri.ru",
+  "password": "$2b$10$kdSXbMEa0toszTXvoY1NwupNUkMCzvEyKSnYtu/.ocxAeDFx3xdgO",
+  "role": "restricted"
+},{
+  "name": "Алексеев Ярослав Владимирович",
+  "email": "alekseev@tsnigri.ru",
+  "password": "$2b$10$y30jLg5axuLjJISU3v1wzeNoATB/KxXrYEZnjAFp5I6khyRBKw6mS",
+  "role": "restricted"
+},{
+  "name": "Дубов Никита Владимирович",
+  "email": "ndubov@tsnigri.ru",
+  "password": "$2b$10$.w46s7ci6.n5B66o6VWq/eWvGyv8XgVCaLY4UIJEOkPktDa4YiTdS",
+  "role": "restricted"
+},{
+  "name": "Ефремов Максим Афанасьевич",
+  "email": "efremov@tsnigri.ru",
+  "password": "$2b$10$hxyH1ztHto1qj6FmsmDAAehHHYGBDsKrzLZUB4VrCjkWgHYjbauNu",
+  "role": "restricted"
+},{
+  "name": "admin",
+  "email": "tsnigri@tsnigri.ru",
+  "password": "$2b$10$Kas2AQXtznDkFcMc7FPXcOEqeEhsi2tNsLhaS.sgweEePwc/JrRv6",
+  "role": "admin"
+},{
+  "name": "Сорокин Дмитрий Анатольевич",
+  "email": "sorokin@tsnigri.ru",
+  "password": "$2b$10$Epg0MAT0oGIfoq9qIQ8BS.QcLoEVLU4lDru83Azi0iNxdskurot8O",
+  "role": "restricted"
+},{
+  "name": "Габбасов Камиль Азатович",
+  "email": "gabbasov@tsnigri.ru",
+  "password": "$2b$10$q09cBh.RXOsNJJRd0E7/ZO00CByigedM22ETAWy/J.9iSBWPdKsFq",
+  "role": "restricted"
+},{
+  "name": "Александров Петр Александрович",
+  "email": "paleksandrov@tsnigri.ru",
+  "password": "$2b$10$yS8oIXmQUYEnS8q7ZpYIceWOpwRoGQb7A6dxvffg1aJEWDz7COVUK",
+  "role": "restricted"
+},{
+  "name": "Широбоков Алексей Юрьевич",
+  "email": "shirobokov@tsnigri.ru",
+  "password": "$2b$10$uFEf8OAdwrHoRqrJ3a3Dg.hJaG.CG92f3uutD.lPp5/2gB0BM/Yte",
+  "role": "restricted"
+},{
+  "name": "Додриков Юрий Александрович dodrikov@tsnigri.ru",
+  "email": "dodrikov@tsnigri.ru",
+  "password": "$2b$10$1ArGIOgxHPmZgBTmXQP2RuGKIM1m9P9xP8U6AtTG2MeomUNmenbqe",
+  "role": "restricted"
+},{
+  "name": "Усанова Олеся Игоревна",
+  "email": "usanova@tsnigri.ru",
+  "password": "$2b$10$Zip.rVdjVtyz2b455jcnt.02Mf/y9uThCZeVY2FmnOWudFqncdnPW",
+  "role": "restricted"
+},{
+  "name": "Калугин Валерий Михайлович",
+  "email": "kalugin@tsnigri.ru",
+  "password": "$2b$10$8w.9nSV/yQq1.0Zdna7.8OlyfBaXvWZsoHhFKLAB7TBAw.5/KCkGi",
+  "role": "restricted"
+},{
+  "name": "Абраменков Кирилл Сергеевич",
+  "email": "abramenkov@tsnigri.ru",
+  "password": "$2b$10$wjDBSg0BNvyGa8j8sGh2tOu7kMiiDoHGPc7hB7uiOSdX/OgzeN8Ia",
+  "role": "restricted"
+},{
+  "name": "Щендригин Александр Николаевич",
+  "email": "us@tsnigri.ru",
+  "password": "$2b$10$UBPVqbxAuv1lLKFkGdOzbe02l1QCTgaFpbTswpg.G47ZzEIM6H4LW",
+  "role": "restricted"
+},{
+  "name": "Суслова Светлана Валерьевна",
+  "email": "ssuslova@tsnigri.ru",
+  "password": "$2b$10$cA/h7GzBoMot/SiufiWHA.TK9gAp0aRVLTTZsB0pDFJTo1INpXuCG",
+  "role": "restricted"
+}]

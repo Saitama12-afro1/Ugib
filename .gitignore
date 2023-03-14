@@ -4,6 +4,11 @@ env
 env/pyvenv.cfg
 ugib/ugib/__pycache__/
 ugib/crud/__pycache__/переезд
+Ugib\ugib\crud\templatetags\__pycache__
+Ugib\ugib\crud\__pycache__
+Ugib\ugib\grr\__pycache__
+Ugib\ugib\ugib\__pycache__
+Ugib\ugib\grr\migrations\__pycache__
 ugib/crud/migrations/__pycache__/
 ugib/crud/__pycache__/filters.cpython-310.pyc
 ugib/crud/__pycache__/models.cpython-310.pyc
@@ -7934,5 +7939,3 @@ env/Lib/site-packages/urllib3-1.26.12.dist-info/RECORD
 env/Lib/site-packages/urllib3-1.26.12.dist-info/top_level.txt
 env/Lib/site-packages/urllib3-1.26.12.dist-info/WHEEL
 env/Scripts/normalizer.exe
-t.py
-t.py

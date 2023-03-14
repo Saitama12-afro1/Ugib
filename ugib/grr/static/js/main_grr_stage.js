@@ -14,6 +14,14 @@ function window_form_order(){
     tag3.hidden = !tag3.hidden    
     };
 
+function refresh_meta(event){
+        let current_page = document.querySelector(".page-item.active").innerText;
+        let cookie = document.cookie;
+        let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+        $.post('/refresh', {'cur_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
+        });
+       
+    };
 
 function deleteUds(event){
     var tag  = event.target.value;

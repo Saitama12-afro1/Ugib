@@ -94,6 +94,7 @@ class UdsMeta(models.Model):
     path_local = UnlimitedCharField( blank=True, null=True)
     path_cloud = UnlimitedCharField( blank=True, null=True)
     status = UnlimitedCharField( blank=True, null=True)#all null
+    geom_status = UnlimitedCharField( blank=True, null=True)
     timecode = UnlimitedCharField( blank=True, null=True)#all null
     obj_sub_group_ref = UnlimitedCharField( blank=True, null=True)
     path_local_ref = UnlimitedCharField( blank=True, null=True)
@@ -154,16 +155,18 @@ class Bascet(models.Model):
 
 
 class Order(models.Model):
+    order_id = models.IntegerField(primary_key=True)
     udsMeta = models.ForeignKey(
             UdsMeta, 
-            on_delete = models.CASCADE
+            on_delete = models.CASCADE,
+            db_column="uds_id"
         )
     my_user = models.ManyToManyField(
             User,
             related_name = "orders",
-            related_query_name = "order" 
+            related_query_name = "order"
             )
-    datetimeAppend = models.DateTimeField()
+    dataAppend = models.DateTimeField()
     status = models.BooleanField()
     
     class Meta:
@@ -173,12 +176,7 @@ class Order(models.Model):
 class History(models.Model):
     date = models.DateField()
     typeAction = models.CharField(max_length = 100)
-    
-    my_user = models.ForeignKey(
-        User,
-        on_delete = models.CASCADE,
-        related_name = "histories"
-    )
+    my_user = models.ForeignKey(User, on_delete = models.CASCADE,related_name = "histories")
     udsMeta = models.TextField()
     order = models.BooleanField()
     fond = models.CharField(max_length=50, default="01found")
