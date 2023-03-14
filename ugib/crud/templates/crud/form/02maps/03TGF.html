@@ -93,9 +93,16 @@
     <label for = "obj_synopsis" class = "lbl">Синопсис</label> 
     <textarea class="form-control" name = "obj_synopsis" value = "" > </textarea>
     
-   
-    <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
-    <textarea class="form-control" name = "obj_type" value = "">Карта</textarea>
+    <div class = "dropright">
+        <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "obj_type" value = "">Карта</textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Карта</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Объяснительная записка</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Карта, Объяснительная записка</button>
+    </div>
+    </div>
     <label for = "obj_sub_type" class = "lbl">Условное название каталога учета</label> 
     <textarea class="form-control" name = "obj_sub_type" value = "" >Карты</textarea>
     <label for = "obj_assoc_inv_nums" class = "lbl" >Инвентарные номера в каталогах учета</label> 
@@ -222,14 +229,14 @@
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 
-    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">01FOND</textarea>
+    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">02MAPS</textarea>
     <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
     <textarea class="form-control" name = "obj_sub_group" id = "obj_sub_group"value = "" >{{choise}}</textarea>
 
     <label for = "path_local" class = "lbl">path_local</label> 
-    <textarea  class="form-control" name = "path_local" value = "" id = "path_local"> > </textarea>
+    <textarea  class="form-control" name = "path_local" value = "" id = "path_local"></textarea>
     <label for = "path_cloud" class = "lbl">path_cloud</label> 
-    <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"> </textarea>
+    <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"></textarea>
     <label for = "status" class = "lbl">Cтатус</label> 
     <textarea  class="form-control" name = "status" value = ""> </textarea>
     <label for = "timecode" class = "lbl">Дата изменения</label> 
@@ -238,9 +245,9 @@
     <textarea class="form-control" name = "obj_sub_group_ref" value = "">{{choise}}_REF</textarea>
 
     <label for = "path_local_ref" class = "lbl"> path_local_ref</label> 
-    <textarea class="form-control" name = "path_local_ref" value = "" id = "path_local_ref"> </textarea>
+    <textarea class="form-control" name = "path_local_ref" value = "" id = "path_local_ref"></textarea>
     <label for = "path_cloud_ref" class = "lbl">path_cloud_ref </label> 
-    <textarea  class="form-control" name = "path_cloud_ref" value = "" id = "path_cloud_ref"> </textarea>
+    <textarea  class="form-control" name = "path_cloud_ref" value = "" id = "path_cloud_ref"></textarea>
   </div>
 
 </div>

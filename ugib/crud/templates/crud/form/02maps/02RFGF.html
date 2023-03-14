@@ -4,13 +4,11 @@
     <label for = "stor_folder" class = "lbl">Папка хранения</label>
     <textarea class="form-control" name = "stor_folder" id = "stor_folder_valid" value = "" novalidate onblur = "my_blur(event)"></textarea>
     <span class="error" aria-live="polite" id = "error_stor_folder"></span>
-    <div class="dropright">
-                <label for = "stor_phys" class = "lbl">Физическое место хранения вещественного носителя</label>
-                <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_phys"> Росгеолфонд</textarea>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button" onClick ="valInput(event)">Росгеолфонд</button>
-                    </div>
-                </div>
+
+    <label for = "stor_phys" class = "lbl">Физическое место хранения вещественного носителя</label>
+    <textarea class="form-control"  name = "stor_phys"></textarea>
+    
+               
     <label for = "stor_reason" class = "lbl">Причина передачи</label> 
     <textarea class="form-control"   name = "stor_reason" id = "stor_reason" value = "">Приказ ФГУП ЦНИГРИ (ФГБУ "ЦНИГРИ") от 25.10.2016 № 57. Регламент № 1 учета и передачи информации в цифровом виде электронного банка геологических данных ФГБУ "ЦНИГРИ", 2018</textarea>
     <label for = "stor_date" class = "lbl"> Дата передачи</label> 
@@ -76,13 +74,20 @@
     <label for = "obj_synopsis" class = "lbl">Синопсис</label> 
     <textarea class="form-control" name = "obj_synopsis" value = "" > </textarea>
     
+    <div class = "dropright">
+        <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "obj_type" value = "">Карта</textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 
-    <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
-    <textarea class="form-control" name = "obj_type" value = "">Карта</textarea>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Карта</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Объяснительная записка</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Карта, Объяснительная записка</button>
+    </div>
+    </div>
     <label for = "obj_sub_type" class = "lbl">Условное название каталога учета</label> 
     <textarea class="form-control" name = "obj_sub_type" value = "" >Карты</textarea>
     <label for = "obj_assoc_inv_nums" class = "lbl" >Инвентарные номера в каталогах учета</label> 
-    <textarea class="form-control" name = "obj_assoc_inv_nums" value = ""  id = "obj_assoc_inv_nums">Росгеолфонд:</textarea>
+    <textarea class="form-control" name = "obj_assoc_inv_nums" value = ""  id = "obj_assoc_inv_nums">ЦНИГРИ:</textarea>
     <label for = "obj_date" class = "lbl">Дата составления объекта учета</label> 
     <textarea class="form-control" name = "obj_date" value = "" > </textarea>
     <label for = "obj_year" class = "lbl">Год составления объекта учета</label> 
@@ -205,15 +210,15 @@
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 
-    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">01FOND</textarea>
+    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">02MAPS</textarea>
         <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
         <textarea class="form-control" name = "obj_sub_group" id = "obj_sub_group" value = "" >{{choise}}</textarea>
       
 
     <label for = "path_local" class = "lbl">path_local</label> 
-    <textarea  class="form-control" name = "path_local" value = "" id = "path_local"> > </textarea>
+    <textarea  class="form-control" name = "path_local" value = "" id = "path_local"></textarea>
     <label for = "path_cloud" class = "lbl">path_cloud</label> 
-    <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"> </textarea>
+    <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"></textarea>
     <label for = "status" class = "lbl">Cтатус</label> 
     <textarea  class="form-control" name = "status" value = ""> </textarea>
     <label for = "timecode" class = "lbl">Дата изменения</label> 
