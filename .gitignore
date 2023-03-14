@@ -2,6 +2,14 @@ task.txt
 test.py
 env
 env/pyvenv.cfg
+ugib/ugib/__pycache__/
+ugib/crud/__pycache__/
+Ugib\ugib\crud\templatetags\__pycache__
+Ugib\ugib\crud\__pycache__
+Ugib\ugib\grr\__pycache__
+Ugib\ugib\ugib\__pycache__
+Ugib\ugib\grr\migrations\__pycache__
+ugib/crud/migrations/__pycache__/
 env/Lib/site-packages/distutils-precedence.pth
 env/Lib/site-packages/Django-4.1.1.dist-info/AUTHORS
 env/Lib/site-packages/Django-4.1.1.dist-info/entry_points.txt
