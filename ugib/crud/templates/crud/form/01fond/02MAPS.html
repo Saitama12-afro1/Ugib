@@ -7,9 +7,9 @@
     <span class="error" aria-live="polite" id = "error_stor_folder"></span>
     <div class="dropright">
                 <label for = "stor_phys" class = "lbl">Физическое место хранения вещественного носителя</label>
-                <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_phys"> Отдел геолого-экономической оценки месторождений и апробации </textarea>
+                <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_phys"> Фонды ЦНИГРИ </textarea>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button" onClick ="valInput(event)">Отдел геолого-экономической оценки месторождений и апробации</button>
+                        <button class="dropdown-item" type="button" onClick ="valInput(event)">Фонды ЦНИГРИ</button>
                     </div>
                 </div>
     
@@ -35,20 +35,33 @@
                 <button class="dropdown-item" type="button" onClick ="valInput(event)">Ушарова А.Б., ведущий инженер</button>
             </div>
         </div>
-    <label for = "stor_desc" class = "lbl">Дополнительные сведения</label> 
-    <textarea class="form-control"  name = "stor_desc"  id = "stor_desc"  onblur = "desc_blur(event)">{{stor_desc}}</textarea>
-    <span class="error" aria-live="polite" id = "error_stor_desc"></span>
-    <label for = "stor_fmts" class = "lbl">Тип файлов</label> 
-    <textarea class="form-control" name = "stor_fmts" value = "" ></textarea>
     <div class = "dropright">
-        <label for = "stor_units" class = "lbl">Единицы хранения документа</label> 
-        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "stor_units" value = "" ></textarea>
+        <label for = "stor_desc" class = "lbl">Дополнительные сведения</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  name = "stor_desc"  id = "stor_desc" ></textarea>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" type="button" onClick ="valInput(event)"> Протокол. Материалы на апробацию</button>
-                <button class="dropdown-item" type="button" onClick ="valInput(event)"> Протокол. Заключения. Материалы на апробацию</button>
-                <button class="dropdown-item" type="button" onClick ="valInput(event)"> Протокол. Заключения</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">Росгеолфонд</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Чукотскому АО</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Красноярскому кр.</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Северо-Западному ФО</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Хакасия</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Дальневосточному ФО</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Иркутской обл. и Усть-Ордынскому Бурятскому АО</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Кемеровской обл.</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Красноярскому кр.</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Мурманской обл.</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Адыгея</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Алтай</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Бурятия</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Карелия</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Тыва</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Респ. Хакасия</button>
+                <button class="dropdown-item" type="button" onClick ="valInputMore(event)">ТФГИ по Северо-Западному ФО</button>
             </div>
     </div>
+    <label for = "stor_fmts" class = "lbl">Тип файлов</label> 
+    <textarea class="form-control" name = "stor_fmts" value = "" ></textarea>
+    <label for = "stor_units" class = "lbl">Единицы хранения документа</label> 
+    <textarea class="form-control" name = "stor_units" value = "" ></textarea>
     <label for = "obj_name" class = "lbl">Название объекта</label> 
     <textarea class="form-control" name = "obj_name" value = "" id = "obj_name_valid"> </textarea>
     <span class="error" aria-live="polite" id = "error_obj_name"></span>
@@ -70,21 +83,15 @@
     </div>
     <label for = "obj_synopsis" class = "lbl">Синопсис</label> 
     <textarea class="form-control" name = "obj_synopsis" value = "" > </textarea>
-    <div class = "dropright">
-        <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
-        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "obj_type" value = "">Материалы на апробацию</textarea>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" type="button" onClick ="valInput(event)">Материалы на апробацию</button>
-               
-            </div>
-    </div>
+    <label for = "obj_type" class = "lbl">Вид объекта учета</label> 
+    <textarea class="form-control" name = "obj_type" value = "">Карта</textarea>
+
         <label for = "obj_sub_type" class = "lbl">Условное название каталога учета</label> 
-        <textarea class="form-control" name = "obj_sub_type" value = "" >Материалы к апробации прогнозных ресурсов</textarea>
+        <textarea class="form-control" name = "obj_sub_type" value = "" >Карты</textarea>
     <label for = "obj_assoc_inv_nums" class = "lbl" >Инвентарные номера в каталогах учета</label> 
     <textarea class="form-control" name = "obj_assoc_inv_nums" value = ""  id = "obj_assoc_inv_nums">ЦНИГРИ:</textarea>
-    <span class="error" aria-live="polite" id = "error_obj_assoc_inv_nums"></span>
     <label for = "obj_date" class = "lbl">Дата составления объекта учета</label> 
-    <textarea class="form-control" name = "obj_date" id ="obj_date" value = "" >{{current_date}}</textarea>
+    <textarea class="form-control" name = "obj_date" value = "" > </textarea>
     <label for = "obj_year" class = "lbl">Год составления объекта учета</label> 
     <textarea class="form-control" name = "obj_year" value = "" id = "obj_year"> </textarea>
     <label for = "obj_authors" class = "lbl">Автор (авторы)</label> 
@@ -126,7 +133,7 @@
     <label for = "obj_main_min" class = "lbl">Иные дополнительные сведения</label> 
     <textarea class="form-control" name = "obj_supl_info" value = "" > </textarea>
     <div class = "dropright">
-        <label for = "obj_main_min" class = "lbl">'Полезные ископаемые основные</label> 
+        <label for = "obj_main_min" class = "lbl">Полезные ископаемые основные</label> 
         <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id = "obj_main_min_valid" name = "obj_main_min" value = ""> </textarea>
         <span class="error" aria-live="polite" id = "error_obj_main_min"></span> 
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -195,25 +202,34 @@
     <textarea class="form-control" name = "spat_toponim" id = "spat_toponim_valid"> </textarea>
     <label for = "inf_type" class = "lbl">Тип информации</label> 
     <textarea class="form-control" name = "inf_type" >Интерпретированная </textarea>
-    <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
-    <textarea class="form-control" name = "inf_media" >Электронный</textarea>
+    <div class = "dropright">
+        <label for = "inf_media" class = "lbl">Вид носителя информации</label> 
+        <textarea class="form-control dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name = "inf_media" > </textarea>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Электронный</button>
+            <button class="dropdown-item" type="button" onClick ="valInput(event)">Бумажный</button>
+        </div>
+    </div>
     <label for = "path_others" class = "lbl">Государственная регистрация</label> 
     <textarea class="form-control" name = "path_others" value = ""> </textarea>
     <label for = "obj_main_group" class = "lbl">Формула</label> 
-    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">13APR_PR</textarea>
+    <textarea class="form-control" name = "obj_main_group" id = "obj_main_group">01FOND</textarea>
     <label for = "obj_sub_group" class = "lbl">obj_sub_group</label> 
-    <textarea class="form-control" name = "obj_sub_group" id = "obj_sub_group"value = "">01_APR_PR</textarea>
+    <textarea class="form-control" name = "obj_sub_group" id = "obj_sub_group"value = "">{{choise}}</textarea>
     <label for = "path_local" class = "lbl">path_local</label> 
     <textarea  class="form-control" name = "path_local" value = "" id = "path_local"> </textarea>
     <label for = "path_cloud" class = "lbl">path_cloud</label> 
     <textarea   class="form-control" name = "path_cloud" value = "" id = "path_cloud"> </textarea>
-    <label for = "path_local_protocol" class = "lbl">path_local_protocol</label> 
-    <textarea  class="form-control" name = "path_local_protocol" value = "" id = "path_local_protocol">{{path_local_protocol}}</textarea>
-    <label for = "path_cloud_protocol" class = "lbl">path_cloud_protocol</label> 
-    <textarea   class="form-control" name = "path_cloud_protocol" value = "" id = "path_cloud_protocol">{{path_cloud_protocol}}</textarea>
     <label for = "status" class = "lbl">Cтатус</label> 
     <textarea  class="form-control" name = "status" value = ""> </textarea>
     <label for = "timecode" class = "lbl">Дата изменения</label> 
     <textarea class="form-control" name = "timecode" value = "" > </textarea>
+        <label for = "obj_sub_group_ref" class = "lbl">obj_sub_group_ref </label> 
+        <textarea class="form-control" name = "obj_sub_group_ref" value = ""> {{choise}}_REF </textarea>
+
+    <label for = "path_local_ref" class = "lbl"> path_local_ref</label> 
+    <textarea class="form-control" name = "path_local_ref" value = "" id = "path_local_ref"> </textarea>
+    <label for = "path_cloud_ref" class = "lbl">path_cloud_ref </label> 
+    <textarea  class="form-control" name = "path_cloud_ref" value = "" id = "path_cloud_ref"> </textarea>
   </div>
 </div>

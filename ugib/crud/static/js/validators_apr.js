@@ -37,7 +37,22 @@ function current_height(area){
     stor_reason.addEventListener("input", function (e) { fixTextareaSize(stor_reason) })
 
     let obj_assoc_inv_nums = document.getElementById("obj_assoc_inv_nums")
-    obj_assoc_inv_nums.addEventListener("input", function (e){fixTextareaSize(obj_assoc_inv_nums)})
+    obj_assoc_inv_nums.addEventListener("input", function (e){
+        fixTextareaSize(obj_assoc_inv_nums);
+        console.log(obj_assoc_inv_nums.value);
+        const pattern = /ЦНИГРИ+\s?:/
+        const error = document.querySelector("#error_obj_assoc_inv_nums");
+        if(obj_assoc_inv_nums.value.search(pattern) != -1){
+            error.textContent = "";
+            error.className = "error";
+        }else{
+            showError()
+        }        
+        function showError() {
+            error.textContent = "Првоерьте правильност ьнаписания слова ЦНИГРИ"
+            error.className = 'error active';
+        }
+    })
 
     let spat_num_grid = document.getElementById("spat_num_grid_valid");
     spat_num_grid.addEventListener("input", (event) => {

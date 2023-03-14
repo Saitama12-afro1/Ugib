@@ -1,12 +1,13 @@
-# class Solution:
-#     def trap(self, height: list[int]) -> int:
-#         count = 0
-#         curr_max = float("-inf")
-#         curr_min = float("inf")
-#         for i in range(height):
-#             if height(i) < curr_min:
-        
-
-# height = []
-
-# print(Solution().trap(height))
+from decimal import *
+def exp(x):
+    getcontext().prec += 2
+    i, lasts, s, fact, num = 0, 0, 1, 1, 1
+    while s != lasts:
+        lasts = s
+        i += 1
+        fact *= i
+        num *= x
+        s += num / fact
+    getcontext().prec -= 2
+    return +s
+exp(Decimal(3000))

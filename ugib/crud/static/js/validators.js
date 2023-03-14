@@ -1,27 +1,13 @@
 function dinamic_form(event) {
-    let this_choise = event.target.value;
-    if (this_choise == "01TSNIGRI")
-    $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
+    let this_choise = document.getElementById("select_sub").value;
+    let choise_fond = document.getElementById("select_fond")
+    console.log(choise_fond.value)
+    
+    $.get( "get_html_uds/", data = {'choise':this_choise, "fond": choise_fond.value}, function( data ) {
         $( "#valid_div" ).html( data );
         TSNIGRI_validation(this_choise)
       });
-      else if (this_choise == "02RFGF"){
-    $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
-        $( "#valid_div" ).html( data );
-        TSNIGRI_validation(this_choise)
-      });
-      }
-      else if (this_choise == "03TGF"){
-        $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
-            $( "#valid_div" ).html( data );
-            TSNIGRI_validation(this_choise)
-          });
-      }else if (this_choise == "04OTHER_ORG"){
-        $.get( "get_html_uds/", data = {'choise':this_choise}, function( data ) {
-            $( "#valid_div" ).html( data );
-            TSNIGRI_validation(this_choise)
-          });
-      }
+    
 }
 
 function current_height(area){
@@ -141,6 +127,7 @@ function current_height(area){
         }
     })
 
+    
     let stor_desc = document.getElementById("stor_desc")
     stor_desc.addEventListener("input", (event) =>{
         fixTextareaSize(stor_desc);
@@ -157,6 +144,7 @@ function current_height(area){
         }
     })
     if ((choise == "03TGF")|| (choise == "04OTHER_ORG")){
+
     let stor_phys = document.getElementById("stor_phys")
     stor_phys.addEventListener("input", (event) =>{
         fixTextareaSize(area);
@@ -208,22 +196,56 @@ function current_height(area){
         fixTextareaSize(obj_rdoc_name);
         let mas = right_bracket(obj_rdoc_name.value)
         const error = document.querySelector("#error_obj_rdoc_name");
+        var pattern1 = /<</;
+        var pattern2 = />>/;
+        var patterns =[/Договор/, /ГК/, /Доп. Соглашение/, /№/, /[А-Я.]?[0-9\.]+/, /от/, /[\.\,-]\s?/]
+        let text = obj_rdoc_name.value.split(" ");
+        console.log(text);
+        for (let el of text){
+            let isMatching = false;
+            for (let pattern of patterns){
+                console.log(pattern.test(el))
+                if (pattern.test(el)){
+                
+                    isMatching = true
+                    break;
+                }
+            }
+            console.log(isMatching);
+            if (isMatching == false){
+                error.textContent = "Не соответствует шаблону, проверьте стоит ли пробел после № или же ошибка в чем-то другом"
+                error.className = 'error active';
+                break;
+            }
+            else{
+                if (error.textContent =="Не соответствует шаблону, проверьте стоит ли пробел после № или же ошибка в чем-то другом"){
+                error.textContent = "";
+                error.className = "error";
+                }
+            }
+        }
         if (mas.length == 0 && obj_rdoc_name.value.search(pattern1) == -1  && obj_rdoc_name.value.search(pattern2) == -1){
+            if (error.textContent =="Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"){
             error.textContent = "";
             error.className = "error";
+            }
         }else{
             showError()
-        }        
+        }
+ 
         function showError() {
             error.textContent = "Не соответствует шаблону, не закрыта скобка или кавычка или же вы используете <<"
             error.className = 'error active';
         }
     })
+
     let obj_rdoc_num = document.getElementById("obj_rdoc_num_valid");
     obj_rdoc_num.addEventListener("input", (event) => {
         fixTextareaSize(obj_rdoc_num);
         let mas = right_bracket(obj_rdoc_num.value)
         const error = document.querySelector("#error_obj_rdoc_num");
+        var pattern1 = /<</;
+        var pattern2 = />>/;
         if (mas.length == 0  && obj_rdoc_num.value.search(pattern1) == -1  && obj_rdoc_num.value.search(pattern2) == -1){
             error.textContent = "";
             error.className = "error";
@@ -255,8 +277,8 @@ function current_height(area){
     obj_orgs.addEventListener("input", (event) => {
         let mas = right_bracket(obj_orgs.value);
         const error = document.querySelector("#error_obj_orgs");
-        pattern1 = /<</;
-        pattern2 = />>/;
+        var pattern1 = /<</;
+        var pattern2 = />>/;
 
         if (mas.length == 0 && obj_orgs.value.search(pattern1) == -1  && obj_orgs.value.search(pattern2) == -1){
             error.textContent = "";

@@ -34,7 +34,7 @@
       
         <a href = "{% url "crud:logout"%}"> Выйти</a>
         {% if super_users %}
-        <button type="button" class="btn btn-link" onclick="window.location.href = '/refresh'">Обновить</button>
+        <button type="button" class="btn btn-link" onclick="refresh_meta(event)">Обновить</button>
         <a href = "{% url "crud:history"%}"> История</a>
 			
         {% endif %}
@@ -139,8 +139,9 @@
     <div class="modal-dialog modal-dialog-centered modal-xl modal-custom " id = "custom_modal" role="document">
       <div class="modal-content modal-content-custom" >
         <div class="modal-header">
-          <select>
+          <select id = "select_fond" onClick = "dinamic_form(event)">
             <option>01FOND</option>
+            <option>02MAPS</option>
           </select>
           <select id = "select_sub" onClick = "dinamic_form(event)" >
             <option>01TSNIGRI</option>

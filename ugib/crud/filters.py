@@ -24,9 +24,9 @@ class UdsMetaFilters(django_filters.FilterSet):
         
         if value.replace(".", "", 1).isdigit():
             value = Decimal(value)
-            result_query =  UdsMeta.objects.filter(
-                Q(oid__icontains=value)
+            result_query =  UdsMeta.objects.filter(Q(oid__icontains=value) | Q(stor_folder__icontains=value)
             )
+                
         else:
             result_query =  UdsMeta.objects.filter(
                 Q(obj_authors__icontains=value) | Q(stor_folder__icontains=value) | Q(uniq_id__icontains=value)
@@ -74,12 +74,18 @@ class UdsMetaAprFilters(django_filters.FilterSet):
         if value.replace(".", "", 1).isdigit():
             value = Decimal(value)
             result_query =  UdsMetaApr.objects.filter(
-                Q(oid__icontains=value)
+              Q(oid__icontains=value) | Q(stor_folder__icontains=value)
             )
-
+        elif len(UdsMetaApr.objects.filter(
+             Q(stor_folder__icontains=value)
+            )) !=0:
+            result_query =  UdsMetaApr.objects.filter(
+             Q(stor_folder__icontains=value)
+            )
+            
         else: 
             result_query = UdsMetaApr.objects.filter(
-            Q(obj_authors__icontains=value) | Q(stor_folder__icontains=value) | Q(uniq_id__icontains=value)
+            Q(obj_authors__icontains=value) | Q(uniq_id__icontains=value)
             | Q(obj_main_min__icontains=value) | Q(stor_date__icontains=value) | Q(stor_phys__icontains=value) | Q(stor_date__icontains=value)
             | Q(stor_dept__icontains=value) | Q(stor_desc__icontains=value) | Q(stor_fmts__icontains=value) | Q(stor_units__icontains=value)
             | Q(obj_name__icontains=value) | Q(type_of_work__icontains=value) | Q(stor_fmts__icontains=value) | Q(stor_person__icontains=value)
@@ -108,6 +114,7 @@ class UdsMetaAprFilters(django_filters.FilterSet):
                     for c, col in enumerate(row):
                         worksheet.write(r, c, col)
             workbook.close()
+        print(result_query)
         return result_query
         
 class HistoryFilter(django_filters.FilterSet):

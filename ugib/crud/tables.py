@@ -17,7 +17,7 @@ class UdsMetaTable(tables.Table):
     
     class Meta:
         model = UdsMeta
-        template_name = "crud/index/01found/uds_table_htmx.html"
+        template_name = "crud/index/01fond/uds_table_htmx.html"
         sequence = ('Delete','Exel', 'Update','Bascet')
 
 

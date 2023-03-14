@@ -13,7 +13,7 @@ import xlsxwriter
 from docxtpl import DocxTemplate
 from xlsxwriter.workbook import Workbook
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.utils import IntegrityError
@@ -48,20 +48,22 @@ MyHasher = MyHasher()
 @login_required(login_url="/")
 @transaction.atomic
 def refresh_view(request):
-    with connection.cursor() as cursor:
-        # # cursor.execute("REFRESH MATERIALIZED VIEW public.mat_view_v3 WITH data")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_apr_geom_mat_view_v1  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_geom_mat_view  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_mat_view  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view  WITH data;")
-        # # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view_test  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_geom_mat_view  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_mat_view  WITH data;")
-        # # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_ntb_final  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_protocols_geom_mat_view_v1  WITH data;")
-        # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_view_mat_v4  WITH data;")
-        cursor.execute("select diagnostic.refresh_mat_view()")
-    return redirect('/')
+    if request.method == 'POST':
+        with connection.cursor() as cursor:
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.mat_view_v3 WITH data")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_apr_geom_mat_view_v1  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_geom_mat_view  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_accom_mat_view  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_geom_mat_view_test  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_geom_mat_view  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_grr_stage_mat_view  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_ntb_final  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_protocols_geom_mat_view_v1  WITH data;")
+            # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_view_mat_v4  WITH data;")
+            cursor.execute("select diagnostic.refresh_mat_view()")
+        cur_page_link = request.POST["cur_page"]
+        return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
             
 
 @login_required(login_url="/")
@@ -212,10 +214,13 @@ def bascet(request):
 def page_not_found(request, exception):
     return render(request,'crud/errors/404.html', {'path': request.path}, status = 404 )
 
+
+
 class HistoryView(FilterView):
     filterset_class = HistoryFilter
     template_name = "crud/history/history.html"
     paginate_by = 20
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
@@ -260,30 +265,14 @@ def history_views(request):
     
     return render(request, template, context)
 
+
 def test(request):
-    uds = UdsMeta.objects.all().order_by("-oid")
-    a = "https://cloud.tsnigri.ru/apps/files/?dir=/01-01-%D0%A4%D0%9E%D0%9D%D0%94%D0%9E%D0%92%D0%AB%D0%95%20%D0%9C%D0%90%D0%A2%D0%95%D0%A0%D0%98%D0%90%D0%9B%D0%AB%20%D0%A6%D0%9D%D0%98%D0%93%D0%A0%D0%98/8518-%D0%91%D0%B5%D1%80%D0%B5%D0%B7%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%AE.%D0%9A.%2C1986&fileid=5896026"
-    b = "http://cloud.tsnigri.ru/apps/files/?dir=/01-01-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/8518-Березиков Ю.К.,1986"
-    resp  = requests.get(a,headers={"Host":"cloud.tsnigri.ru"})
-    
-    # answer = []
-    # for i in uds:
-    #     url = str(i.path_cloud_ref)
-    #     print(url, end=" ")
-    #     url = url.replace("http://cloud.tsnigri.ru/", "https://cloud.tsnigri.ru/login?redirect_url=")
-    #     print(url)
-    #     try:
-    #         a = requests.get(url, headers={"Host":"cloud.tsnigri.ru"}, timeout=5)
-    #         print(a.url,  a.status_code)
-    #         if a.status_code == 404:
-    #             answer.append(i.oid)
-    #     except :
-    #         answer.append(i.oid)
-    
-    # print(answer)
-    if request.method == "POST":
-        print(request.POST)
-    return redirect("/")
+    import json 
+    with open("users.json", "rb") as file:
+        a = json.load(file)
+    for user in a:
+        print(user)
+    return HttpResponse(json.dumps(a, indent=1))
     
     
     
@@ -310,14 +299,13 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
     
     def get_table_kwargs(self):# Здесь исключаются из поля видимости столбцы недоступные пользователю не принадлежащему определенной группе
         if self.request.user.is_active:
-            if self.request.user.groups.filter(name = "common_user").exists():   
+            if self.request.user.groups.filter(name = "common_user").exists():  
                 return {
                     'exclude':('Delete','Update'),
                     }
             else:
                 return {
                     'exclude':('Bascet'),
-                    
                     }
         else:
             return {
@@ -330,7 +318,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         super_user_username = ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "test@mail.ru","chernyshov@tsnigri.ru") # пользователи с доступ к CRUD-операциям
         user = request.user
         if self.data_models is UdsMeta:
-            choise = '01found'
+            choise = '01fond'
         if self.data_models is UdsMetaApr:
             choise = 'apr'
         if self.data_models is UdsMetaGrrStage:
@@ -452,7 +440,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             else:
                 return redirect(self.redirect_url)#сделать доп ошибку
                     
-                    
         elif 'create' in request.POST:
             try:                          
                 form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
@@ -465,6 +452,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
                     UdsMetaProtocols.objects.create(**form_data)
                 else:
+                    print(form_data)
                     self.data_models.objects.create(**form_data)
                 @decor
                 def arr():
@@ -484,7 +472,8 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**form_data)
                     except:
                         pass
-                self.data_models.objects.filter(oid = form_data["oid"]).update(**form_data)  
+                self.data_models.objects.filter(oid = form_data["oid"]).update(**form_data) 
+                
                 
                 @decor
                 def arr():
@@ -511,6 +500,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 arr(user, self.data_models.objects.get(oid =  int(request.POST["oid"])))
                 
                 return redirect(self.redirect_url)
+
             except ObjectDoesNotExist:
                 return redirect(self.redirect_url)
         
@@ -533,8 +523,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             response['X-Sendfile'] = filename
             return response
 
-            
-            
         return redirect(self.redirect_url)
     
     
@@ -545,14 +533,15 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         # buff_2 = self.data_models.objects.all()
         # for i in buff_2:
         #     stor_phys_dict.update({i.stor_desc: stor_phys_dict.get(i.stor_desc, 0) + 1})
-        # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))        
-        # print(context["stor_phys_p"])
+        # context["stor_phys_p"] = dict(sorted(stor_phys_dict.items(), reverse=True,key=lambda item: item[1]))
+        # import pprint        
+        # pprint.pprint(context["stor_phys_p"])
         context["form"] = self.login_form
         context["register_form"] = self.register_form
         context["user"] = self.request.user
         context["common_user"] = self.request.user.groups.filter(name = "common_user").exists()
         context["current_date"] =  datetime.strftime(datetime.now(), "%d.%m.%Y")
-        context["choise"] = "01FOUND"
+        context["choise"] = "01fond"
         context["super_users"] = self.request.user.username in  ("vahrushev@tsnigri.ru", "uvarova@tsnigri.ru",  "chernyshov@tsnigri.ru", 'test@mail.ru')
         d, m, y = (context["current_date"].split('.'))# 14.10.2022 
         old_uniq = buff.uniq_id
@@ -571,9 +560,9 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
     
     def get_template_names(self): 
         if self.request.htmx:
-            template_name = "crud/index/01found/index_table_partial.html"
+            template_name = "crud/index/01fond/index_table_partial.html"
         else:
-            template_name = "crud/index/01found/index_table_htmx.html"
+            template_name = "crud/index/01fond/index_table_htmx.html"
         return template_name
     
 
@@ -585,27 +574,25 @@ def get_html_uds(request):
     iniz = iniz[0][0] + "." + iniz[1][0] + "."#Создание инициалов из Имени и Отчества
     context["iniz"] = iniz
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
-  
+    if ("fond" not in request.GET):
+        fond = "01FOND".lower()
+    else:
+        fond = request.GET["fond"].lower()
     # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
     if 'oid' in request.GET:
         context["record"] = UdsMeta.objects.get(oid = request.GET["oid"])
         return render(request, 'crud/form/update.html', context=context)
-    if request.GET["choise"] == "01TSNIGRI":
-        context["choise"] = "01TSNIGRI"
-        context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
-        return render(request, "crud/form/01found/01TSNIGRI.html", context=context)
-    if request.GET["choise"] == "02RFGF":
-        context["choise"] = "02RFGF"
-        context["uniq_id"] = create_uniq_id(choise= context["choise"],current_date = context["current_date"] )
-        return render(request, "crud/form/01found/02RFGF.html", context=context)
-    if request.GET["choise"] == "03TGF":
-        context["choise"] = "03TGF"
-        context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
-        return render(request, "crud/form/01found/03TGF.html", context=context)
-    if request.GET["choise"] == "04OTHER_ORG":
-        context["choise"] = "04OTHER_ORG"
-        context["uniq_id"] = create_uniq_id(choise=context["choise"],current_date = context["current_date"] )
-        return render(request, "crud/form/01found/04OTHER_ORG.html", context=context)
+    # if fond == "01FOND":
+    context["choise"] = request.GET["choise"]
+    choise = context["choise"]
+    context["uniq_id"] = create_uniq_id(choise=choise,current_date = context["current_date"], fond = fond)
+    return render(request, f"crud/form/{fond}/{choise}.html", context=context)
+    # elif fond == "02MAPS":
+    #     context["choise"] = request.GET["choise"]
+    #     choise = context["choise"]
+    #     context["uniq_id"] = create_uniq_id(choise=choise,current_date = context["current_date"], fond = "02maps")
+    #     return render(request, f"crud/form/02maps/{choise}.html", context=context)
+        
     
     
 def get_html_apr(request):
@@ -618,12 +605,14 @@ def get_html_apr(request):
     context["userInfo"] = UserInfo.objects.get(user_id = request.user.id)
     date = context["current_date"].replace(".", "_")
     buff = UdsMetaApr.objects.order_by("-oid").first() 
+    
     try:
         last_count_stor_desc =  int(buff.stor_desc[len(buff.stor_desc) - 2:]) + 1
         if last_count_stor_desc % 10 == last_count_stor_desc:
             last_count_stor_desc = "0" + str(last_count_stor_desc)
     except ValueError:
         last_count_stor_desc = ''
+        
     date = date.split("_")
     date = date[2] + "_" + date[1] + "_" + date[0]
     stor_desc = context["stor_desc"] = f"{date} Протокол " 
@@ -641,7 +630,7 @@ def get_html_apr(request):
 
 
 
-def create_uniq_id(choise:str,current_date:datetime) ->str: # Функция создает уникальный идентификатор
+def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Функция создает уникальный идентификатор
         buff = UdsMeta.objects.order_by("-oid").first()
         old_uniq = buff.uniq_id
         old_date = buff.stor_date
@@ -657,6 +646,18 @@ def create_uniq_id(choise:str,current_date:datetime) ->str: # Функция с�
                 return f"g13s01y{y}m{m}d{d}n{int(count) + 1}e"
             else:
                 return f"g13s01y{y}m{m}d{d}n{1}e"
+        if fond == "02maps":
+            buff = UdsMeta.objects.filter(uniq_id__istartswith=f'g02s{name_fond}').order_by("-oid").first()
+            if buff != None:
+                old_uniq = buff.uniq_id
+                old_date = buff.stor_date
+                count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]   
+            else:
+                count = 1
+            if current_date == old_date:
+                return f"g02s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
+            else:
+                return f"g02s{name_fond}y{y}m{m}d{d}n1e"
         if choise == "grr-stage":
             buff = UdsMetaGrrStage.objects.order_by("-oid").first()
             old_uniq = buff.uniq_id
@@ -675,9 +676,18 @@ def create_uniq_id(choise:str,current_date:datetime) ->str: # Функция с�
                 return f"g14s01y{y}m{m}d{d}n{int(count) + 1}e"
             else:
                 return f"g14s01y{y}m{m}d{d}n{1}e"
+        if choise == "02MAPS":
+            buff = UdsMeta.objects.filter(uniq_id__istartswith='g02s04').order_by("-oid").first()
+            print(buff)
+            old_uniq = buff.uniq_id
+            old_date = buff.stor_date
+            count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]   
+            if current_date == old_date:
+                return f"g02s04y{y}m{m}d{d}n{int(count) + 1}e"
+            else:
+                return f"g02s04y{y}m{m}d{d}n1e"
+            
         if current_date == old_date:
-            
-            
             return f"g01s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
         else:
              return f"g01s{name_fond}y{y}m{m}d{d}n{1}e"

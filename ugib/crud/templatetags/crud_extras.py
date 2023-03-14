@@ -16,7 +16,7 @@ all_columns = {'oid':'Номер','uniq_id':'Уникальный номер','s
         'inf_type':'Тип информации', 'inf_media':'Вид носителя информации', 'path_others':'Государственная регистрация', 'obj_main_group':'Формула', 
         'obj_sub_group':'obj_sub_group', 'path_local':'path_local', 'path_cloud':'path_cloud', 'status':'Cтатус', 'timecode':'Дата изменения', 
         'obj_sub_group_ref':'obj_sub_group_ref', 'path_local_ref':'path_local_ref', 'path_cloud_ref':'path_cloud_ref', 'delete':'Удалить','Exel':'Exel', 
-        'update':'Изменить','Bascet':'В корзину'}
+        'update':'Изменить','Bascet':'В корзину', 'geom_status':"Статус геометрии"}
 
 @register.filter
 def addstr(arg1):#задает название класса  html в нужном формате 
@@ -50,8 +50,8 @@ def replace_none_on_str(cell):
 @register.simple_tag
 def create_href_for_history(uniq_id, fond):
     if fond == "01found":
-        return f"http://gis311k1:8000/?query={uniq_id}"
-    return f"http://gis311k1:8000/{fond}/?query={uniq_id}"
+        return f"http://atlas:8000/?query={uniq_id}"
+    return f"http://atlas:8000/{fond}/?query={uniq_id}"
 
 
 @register.simple_tag(takes_context=True)
