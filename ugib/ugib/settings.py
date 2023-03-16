@@ -121,7 +121,8 @@ PASSWORD_HASHERS = [
 
 
 WSGI_APPLICATION = 'ugib.wsgi.application'
-
+import mimetypes
+mimetypes.add_type("text/css", ".css", True)
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

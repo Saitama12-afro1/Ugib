@@ -267,12 +267,33 @@ def history_views(request):
 
 
 def test(request):
-    import json 
-    with open("users.json", "rb") as file:
-        a = json.load(file)
-    for user in a:
-        print(user)
-    return HttpResponse(json.dumps(a, indent=1))
+    buff = UdsMetaProtocols.objects.all()
+    for i in buff:
+        try:
+            if i.obj_assoc_geol != None:
+                if "»" in i.obj_assoc_geol or "«" in i.obj_assoc_geol:
+                    i.obj_assoc_geol = i.obj_assoc_geol.replace('«', "\"").replace("»", "\"")
+                    i.save()
+            if i.obj_rdoc_name != None:
+                if "»" in i.obj_rdoc_name or "«" in i.obj_rdoc_name:
+                        i.obj_rdoc_name = i.obj_rdoc_name.replace('«', "\"").replace("»", "\"")
+                        i.save()
+            if i.obj_name != None:
+                if "»" in i.obj_name or "«" in i.obj_name:
+                        i.obj_name = i.obj_name.replace('«', "\"").replace("»", "\"")
+                        i.save()
+        except:
+            print(i.obj_name, i.obj_assoc_geol, i.obj_rdoc_name)
+                                        
+        
+        # i.obj_assoc_inv_nums = new_pole
+        # i.save()
+        
+        
+        
+        
+        
+    return HttpResponse("dsds")
     
     
     
@@ -280,6 +301,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
    
     table_class = UdsMetaTable
     data_models = UdsMeta
+    
     def get_queryset(self):
         # print(self.data_models.objects.all())
         try:

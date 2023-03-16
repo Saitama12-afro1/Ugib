@@ -5,6 +5,21 @@ from django.db.models import QuerySet
 
 from .models import UdsMeta
 
+def update_nomer(buff):
+    if "№" in buff:
+        for index, el in enumerate(buff):
+            if el == "№" and buff[index + 1] == " ":
+                continue
+            elif el == "№" and buff[index + 1] != " ":
+                import re
+                res = re.search(r"[А-я0-9]",buff[index + 1])
+                if res == None:
+                    print("now_null")
+                    new_s = buff[: index + 1] + " " + buff[index + 2:]
+                else:
+                    new_s = buff[: index + 1] + " " + buff[index + 1:]
+                buff = new_s
+    return buff
 
 class HelperUdsMet:
     _all_columns = ['oid','uniq_id','stor_folder', 'stor_phys', 
@@ -44,6 +59,9 @@ class HelperUdsMet:
                 t = re.sub('\t',' ',t)
                 t = t.strip()
                 t = (t.replace("  ", " "))
+
+                t = t.replace("»", "\"").replace("«", "\"")
+                t = update_nomer(t)
                 if len(t) != 0:
                     if t[len(t) - 1 ] == ',':
                         t = t.rstrip(",")
