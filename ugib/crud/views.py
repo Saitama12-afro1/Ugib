@@ -7,7 +7,7 @@ import requests
 import glob
 import os
 import io
-
+import logging
 
 import xlsxwriter
 from docxtpl import DocxTemplate
@@ -44,6 +44,7 @@ from ugib.MyHasher import MyHasher
 
 MyHasher = MyHasher()
 
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/")
 @transaction.atomic
@@ -298,7 +299,6 @@ def test(request):
     
     
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представление для базовой страницы
-   
     table_class = UdsMetaTable
     data_models = UdsMeta
     
@@ -309,6 +309,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         except:
             bascet = []
         uds_meta = self.data_models.objects.all()
+        logger.info(f"Load {self.data_models} page")    
         for i in bascet:
             uds_meta = uds_meta.filter(~Q(oid = i.oid))
         return uds_meta.order_by("-oid")
@@ -357,6 +358,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
                 udsMetaObj.delete()
             except ObjectDoesNotExist:
+                logger.error("When removed ObjectDoesNotExist")
                 return redirect(self.redirect_url)
             return redirect(self.redirect_url)
         
@@ -427,7 +429,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         return redirect(self.redirect_url)
 
                 except ObjectDoesNotExist:
-                    print("Oshibka")
+                    logger.error("When logun ObjectDoesNotExist")
                 
         elif 'register' in request.POST:
             if register_form.is_valid(password=request.POST["password"]):
@@ -443,7 +445,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
                         user_info.save()
                     except ObjectDoesNotExist:
-                        print(3232323)
+                        logger.error("When register ObjectDoesNotExist")
                 else:
                     user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"] + " " + request.POST["sur_name"],
                                 last_name =request.POST["last_name"],
@@ -476,13 +478,17 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 else:
                     print(form_data)
                     self.data_models.objects.create(**form_data)
+                    
                 @decor
                 def arr():
                     return "create", choise
+                
                 arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
                 
             except IntegrityError:
-                pass
+                logger.error("When create not valid key")
+            except:
+                logger.error("When create unexpected error")
             return redirect(self.redirect_url) 
         
         elif 'update' in request.POST:
@@ -503,15 +509,18 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
 
                 arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
             except ObjectDoesNotExist:
+                logger.error("When update ObjectDoesNotExist")
                 return redirect(self.redirect_url)
         
         elif 'upd_one' in request.POST:
+            
             try:
                 if choise == 'apr':
                     try:
                         buff =  self.data_models.objects.get(oid = request.POST["oid"])
                         UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**{request.POST['cls']:request.POST['upd_val']})
                     except ObjectDoesNotExist:
+                        logger.error("When upd_one ObjectDoesNotExist")
                         return redirect(self.redirect_url)
                     
                 self.data_models.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
@@ -524,6 +533,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 return redirect(self.redirect_url)
 
             except ObjectDoesNotExist:
+                logger.error("When upd_one ObjectDoesNotExist")
                 return redirect(self.redirect_url)
         
         elif 'bascet' in request.POST:
@@ -659,6 +669,8 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
         count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
         name_fond = choise[0] + choise[1]
         d, m, y = (current_date.split('.'))# 14.10.2022 
+        print(fond, choise)
+        print(UdsMeta.objects.order_by("-oid").first().uniq_id)
         if choise == "apr":
             buff = UdsMetaApr.objects.order_by("-oid").first()
             old_uniq = buff.uniq_id
@@ -708,7 +720,8 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
                 return f"g02s04y{y}m{m}d{d}n{int(count) + 1}e"
             else:
                 return f"g02s04y{y}m{m}d{d}n1e"
-            
+        print(current_date, old_date)
+        
         if current_date == old_date:
             return f"g01s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
         else:

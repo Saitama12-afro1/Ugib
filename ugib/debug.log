@@ -1,0 +1,58 @@
+2023-04-03 10:11:04,393 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:11:04,594 crud.views   DEBUG    Test!!
+2023-04-03 10:12:11,557 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:12:12,197 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:12:19,110 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:12:19,802 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:12:28,517 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:12:29,048 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:12:43,063 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:12:43,589 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:12:43,790 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:13:22,682 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:13:23,286 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:13:23,502 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:13:34,701 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:13:35,308 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:13:35,532 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:13:58,646 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:13:59,205 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:13:59,423 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:14:31,873 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:14:32,429 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:14:32,625 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:14:59,869 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:15:00,424 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:15:00,639 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:15:32,081 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:15:32,639 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:15:32,845 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:16:17,199 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:16:17,755 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:16:17,949 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:16:38,876 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:16:39,482 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:16:39,688 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:17:02,619 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:17:03,203 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:17:03,412 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:17:15,609 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:17:16,170 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:17:16,393 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:17:23,320 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:17:23,881 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:17:24,083 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:22:48,780 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\ugib\settings.py changed, reloading.
+2023-04-03 10:22:58,763 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:22:58,949 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:23:03,799 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\ugib\settings.py changed, reloading.
+2023-04-03 10:23:13,578 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:23:13,780 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:25:21,807 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\ugib\settings.py changed, reloading.
+2023-04-03 10:25:22,809 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:25:23,116 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-03 10:27:02,998 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-03 10:27:03,744 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-03 10:27:04,968 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page
+2023-04-03 10:27:07,735 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-03 10:27:12,727 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page

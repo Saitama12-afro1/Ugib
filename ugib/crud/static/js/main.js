@@ -54,7 +54,6 @@ function createPost(event){
     
         }
     }
-    console.log(d)
     $.post('/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         console.log(div)
