@@ -130,7 +130,7 @@ mimetypes.add_type("text/css", ".css", True)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "bd_reestr_v3",
+        'NAME': "bd_reestr_test",
         'USER': "postgres",
         "PASSWORD": "postgres",
         "HOST": "kastor.tsnigri.ru",
