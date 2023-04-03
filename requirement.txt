@@ -3,7 +3,7 @@ xlsxwriter
 django-crispy-forms
 django-tables2
 docxcompose
-pip install crispy-bootstrap4
+crispy-bootstrap4
 docxtpl
 django_crispy_forms
 django_filter
