@@ -3,13 +3,15 @@ xlsxwriter
 django-crispy-forms
 django-tables2
 docxcompose
+pip install crispy-bootstrap4
 docxtpl
 django_crispy_forms
 django_filter
 django_htmx
-psycopg2
+psycopg2-binary
 requests
 django_static_jquery
 jinja2
 bcrypt
 django-cors-headers
+django-debug-toolbar

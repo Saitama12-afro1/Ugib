@@ -54,7 +54,6 @@ function createPost(event){
     
         }
     }
-    console.log(d)
     $.post('/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         console.log(div)
@@ -235,16 +234,18 @@ window.addEventListener('load', (event) => {
 function my_blur(event){
     let stor_folder_data = event.target.value
     let pattern = /,\s?[0-9-]+/
+    console.log(stor_folder_data.match(pattern))
     let year = stor_folder_data.match(pattern)[0]
     year.slice(1)
     let obj_year = document.getElementById("obj_year")
     $(obj_year).val(year.slice(1))
     let path_local = document.getElementById("path_local")
     let path_local_ref = document.getElementById("path_local_ref")
-    let path_cloud = document.getElementById("path_cloud")
-    let obj_main_group = document.getElementById("obj_main_group")
-    let obj_sub_group = document.getElementById("obj_sub_group")
-    let obj_assoc_inv_nums = document.getElementById("obj_assoc_inv_nums")
+    let path_cloud = document.getElementById("path_cloud");
+    let obj_main_group = document.getElementById("obj_main_group");
+    let obj_sub_group = document.getElementById("obj_sub_group");
+    let obj_assoc_inv_nums = document.getElementById("obj_assoc_inv_nums");
+    let choise_form = document.getElementById("select_fond").value;
     buff = stor_folder_data.split('-')[0]
    
 
@@ -252,8 +253,13 @@ function my_blur(event){
     $(path_local_ref).val("\\"+"\\pegas\\UDS\\" + obj_main_group.value + "\\" + obj_sub_group.value + "_REF\\" + stor_folder_data)
     let choise = document.getElementById("select_sub").value
     let stor_desc = document.getElementById('stor_desc')
+    if (choise_form != "02maps"){
     d = {"01TSNIGRI" :"ЦНИГРИ:", '02RFGF:':'Росгеолфонд:'}
     $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value)
+
+    } else {
+        $(obj_assoc_inv_nums).val('ЦНИГРИ:', + buff + ";" + stor_desc.value)
+    }
 
     if (choise == "01TSNIGRI"){
     $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/"+stor_folder_data)

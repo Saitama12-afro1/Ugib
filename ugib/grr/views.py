@@ -32,8 +32,6 @@ from .tables import UdsMetaGrrAccomTable, UdsMetaGrrStageTable
 from .filters import  UdsMetaGrrStageFilter, UdsMetaGrrAccomFilter
 
 
-def test(request):
-    return HttpResponse("dsds")
 
 class UdsMetaGrrStageHTMxTableView(UdsMetaHTMxTableView, SingleTableMixin, FilterView): # представление для базовой страницы
     table_class = UdsMetaGrrStageTable
@@ -94,7 +92,6 @@ def get_html_grr_stage(request):
         return render(request, "grr/form/grr_accom.html", context=context)
     
     
-
 
 class UdsMetaGrrAccomHTMxTableView(UdsMetaHTMxTableView,SingleTableMixin, FilterView): # представление для базовой страницы
     table_class = UdsMetaGrrAccomTable

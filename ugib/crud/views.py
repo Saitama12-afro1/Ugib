@@ -7,7 +7,7 @@ import requests
 import glob
 import os
 import io
-
+import logging
 
 import xlsxwriter
 from docxtpl import DocxTemplate
@@ -44,6 +44,7 @@ from ugib.MyHasher import MyHasher
 
 MyHasher = MyHasher()
 
+logger = logging.getLogger(__name__)
 
 @login_required(login_url="/")
 @transaction.atomic
@@ -267,19 +268,40 @@ def history_views(request):
 
 
 def test(request):
-    import json 
-    with open("users.json", "rb") as file:
-        a = json.load(file)
-    for user in a:
-        print(user)
-    return HttpResponse(json.dumps(a, indent=1))
+    buff = UdsMetaProtocols.objects.all()
+    for i in buff:
+        try:
+            if i.obj_assoc_geol != None:
+                if "»" in i.obj_assoc_geol or "«" in i.obj_assoc_geol:
+                    i.obj_assoc_geol = i.obj_assoc_geol.replace('«', "\"").replace("»", "\"")
+                    i.save()
+            if i.obj_rdoc_name != None:
+                if "»" in i.obj_rdoc_name or "«" in i.obj_rdoc_name:
+                        i.obj_rdoc_name = i.obj_rdoc_name.replace('«', "\"").replace("»", "\"")
+                        i.save()
+            if i.obj_name != None:
+                if "»" in i.obj_name or "«" in i.obj_name:
+                        i.obj_name = i.obj_name.replace('«', "\"").replace("»", "\"")
+                        i.save()
+        except:
+            print(i.obj_name, i.obj_assoc_geol, i.obj_rdoc_name)
+                                        
+        
+        # i.obj_assoc_inv_nums = new_pole
+        # i.save()
+        
+        
+        
+        
+        
+    return HttpResponse("dsds")
     
     
     
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представление для базовой страницы
-   
     table_class = UdsMetaTable
     data_models = UdsMeta
+    
     def get_queryset(self):
         # print(self.data_models.objects.all())
         try:
@@ -287,6 +309,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         except:
             bascet = []
         uds_meta = self.data_models.objects.all()
+        logger.info(f"Load {self.data_models} page")    
         for i in bascet:
             uds_meta = uds_meta.filter(~Q(oid = i.oid))
         return uds_meta.order_by("-oid")
@@ -328,13 +351,15 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         
         if 'del' in request.POST:
             try:
-                udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
-                @decor 
-                def arr():
-                    return "del", choise
-                arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
-                udsMetaObj.delete()
+                with transaction.atomic():
+                    udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
+                    @decor 
+                    def arr():
+                        return "del", choise
+                    arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
+                    udsMetaObj.delete()
             except ObjectDoesNotExist:
+                logger.error("When removed ObjectDoesNotExist")
                 return redirect(self.redirect_url)
             return redirect(self.redirect_url)
         
@@ -405,7 +430,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         return redirect(self.redirect_url)
 
                 except ObjectDoesNotExist:
-                    print("Oshibka")
+                    logger.error("When logun ObjectDoesNotExist")
                 
         elif 'register' in request.POST:
             if register_form.is_valid(password=request.POST["password"]):
@@ -421,7 +446,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         user_info = UserInfo(user_id = user.id, departament = request.POST["departament"], position = request.POST["position"])
                         user_info.save()
                     except ObjectDoesNotExist:
-                        print(3232323)
+                        logger.error("When register ObjectDoesNotExist")
                 else:
                     user = User(username = register_form.cleaned_data["username"], first_name = request.POST["first_name"] + " " + request.POST["sur_name"],
                                 last_name =request.POST["last_name"],
@@ -441,67 +466,78 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 return redirect(self.redirect_url)#сделать доп ошибку
                     
         elif 'create' in request.POST:
-            try:                          
-                form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
-                if choise == 'apr':
-                    buff: dict = deepcopy(form_data)
-                    buff.pop('path_cloud_protocol')
-                    buff.pop('path_local_protocol')
-                    self.data_models.objects.create(**buff)
-                    form_data['path_local'] = form_data.pop('path_local_protocol')
-                    form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
-                    UdsMetaProtocols.objects.create(**form_data)
-                else:
-                    print(form_data)
-                    self.data_models.objects.create(**form_data)
-                @decor
-                def arr():
-                    return "create", choise
-                arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
+            try:
+                with transaction.atomic():                         
+                    form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+                    if choise == 'apr':
+                        buff: dict = deepcopy(form_data)
+                        buff.pop('path_cloud_protocol')
+                        buff.pop('path_local_protocol')
+                        self.data_models.objects.create(**buff)
+                        form_data['path_local'] = form_data.pop('path_local_protocol')
+                        form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
+                        UdsMetaProtocols.objects.create(**form_data)
+                    else:
+                        print(form_data)
+                        self.data_models.objects.create(**form_data)
+                    
+                    @decor
+                    def arr():
+                        return "create", choise
+                    
+                    arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
                 
             except IntegrityError:
-                pass
+                logger.error("When create not valid key")
+            except Exception as e:
+                logger.error(f"When create {str(e)}")
             return redirect(self.redirect_url) 
         
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
             try:
-                if choise == 'apr':
-                    try:
-                        buff =  self.data_models.objects.get(oid = request.POST["oid"])
-                        UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**form_data)
-                    except:
-                        pass
-                self.data_models.objects.filter(oid = form_data["oid"]).update(**form_data) 
-                
-                
-                @decor
-                def arr():
-                    return "update", choise
+                with transaction.atomic():
+                    if choise == 'apr':
+                        try:
+                            buff =  self.data_models.objects.get(oid = request.POST["oid"])
+                            UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**form_data)
+                        except:
+                            pass
+                    self.data_models.objects.filter(oid = form_data["oid"]).update(**form_data) 
+                    
+                    
+                    @decor
+                    def arr():
+                        return "update", choise
 
-                arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
+                    arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
             except ObjectDoesNotExist:
+                logger.error("When update ObjectDoesNotExist")
                 return redirect(self.redirect_url)
         
         elif 'upd_one' in request.POST:
+            
             try:
-                if choise == 'apr':
-                    try:
-                        buff =  self.data_models.objects.get(oid = request.POST["oid"])
-                        UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**{request.POST['cls']:request.POST['upd_val']})
-                    except ObjectDoesNotExist:
-                        return redirect(self.redirect_url)
+                with transaction.atomic():
+                    if choise == 'apr':
+                        try:
+                            buff =  self.data_models.objects.get(oid = request.POST["oid"])
+                            UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**{request.POST['cls']:request.POST['upd_val']})
+                        except ObjectDoesNotExist:
+                            logger.error("When upd_one ObjectDoesNotExist")
+                            return redirect(self.redirect_url)
+                        
+                    self.data_models.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
                     
-                self.data_models.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
-                
-                @decor
-                def arr():
-                        return "update", choise
-                arr(user, self.data_models.objects.get(oid =  int(request.POST["oid"])))
-                
-                return redirect(self.redirect_url)
+                    @decor
+                    def arr():
+                            return "update", choise
+                    arr(user, self.data_models.objects.get(oid =  int(request.POST["oid"])))
+                    
+                    return redirect(self.redirect_url)
 
             except ObjectDoesNotExist:
+                logger.error("When upd_one ObjectDoesNotExist")
                 return redirect(self.redirect_url)
         
         elif 'bascet' in request.POST:
@@ -516,6 +552,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
             
             return redirect(self.redirect_url) 
+        
         elif 'export_exel_partially' in request.POST:
             filename = 'result_query.xlsx'
             response = FileResponse(open(filename, 'rb'))
@@ -637,6 +674,8 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
         count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
         name_fond = choise[0] + choise[1]
         d, m, y = (current_date.split('.'))# 14.10.2022 
+        print(fond, choise)
+        print(UdsMeta.objects.order_by("-oid").first().uniq_id)
         if choise == "apr":
             buff = UdsMetaApr.objects.order_by("-oid").first()
             old_uniq = buff.uniq_id
@@ -686,7 +725,8 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
                 return f"g02s04y{y}m{m}d{d}n{int(count) + 1}e"
             else:
                 return f"g02s04y{y}m{m}d{d}n1e"
-            
+        print(current_date, old_date)
+        
         if current_date == old_date:
             return f"g01s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
         else:
