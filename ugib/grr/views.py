@@ -64,8 +64,6 @@ class UdsMetaGrrStageHTMxTableView(UdsMetaHTMxTableView, SingleTableMixin, Filte
 
 
 
-
-
 def get_html_grr_stage(request):
     context = {}
     context["user"] = request.user

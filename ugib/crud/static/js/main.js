@@ -28,7 +28,9 @@ function deleteUds(event){
     var tag  = event.target.value;
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/', {'del':"del",'oid': tag, "csrfmiddlewaretoken":csrfToken}, function(response){
+    let current_page = document.querySelector(".page-item.active").innerText;
+
+    $.post('/', {'del':"del",'oid': tag,'current_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div)});
 }
@@ -46,7 +48,8 @@ function createPost(event){
     let d = {};
     let inp = form.getElementsByTagName('textarea');
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    let current_page = document.querySelector(".page-item.active").innerText;
     for (const i in inp){
        
         if (inp[i].name != undefined){
@@ -54,7 +57,7 @@ function createPost(event){
     
         }
     }
-    $.post('/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    $.post('/', {'create':"create",'data': d,'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         console.log(div)
         $('.table-container').html(div);
@@ -75,7 +78,6 @@ function update_one_cell(event){
     } else{
         cell = event.target.parentNode.parentNode.innerText;
     }
-
     let area = document.getElementById("modal_area")
     $(area).val(cell);
     $('#upd_btn').val(oid)
@@ -89,12 +91,13 @@ function update_one_cell(event){
 
 
 function upd_post(event){
-    let oid = document.getElementById('upd_btn').value
+    let oid = document.getElementById('upd_btn').value;
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    cell = document.getElementById('modal_area').value
-    let cls = document.getElementById('close_btn').value
-    $.post('/', {'upd_one':"upd_one",'oid':oid, 'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    cell = document.getElementById('modal_area').value;
+    let cls = document.getElementById('close_btn').value;
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/', {'upd_one':"upd_one",'oid':oid,'current_page':current_page, 'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });
@@ -114,7 +117,8 @@ function update_all_cells(event){
     }
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/', {'update':"update",'data': data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/', {'update':"update",'data': data, 'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });
@@ -159,11 +163,12 @@ function valInputMore(event){
         $(area).val(d[choise]  + " "+ buff + "; "+  input.value)
     } else if (choise == "02RFGF"){
         $(area).val(area.value + input.value)
-    } else if (choise == "03TGF"){
+    } else {
         let stor_phys = document.getElementById("stor_phys").value
         $(area).val(stor_phys+": ;" + input.value)
     }
 }
+
 function valInputMoreStorPhys(event){
     let but = event.target;
     let input_html = but.parentNode.parentNode
@@ -183,6 +188,7 @@ count = 0;
 window.addEventListener('load', (event) => {
     let user = document.getElementById("info_user");
     let create_button = document.getElementById("create_button")
+
     create_button.addEventListener("click", function (event){
         console.log(124151)
         let sl = document.getElementById("select_sub")
@@ -235,8 +241,14 @@ function my_blur(event){
     let stor_folder_data = event.target.value
     let pattern = /,\s?[0-9-]+/
     console.log(stor_folder_data.match(pattern))
-    let year = stor_folder_data.match(pattern)[0]
-    year.slice(1)
+    console.log("ddddddddd")
+
+    if (stor_folder_data.match(pattern) != null){
+        var year = stor_folder_data.match(pattern)[0];
+    } else {
+        var year = "";
+    }
+    
     let obj_year = document.getElementById("obj_year")
     $(obj_year).val(year.slice(1))
     let path_local = document.getElementById("path_local")
@@ -254,26 +266,32 @@ function my_blur(event){
     let choise = document.getElementById("select_sub").value
     let stor_desc = document.getElementById('stor_desc')
     if (choise_form != "02maps"){
-    d = {"01TSNIGRI" :"ЦНИГРИ:", '02RFGF:':'Росгеолфонд:'}
-    $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value)
+    d = {'01TSNIGRI' : 'ЦНИГРИ:', '02RFGF:':'Росгеолфонд:'}
+    console.log(d[choise])
+    console.log(choise)
+    if (choise in d){
+        $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value);
+    } else {
+        
+    }
 
     } else {
         $(obj_assoc_inv_nums).val('ЦНИГРИ:', + buff + ";" + stor_desc.value)
     }
 
     if (choise == "01TSNIGRI"){
-    $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/"+stor_folder_data)
+    $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ ЦНИГРИ/"+ stor_folder_data)
     $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-РЕФЕРАТЫ ФОНДОВЫХ МАТЕРИАЛОВ ЦНИГРИ//"+stor_folder_data)
-}else if (choise == "02RFGF"){
-    $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-МАТЕРИАЛЫ РОСГЕОЛФОНДА/"+stor_folder_data)
-    $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-РЕФЕРАТЫ ФОНДОВЫХ МАТЕРИАЛОВ РФГФ/"+stor_folder_data)
-}else if (choise == "03TGF"){
-    $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-МАТЕРИАЛЫ РЕГИОНАЛЬНЫХ ФОНДОВ/"+stor_folder_data)
-    $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-РЕФЕРАТЫ ФОНДОВЫХ МАТЕРИАЛОВ ТГФ/"+stor_folder_data)
-}else if(choise == "04OTHER_ORG"){
-    $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ%20МАТЕРИАЛЫ%20СТОРОННИХ%20ОРГАНИЗАЦИЙ/"+stor_folder_data)
-    $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ СТОРОННИХ ОРГАНИЗАЦИЙ/"+stor_folder_data)
-}
+    }else if (choise == "02RFGF"){
+        $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-МАТЕРИАЛЫ РОСГЕОЛФОНДА/"+stor_folder_data)
+        $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-РЕФЕРАТЫ ФОНДОВЫХ МАТЕРИАЛОВ РФГФ/"+stor_folder_data)
+    }else if (choise == "03TGF"){
+        $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-МАТЕРИАЛЫ РЕГИОНАЛЬНЫХ ФОНДОВ/"+stor_folder_data)
+        $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-РЕФЕРАТЫ ФОНДОВЫХ МАТЕРИАЛОВ ТГФ/"+stor_folder_data)
+    }else if(choise == "04OTHER_ORG"){
+        $(path_cloud).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ%20МАТЕРИАЛЫ%20СТОРОННИХ%20ОРГАНИЗАЦИЙ/"+stor_folder_data)
+        $(path_cloud_ref).val("http://cloud.tsnigri.ru/apps/files/?dir=/"+obj_main_group.value.slice(0,2) +"-"+obj_sub_group.value.slice(0,2)+"-ФОНДОВЫЕ МАТЕРИАЛЫ СТОРОННИХ ОРГАНИЗАЦИЙ/"+stor_folder_data)
+    }
 }
 
 function testik(event, record) {

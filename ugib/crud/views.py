@@ -350,6 +350,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             choise = 'grr-accom'
         
         if 'del' in request.POST:
+            cur_page_link = request.POST["current_page"]
             try:
                 with transaction.atomic():
                     udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
@@ -360,8 +361,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     udsMetaObj.delete()
             except ObjectDoesNotExist:
                 logger.error("When removed ObjectDoesNotExist")
-                return redirect(self.redirect_url)
-            return redirect(self.redirect_url)
+            return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
         
         elif 'exc' in request.POST:
             form_data = HelperUdsMet.create_dict_from_uds(self.data_models.objects.get(oid = request.POST['oid']))#обернуть в тру execept
@@ -466,9 +466,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 return redirect(self.redirect_url)#сделать доп ошибку
                     
         elif 'create' in request.POST:
+            form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+            cur_page_link = form_data.pop('nt_pag')
             try:
-                with transaction.atomic():                         
-                    form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+                with transaction.atomic():                          
                     if choise == 'apr':
                         buff: dict = deepcopy(form_data)
                         buff.pop('path_cloud_protocol')
@@ -478,7 +479,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
                         UdsMetaProtocols.objects.create(**form_data)
                     else:
-                        print(form_data)
                         self.data_models.objects.create(**form_data)
                     
                     @decor
@@ -491,10 +491,11 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 logger.error("When create not valid key")
             except Exception as e:
                 logger.error(f"When create {str(e)}")
-            return redirect(self.redirect_url) 
+            return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
         
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+            cur_page_link = form_data.pop('nt_pag')
             try:
                 with transaction.atomic():
                     if choise == 'apr':
@@ -512,11 +513,14 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
 
                     arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
             except ObjectDoesNotExist:
+                print("error")
                 logger.error("When update ObjectDoesNotExist")
-                return redirect(self.redirect_url)
+            return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
+                # return redirect(self.redirect_url)
         
         elif 'upd_one' in request.POST:
-            
+            cur_page_link = request.POST["current_page"]
+            print(cur_page_link)
             try:
                 with transaction.atomic():
                     if choise == 'apr':
@@ -525,7 +529,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                             UdsMetaProtocols.objects.filter(uniq_id = buff.uniq_id).update(**{request.POST['cls']:request.POST['upd_val']})
                         except ObjectDoesNotExist:
                             logger.error("When upd_one ObjectDoesNotExist")
-                            return redirect(self.redirect_url)
                         
                     self.data_models.objects.filter(oid = request.POST["oid"]).update(**{request.POST['cls']:request.POST['upd_val']})
                     
@@ -533,12 +536,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     def arr():
                             return "update", choise
                     arr(user, self.data_models.objects.get(oid =  int(request.POST["oid"])))
-                    
-                    return redirect(self.redirect_url)
 
             except ObjectDoesNotExist:
                 logger.error("When upd_one ObjectDoesNotExist")
-                return redirect(self.redirect_url)
+            return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
         
         elif 'bascet' in request.POST:
             udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
