@@ -35,7 +35,7 @@ def inizial(arg1):#создает иницалы для отобрадения �
     return(str(iniz))
 
 @register.filter
-def translate_column_name(column):#переврдит названия 
+def translate_column_name(column):#переводит названия 
     try:
         return all_columns[column]
     except KeyError:
@@ -49,7 +49,7 @@ def replace_none_on_str(cell):
 
 @register.simple_tag
 def create_href_for_history(uniq_id, fond):
-    if fond == "01found":
+    if fond == "01fond":
         return f"http://atlas:8000/?query={uniq_id}"
     return f"http://atlas:8000/{fond}/?query={uniq_id}"
 
