@@ -26,9 +26,10 @@ function window_form_order(){
 function deleteUds(event){
     var tag  = event.target.value;
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/apr/', {'del':"del",'oid': tag, "csrfmiddlewaretoken":csrfToken}, function(response){
-        div = $(response).find('.table-container')
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/apr/', {'del':"del",'current_page':current_page, 'oid': tag, "csrfmiddlewaretoken":csrfToken}, function(response){
+        div = $(response).find('.table-container');
         $('.table-container').html(div)});
 }
 
@@ -53,7 +54,8 @@ function createPost(event){
     
         }
     }
-    $.post('/apr/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/apr/', {'create':"create",'current_page': current_page,'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         console.log(response)
         div = $(response).find('.table-container')
         console.log(div)
@@ -91,9 +93,10 @@ function upd_post(event){
     let oid = document.getElementById('upd_btn').value
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    cell = document.getElementById('modal_area').value
-    let cls = document.getElementById('close_btn').value
-    $.post('/apr/', {'upd_one':"upd_one",'oid':oid, 'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    cell = document.getElementById('modal_area').value;
+    let cls = document.getElementById('close_btn').value;
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/apr/', {'upd_one':"upd_one",'oid':oid, 'cls':cls,'curent_page':current_page ,'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });
@@ -109,8 +112,10 @@ function update_all_cells(event){
         data[(all_input[i].name)] = all_input[i].value
     }
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/apr/', {'update':"update",'data': data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    let current_page = document.querySelector(".page-item.active").innerText;
+
+    $.post('/apr/', {'update':"update",'data': data, 'current_page': current_page,"csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });

@@ -18,8 +18,9 @@ function window_form_order(){
 function deleteUds(event){
     var tag  = event.target.value;
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/grr-accom/', {'del':"del",'oid': tag, "csrfmiddlewaretoken":csrfToken}, function(response){
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/grr-accom/', {'del':"del",'oid': tag, 'current_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div)});
 }
@@ -44,8 +45,9 @@ function createPost(event){
         d[(inp[i].name)] = inp[i].value
     
         }
-    }
-    $.post('/grr-accom/', {'create':"create",'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    };
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/grr-accom/', {'create':"create",'data': d,'current_page': current_page,"csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         console.log(div)
         $('.table-container').html(div);
@@ -92,8 +94,9 @@ function upd_post(event){
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
     cell = document.getElementById('modal_area').value
-    let cls = document.getElementById('close_btn').value
-    $.post('/grr-accom/', {'upd_one':"upd_one",'oid':oid, 'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let cls = document.getElementById('close_btn').value;
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/grr-accom/', {'upd_one':"upd_one",'oid':oid, 'current_page':current_page,'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });
@@ -109,8 +112,9 @@ function update_all_cells(event){
         data[(all_input[i].name)] = all_input[i].value
     }
     let cookie = document.cookie;
-    let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    $.post('/grr-accom/', {'update':"update",'data': data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    let current_page = document.querySelector(".page-item.active").innerText;
+    $.post('/grr-accom/', {'update':"update",'data': data,'current_page': current_page,"csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
     });

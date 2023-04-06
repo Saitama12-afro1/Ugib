@@ -501,3 +501,253 @@ KeyError: 'current_page'
 2023-04-04 17:01:02,889 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
 2023-04-04 17:01:04,360 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
 2023-04-04 17:01:07,176 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-04 17:29:29,983 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-04 17:29:30,618 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 09:09:56,505 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 09:44:06,965 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 09:44:08,697 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 09:44:10,155 django.request WARNING  Not Found: /favicon.ico
+2023-04-06 09:44:12,092 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page
+2023-04-06 09:44:16,603 django.request ERROR    Internal Server Error: /grr-accom/
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'current_page'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\Новая папка\Ugib\ugib\crud\views.py", line 353, in post
+    cur_page_link = request.POST["current_page"]
+  File "E:\Новая папка\env\lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'current_page'
+2023-04-06 09:52:52,604 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page
+2023-04-06 09:52:53,764 django.request WARNING  Not Found: /favicon.ico
+2023-04-06 09:52:53,879 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page
+2023-04-06 09:52:54,764 django.request WARNING  Not Found: /favicon.ico
+2023-04-06 09:52:56,114 django.request ERROR    Internal Server Error: /grr-accom/
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.ForeignKeyViolation: ОШИБКА:  UPDATE или DELETE в таблице "uds_meta_grr_accom" нарушает ограничение внешнего ключа "uds_meta_grr_accom_geom_uniq_id_fkey" таблицы "uds_meta_grr_accom_geom"
+DETAIL:  На ключ (uniq_id)=(g14s01y2021m08d22n14e) всё ещё есть ссылки в таблице "uds_meta_grr_accom_geom".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\Новая папка\Ugib\ugib\crud\views.py", line 361, in post
+    udsMetaObj.delete()
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\base.py", line 1118, in delete
+    return collector.delete()
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\deletion.py", line 448, in delete
+    count = sql.DeleteQuery(model).delete_batch(
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\subqueries.py", line 42, in delete_batch
+    num_deleted += self.do_query(
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\subqueries.py", line 20, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\compiler.py", line 1398, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 230, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 154, in _record
+    return method(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 103, in execute
+    return super().execute(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "E:\Новая папка\env\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: ОШИБКА:  UPDATE или DELETE в таблице "uds_meta_grr_accom" нарушает ограничение внешнего ключа "uds_meta_grr_accom_geom_uniq_id_fkey" таблицы "uds_meta_grr_accom_geom"
+DETAIL:  На ключ (uniq_id)=(g14s01y2021m08d22n14e) всё ещё есть ссылки в таблице "uds_meta_grr_accom_geom".
+
+2023-04-06 09:53:24,339 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 09:53:26,108 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 09:53:29,383 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-06 09:53:31,300 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-06 09:53:33,005 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 09:53:34,535 django.request ERROR    Internal Server Error: /grr-stage/
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\utils\datastructures.py", line 84, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'current_page'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\Новая папка\Ugib\ugib\crud\views.py", line 353, in post
+    cur_page_link = request.POST["current_page"]
+  File "E:\Новая папка\env\lib\site-packages\django\utils\datastructures.py", line 86, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'current_page'
+2023-04-06 09:55:18,157 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 09:55:19,248 django.request WARNING  Not Found: /favicon.ico
+2023-04-06 09:55:20,714 django.request ERROR    Internal Server Error: /grr-stage/
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.ForeignKeyViolation: ОШИБКА:  UPDATE или DELETE в таблице "uds_meta_grr_stage" нарушает ограничение внешнего ключа "uds_meta_grr_stage_geom_uniq_id_fkey" таблицы "uds_meta_grr_stage_geom"
+DETAIL:  На ключ (uniq_id)=(g14s01y2022m3d1n49e) всё ещё есть ссылки в таблице "uds_meta_grr_stage_geom".
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\Новая папка\Ugib\ugib\crud\views.py", line 361, in post
+    udsMetaObj.delete()
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\base.py", line 1118, in delete
+    return collector.delete()
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\deletion.py", line 448, in delete
+    count = sql.DeleteQuery(model).delete_batch(
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\subqueries.py", line 42, in delete_batch
+    num_deleted += self.do_query(
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\subqueries.py", line 20, in do_query
+    cursor = self.get_compiler(using).execute_sql(CURSOR)
+  File "E:\Новая папка\env\lib\site-packages\django\db\models\sql\compiler.py", line 1398, in execute_sql
+    cursor.execute(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 230, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 154, in _record
+    return method(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 103, in execute
+    return super().execute(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "E:\Новая папка\env\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.IntegrityError: ОШИБКА:  UPDATE или DELETE в таблице "uds_meta_grr_stage" нарушает ограничение внешнего ключа "uds_meta_grr_stage_geom_uniq_id_fkey" таблицы "uds_meta_grr_stage_geom"
+DETAIL:  На ключ (uniq_id)=(g14s01y2022m3d1n49e) всё ещё есть ссылки в таблице "uds_meta_grr_stage_geom".
+
+2023-04-06 10:07:10,016 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:07:12,550 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 10:07:15,645 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-06 10:07:16,627 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 10:10:05,425 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:10:06,133 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:10:35,753 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:10:36,360 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:10:53,439 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:10:54,035 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:11:02,300 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:11:02,847 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:11:14,337 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:11:14,925 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:11:40,439 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:11:41,013 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:12:40,774 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:12:41,386 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:13:10,041 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:13:10,616 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:13:25,823 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:13:26,357 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:14:04,862 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:14:05,386 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:14:26,598 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:14:27,185 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:14:40,123 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:14:40,656 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:14:49,967 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:14:50,536 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:15:03,520 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:15:04,083 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:15:11,693 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:15:12,226 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:15:22,162 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 10:15:27,972 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-06 10:15:30,269 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page
+2023-04-06 10:15:34,648 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 10:15:36,383 django.request ERROR    Internal Server Error: /grr-stage/
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.SyntaxError: ОШИБКА:  ошибка синтаксиса (примерное положение: "-")
+LINE 1: DELETE FROM uds_meta_grr-stage_geom WHERE uniq_id = 'g14s01y...
+                                ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "E:\Новая папка\env\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "E:\Новая папка\Ugib\ugib\crud\views.py", line 363, in post
+    cursor.execute(f'DELETE FROM uds_meta_{choise}_geom WHERE uniq_id = %s',[udsMetaObj.uniq_id])
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 230, in execute
+    return self._record(self.cursor.execute, sql, params)
+  File "E:\Новая папка\env\lib\site-packages\debug_toolbar\panels\sql\tracking.py", line 154, in _record
+    return method(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 103, in execute
+    return super().execute(sql, params)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "E:\Новая папка\env\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "E:\Новая папка\env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: ОШИБКА:  ошибка синтаксиса (примерное положение: "-")
+LINE 1: DELETE FROM uds_meta_grr-stage_geom WHERE uniq_id = 'g14s01y...
+                                ^
+
+2023-04-06 10:15:57,713 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:15:58,452 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:16:43,129 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-06 10:16:44,322 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-06 10:16:46,621 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 10:16:49,830 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 10:16:55,851 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrStage'> page
+2023-04-06 10:16:58,461 crud.views   INFO     Load <class 'grr.models.UdsMetaGrrAccom'> page

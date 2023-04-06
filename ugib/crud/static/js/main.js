@@ -62,6 +62,7 @@ function createPost(event){
         console.log(div)
         $('.table-container').html(div);
     });
+
     let div = document.getElementsByClassName("boss_div")[0]
     div.style = " position: sticky;"; 
     $(form).trigger("reset")
@@ -241,7 +242,6 @@ function my_blur(event){
     let stor_folder_data = event.target.value
     let pattern = /,\s?[0-9-]+/
     console.log(stor_folder_data.match(pattern))
-    console.log("ddddddddd")
 
     if (stor_folder_data.match(pattern) != null){
         var year = stor_folder_data.match(pattern)[0];

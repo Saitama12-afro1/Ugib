@@ -358,7 +358,14 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     def arr():
                         return "del", choise
                     arr(user, self.data_models.objects.get(oid =  request.POST["oid"]))
+                    with connection.cursor() as cursor:
+                        if choise == 'grr-stage':
+                            cursor.execute(f'DELETE FROM uds_meta_grr_stage_geom WHERE uniq_id = %s',[udsMetaObj.uniq_id])
+                        elif choise == 'grr-accom':
+                            cursor.execute(f'DELETE FROM uds_meta_grr_accom_geom WHERE uniq_id = %s',[udsMetaObj.uniq_id])
+                            
                     udsMetaObj.delete()
+                    
             except ObjectDoesNotExist:
                 logger.error("When removed ObjectDoesNotExist")
             return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
@@ -520,7 +527,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         
         elif 'upd_one' in request.POST:
             cur_page_link = request.POST["current_page"]
-            print(cur_page_link)
             try:
                 with transaction.atomic():
                     if choise == 'apr':
