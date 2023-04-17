@@ -17,7 +17,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect, HttpRespons
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.utils import IntegrityError
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.models import User, Group
@@ -268,36 +268,63 @@ def history_views(request):
 
 
 def test(request):
-    buff = UdsMetaProtocols.objects.all()
-    for i in buff:
+    if request.method == "POST":
+        data = request.POST["stor_folder"]
+        if data == "":
+            return JsonResponse("0", safe=False)
+        obj = UdsMeta.objects.filter(stor_folder__startswith= data)
+        print(obj)
+        if obj:
+            return JsonResponse("1", safe=False)
+        return JsonResponse("0", safe=False)
+        
+        
+        
+        
+    
+
+def crate_post(request):
+    print(request.META.get('HTTP_REFERER'))
+    user = request.user
+    data_models = UdsMeta
+    if data_models is UdsMeta:
+            choise = '01fond'
+    if data_models is UdsMetaApr:
+        choise = 'apr'
+    if data_models is UdsMetaGrrStage:
+        choise = 'grr-stage'
+    if data_models is UdsMetaGrrAccom:
+        choise = 'grr-accom'
+        
+    if request.method == "POST":
+        form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
+        cur_page_link = form_data.pop('nt_pag')
         try:
-            if i.obj_assoc_geol != None:
-                if "»" in i.obj_assoc_geol or "«" in i.obj_assoc_geol:
-                    i.obj_assoc_geol = i.obj_assoc_geol.replace('«', "\"").replace("»", "\"")
-                    i.save()
-            if i.obj_rdoc_name != None:
-                if "»" in i.obj_rdoc_name or "«" in i.obj_rdoc_name:
-                        i.obj_rdoc_name = i.obj_rdoc_name.replace('«', "\"").replace("»", "\"")
-                        i.save()
-            if i.obj_name != None:
-                if "»" in i.obj_name or "«" in i.obj_name:
-                        i.obj_name = i.obj_name.replace('«', "\"").replace("»", "\"")
-                        i.save()
-        except:
-            print(i.obj_name, i.obj_assoc_geol, i.obj_rdoc_name)
-                                        
-        
-        # i.obj_assoc_inv_nums = new_pole
-        # i.save()
-        
-        
-        
-        
-        
-    return HttpResponse("dsds")
+            with transaction.atomic():                          
+                if choise == 'apr':
+                    buff: dict = deepcopy(form_data)
+                    buff.pop('path_cloud_protocol')
+                    buff.pop('path_local_protocol')
+                    data_models.objects.create(**buff)
+                    form_data['path_local'] = form_data.pop('path_local_protocol')
+                    form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
+                    UdsMetaProtocols.objects.create(**form_data)
+                else:
+                    data_models.objects.create(**form_data)
+                
+                @decor
+                def arr():
+                    return "create", choise
+                
+                arr(user, data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
+                
+        except IntegrityError:
+            logger.error("When create not valid key")
+        except Exception as e:
+            logger.error(f"When create {str(e)}")
+        return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
     
-    
-    
+
 class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представление для базовой страницы
     table_class = UdsMetaTable
     data_models = UdsMeta
@@ -493,12 +520,21 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         return "create", choise
                     
                     arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
+                return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
                 
             except IntegrityError:
                 logger.error("When create not valid key")
+                print("dsdsdsds")
+                response = HttpResponse()
+                return response
+                # return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
+                
             except Exception as e:
                 logger.error(f"When create {str(e)}")
-            return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
+                print("dsdsds")
+                response = HttpResponse()
+                return response
+                # return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
         
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
@@ -567,7 +603,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             response['X-Sendfile'] = filename
             return response
 
-        return redirect(self.redirect_url)
     
     
     def get_context_data(self, **kwargs):
@@ -593,7 +628,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         try:
             count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
         except AttributeError:
-            pass
+            count = 0
 
         if context["current_date"] == old_date:
             context["uniq_id"] = f"g01s01y{y}m{m}d{d}n{int(count) + 1}e"

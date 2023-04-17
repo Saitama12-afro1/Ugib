@@ -57,7 +57,7 @@ function createPost(event){
     
         }
     }
-    $.post('/', {'create':"create",'data': d,'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    $.post('/create/', {'create':"create",'data': d,'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         console.log(div)
         $('.table-container').html(div);
@@ -158,7 +158,7 @@ function valInputMore(event){
     let choise = document.getElementById("obj_sub_group").value
     let stor_folder_data = document.getElementById("stor_folder_valid")
     buff = stor_folder_data.value.split('-')[0]
-    d = {"01TSNIGRI" :"Цнигри:", '02RFGF:':'Росгеолфонд:'}
+    d = {"01TSNIGRI" :"ЦНИГРИ:", '02RFGF:':'Росгеолфонд:'}
 
     if (choise == "01TSNIGRI"){
         $(area).val(d[choise]  + " "+ buff + "; "+  input.value)
@@ -191,7 +191,6 @@ window.addEventListener('load', (event) => {
     let create_button = document.getElementById("create_button")
 
     create_button.addEventListener("click", function (event){
-        console.log(124151)
         let sl = document.getElementById("select_sub")
             let this_choise = sl.value;
             if (this_choise == "01TSNIGRI")
@@ -239,9 +238,22 @@ window.addEventListener('load', (event) => {
 
 
 function my_blur(event){
-    let stor_folder_data = event.target.value
+    let stor_folder_data = event.target.value;
+    let cookie = document.cookie;
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    $.post('/test/', {'stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+        console.log(response);
+        let error =  document.getElementById("error_stor_folder")
+
+        if (response == "1"){
+            error.textContent = "Уже есть в базе данных"
+            error.className = 'error active';
+        }else{
+            error.textContent = "";
+            error.className = "error";
+        }
+    });
     let pattern = /,\s?[0-9-]+/
-    console.log(stor_folder_data.match(pattern))
 
     if (stor_folder_data.match(pattern) != null){
         var year = stor_folder_data.match(pattern)[0];
@@ -267,8 +279,6 @@ function my_blur(event){
     let stor_desc = document.getElementById('stor_desc')
     if (choise_form != "02maps"){
     d = {'01TSNIGRI' : 'ЦНИГРИ:', '02RFGF:':'Росгеолфонд:'}
-    console.log(d[choise])
-    console.log(choise)
     if (choise in d){
         $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value);
     } else {

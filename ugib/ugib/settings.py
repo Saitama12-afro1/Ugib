@@ -83,10 +83,11 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
-CORS_ALLOWED_ORIGINS  = ["http://localhost:8080","http://127.0.0.1:8080" ]
+CORS_ALLOWED_ORIGINS  = ["http://localhost:8080","http://127.0.0.1:8080", "https://ugib.tsnigri.ru"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8080",
+    "https://ugib.tsnigri.ru"
 ]
 
 ROOT_URLCONF = 'ugib.urls'

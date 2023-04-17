@@ -174,7 +174,7 @@ window.addEventListener('load', (event) => {
                 TSNIGRI_validation(this_choise)
               });
     count ++;
-    })
+    });
     if (user.value == "False"){
         let all_btn = document.querySelectorAll("button.btn.btn-primary.test")
         for(const i in all_btn){

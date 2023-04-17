@@ -25,8 +25,9 @@ function current_height(area){
         error.textContent = "";
         error.className = "error";
     }else{
-        showError()
-    } 
+        showError();
+    }
+    
     function showError() {
         error.textContent = "Не соответствует шаблону Число-Фамилия И.И.,Число"
         error.className = 'error active';
