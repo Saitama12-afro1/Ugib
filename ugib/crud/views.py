@@ -315,7 +315,11 @@ def create_post(request):
         
     if request.method == "POST":
         form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
-        cur_page_link = form_data.pop('nt_pag')
+        try:
+            cur_page_link = form_data.pop('nt_pag')
+        except KeyError:
+            cur_page_link = 0
+            
         try:
             with transaction.atomic():
                 if choise == 'apr':
@@ -398,7 +402,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             choise = 'grr-accom'
         
         if 'del' in request.POST:
-            cur_page_link = request.POST["current_page"]
+            try:
+                cur_page_link = request.POST["current_page"]
+            except KeyError:
+                cur_page_link = 0
             try:
                 with transaction.atomic():
                     udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
@@ -522,7 +529,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                     
         elif 'create' in request.POST: 
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
-            cur_page_link = form_data.pop('nt_pag')
+            try:
+                cur_page_link = form_data.pop('nt_pag')
+            except KeyError:
+                cur_page_link = 0
             try:
                 with transaction.atomic():
                     form_data["uniq_id"] = get_uniq_id(request.POST["choise"],request.POST["fond"].lower())
@@ -560,7 +570,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         
         elif 'update' in request.POST:
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
-            cur_page_link = form_data.pop('nt_pag')
+            try:
+                cur_page_link = form_data.pop('nt_pag')
+            except KeyError:
+                cur_page_link = 0
             try:
                 with transaction.atomic():
                     if choise == 'apr':
@@ -584,7 +597,10 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 # return redirect(self.redirect_url)
         
         elif 'upd_one' in request.POST:
-            cur_page_link = request.POST["current_page"]
+            try:
+                cur_page_link = request.POST["current_page"]
+            except KeyError:
+                cur_page_link = 0
             try:
                 with transaction.atomic():
                     if choise == 'apr':
