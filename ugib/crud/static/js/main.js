@@ -9,7 +9,7 @@ function refresh_meta(event){
         let current_page = document.querySelector(".page-item.active").innerText;
         let cookie = document.cookie;
         let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
-        $.post('/refresh', {'cur_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
+        $.post('/refresh/', {'cur_page':current_page, "csrfmiddlewaretoken":csrfToken}, function(response){
         });
        
     };
