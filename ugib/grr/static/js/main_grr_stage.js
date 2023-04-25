@@ -44,6 +44,8 @@ function fixTextareaSize(textarea) {
 
 function createPost(event){
     let form = event.target.parentNode;
+    let fond = "grr-stage";
+    let choise = "grr-stage";
     let d = {};
     let inp = form.getElementsByTagName('textarea');
     let cookie = document.cookie;
@@ -56,7 +58,7 @@ function createPost(event){
         }
     };
     let current_page = document.querySelector(".page-item.active").innerText;
-    $.post('/grr-stage/', {'create':"create",'data': d,'current_page':current_page ,"csrfmiddlewaretoken":csrfToken} ,function(response){
+    $.post('/grr-stage/', {'create':"create",'fond': fond, 'choise': choise,'data': d,'current_page':current_page ,"csrfmiddlewaretoken":csrfToken} ,function(response){
         console.log(response)
         div = $(response).find('.table-container')
         console.log(div)
@@ -188,9 +190,22 @@ window.addEventListener('load', (event) => {
 
 
 function my_blur(event){
-    let stor_folder_data = event.target.value
-    let pattern = /[0-9]+/
-    let year = stor_folder_data.match(pattern)[0]
+    let stor_folder_data = event.target.value;
+    let pattern = /[0-9]+/;
+    let year = stor_folder_data.match(pattern)[0];
+    let cookie = document.cookie;
+    let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
+    $.post('/test/', {'choise':'stage','stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+        let error =  document.getElementById("error_stor_folder")
+
+        if (response == "1"){
+            error.textContent = "Уже есть в базе данных"
+            error.className = 'error active';
+        }else{
+            error.textContent = "";
+            error.className = "error";
+        }
+    });
 
     let obj_year = document.getElementById("obj_year")
     $(obj_year).val(year)

@@ -44,6 +44,9 @@ function fixTextareaSize(textarea) {
 
 
 function createPost(event){
+    let fond = document.getElementById("select_fond").value;
+    let choise = document.getElementById("obj_sub_group").value
+    console.log(choise, fond)
     let form = event.target.parentNode;
     let d = {};
     let inp = form.getElementsByTagName('textarea');
@@ -57,9 +60,9 @@ function createPost(event){
     
         }
     }
-    $.post('/create/', {'create':"create",'data': d,'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
+
+    $.post('/', {'create':'create','fond': fond, 'choise': choise, 'data': d,'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
-        console.log(div)
         $('.table-container').html(div);
     });
 
@@ -188,8 +191,8 @@ count = 0;
 
 window.addEventListener('load', (event) => {
     let user = document.getElementById("info_user");
-    let create_button = document.getElementById("create_button")
-
+    let create_button = document.getElementById("create_button");
+    
     create_button.addEventListener("click", function (event){
         let sl = document.getElementById("select_sub")
             let this_choise = sl.value;
@@ -241,7 +244,7 @@ function my_blur(event){
     let stor_folder_data = event.target.value;
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
-    $.post('/test/', {'stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    $.post('/test/', {'choise':'01fond','stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
         console.log(response);
         let error =  document.getElementById("error_stor_folder")
 
@@ -280,7 +283,7 @@ function my_blur(event){
     if (choise_form != "02maps"){
     d = {'01TSNIGRI' : 'ЦНИГРИ:', '02RFGF:':'Росгеолфонд:'}
     if (choise in d){
-        $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + ";" + stor_desc.value);
+        $(obj_assoc_inv_nums).val(d[choise]  + " "+ buff + "; " + stor_desc.value);
     } else {
         
     }

@@ -16,6 +16,6 @@ urlpatterns = [
     path('get_html_apr/', views.get_html_apr, name='get_html_apr'),
     path('password_change/', views.password_change, name = "password_change"),
     path('refresh/', views.refresh_view, name = "refresh_view"),
-    path('create/', views.crate_post, name='create')
+    path('create/', views.create_post, name='create')
     # path('')
 ]

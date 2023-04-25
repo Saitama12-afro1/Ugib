@@ -29,7 +29,7 @@ class HelperUdsMet:
         'obj_restrict', 'obj_rights', 'obj_rdoc_name', 'obj_rdoc_num', 'obj_terms', 'obj_sources', 'obj_supl_info', 
         'obj_main_min', 'obj_supl_min', 'obj_group_min', 'obj_assoc_geol', 'spat_atd_ate', 'spat_loc', 'spat_num_grid', 
         'spat_coords_source', 'spat_toponim', 'inf_type', 'inf_media', 'path_others', 'obj_main_group', 'obj_sub_group', 'path_local', 
-        'path_cloud', 'status', 'timecode', 'obj_sub_group_ref', 'path_local_ref', 'path_cloud_ref']
+        'path_cloud', 'status','geom_status', 'timecode', 'obj_sub_group_ref', 'path_local_ref', 'path_cloud_ref']
     
     
     
@@ -53,7 +53,7 @@ class HelperUdsMet:
         d = {}
         exceptions = ('spat_coords_sourse')
         for i in js_dict:
-            if i != "csrfmiddlewaretoken" and i != "create" and i != "update" and  i != 'data[csrfmiddlewaretoken]':
+            if i != "csrfmiddlewaretoken" and i != "create" and i != "update" and  i != 'data[csrfmiddlewaretoken]' and i != "choise" and i!= 'fond' :
                 if i[5:len(i)-1] not in exceptions:
                     t = re.sub('\n',' ',js_dict[i])
                 t = re.sub('\t',' ',t)

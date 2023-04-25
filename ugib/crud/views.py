@@ -46,6 +46,10 @@ MyHasher = MyHasher()
 
 logger = logging.getLogger(__name__)
 
+tables = {"01fond": UdsMeta, "apr": UdsMetaApr, "grr-stage": UdsMetaGrrStage, "grr-accom":UdsMetaGrrAccom, "02maps": UdsMeta }
+
+
+
 @login_required(login_url="/")
 @transaction.atomic
 def refresh_view(request):
@@ -266,24 +270,37 @@ def history_views(request):
     
     return render(request, template, context)
 
+def get_uniq_id(choise, fond):
+    num = {"01fond": "01", "apr": "13", "grr-stage": "14", "grr-accom":"14", "02maps": "02" }
+    current_date = datetime.strftime(datetime.now(), "%d.%m.%Y")
+    if choise[0].isdigit():
+        number_fond = choise[:2]
+    else:
+        number_fond = "01"
+    buff = tables[fond].objects.order_by("-oid").first()
+    old_uniq = buff.uniq_id
+    old_date = buff.stor_date
+    count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]
+    d, m, y = (current_date.split('.'))
+    n = num[fond]
+
+    if current_date == old_date:
+        return f"g{n}s{number_fond}y{y}m{m}d{d}n{int(count) + 1}e"
+    else:
+        return f"g{n}s{number_fond}y{y}m{m}d{d}n{1}e"
 
 def test(request):
     if request.method == "POST":
         data = request.POST["stor_folder"]
         if data == "":
             return JsonResponse("0", safe=False)
-        obj = UdsMeta.objects.filter(stor_folder__startswith= data)
-        print(obj)
+        obj = tables[request.POST["choise"]].objects.filter(stor_folder__startswith= data)
         if obj:
             return JsonResponse("1", safe=False)
         return JsonResponse("0", safe=False)
         
-        
-        
-        
-    
 
-def crate_post(request):
+def create_post(request):
     print(request.META.get('HTTP_REFERER'))
     user = request.user
     data_models = UdsMeta
@@ -300,7 +317,7 @@ def crate_post(request):
         form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
         cur_page_link = form_data.pop('nt_pag')
         try:
-            with transaction.atomic():                          
+            with transaction.atomic():
                 if choise == 'apr':
                     buff: dict = deepcopy(form_data)
                     buff.pop('path_cloud_protocol')
@@ -319,9 +336,13 @@ def crate_post(request):
                 arr(user, data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
                 
         except IntegrityError:
-            logger.error("When create not valid key")
+            uniq_id = form_data["uniq_id"]
+            uniq_id = uniq_id[:len(uniq_id) - 2] + str(int(uniq_id[len(uniq_id) - 2:len(uniq_id) - 1]) + 1) + uniq_id[len(uniq_id) - 1:]
+            form_data["uniq_id"] = uniq_id
+            data_models.objects.create(**form_data)
+            logger.error(" create not valid key")
         except Exception as e:
-            logger.error(f"When create {str(e)}")
+            logger.error(f" create {str(e)}")
         return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
     
 
@@ -399,7 +420,6 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
         
         elif 'exc' in request.POST:
             form_data = HelperUdsMet.create_dict_from_uds(self.data_models.objects.get(oid = request.POST['oid']))#обернуть в тру execept
-            
             with open('stockitems_misuper.csv', 'w', newline="", encoding="cp1251") as myfile:  
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL, delimiter=",", dialect=csv.Dialect.delimiter)
                 wr.writerow(HelperUdsMet._all_columns,)
@@ -499,11 +519,12 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             else:
                 return redirect(self.redirect_url)#сделать доп ошибку
                     
-        elif 'create' in request.POST:
+        elif 'create' in request.POST: 
             form_data = HelperUdsMet.credte_dict_from_js_dict(request.POST)
             cur_page_link = form_data.pop('nt_pag')
             try:
-                with transaction.atomic():                          
+                with transaction.atomic():
+                    form_data["uniq_id"] = get_uniq_id(request.POST["choise"],request.POST["fond"].lower())
                     if choise == 'apr':
                         buff: dict = deepcopy(form_data)
                         buff.pop('path_cloud_protocol')
@@ -512,26 +533,26 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         form_data['path_local'] = form_data.pop('path_local_protocol')
                         form_data['path_cloud'] = form_data.pop('path_cloud_protocol')
                         UdsMetaProtocols.objects.create(**form_data)
+                        
                     else:
                         self.data_models.objects.create(**form_data)
-                    
                     @decor
                     def arr():
                         return "create", choise
-                    
                     arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"])) 
                 return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
                 
             except IntegrityError:
-                logger.error("When create not valid key")
-                print("dsdsdsds")
-                response = HttpResponse()
-                return response
-                # return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
+
+                uniq_id = form_data["uniq_id"]
+                uniq_id = uniq_id[:len(uniq_id) - 2] + str(int(uniq_id[len(uniq_id) - 2:len(uniq_id) - 1]) + 1) + uniq_id[len(uniq_id) - 1:]
+                form_data["uniq_id"] = uniq_id
+                self.data_models.objects.create(**form_data)
+                logger.error(" create not valid key")
+                return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
                 
             except Exception as e:
                 logger.error(f"When create {str(e)}")
-                print("dsdsds")
                 response = HttpResponse()
                 return response
                 # return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
@@ -657,21 +678,14 @@ def get_html_uds(request):
         fond = "01FOND".lower()
     else:
         fond = request.GET["fond"].lower()
-    # buff2 = UdsMeta.objects.filter(obj_sub_group = "02RFGF").order_by("-oid").first()
     if 'oid' in request.GET:
         context["record"] = UdsMeta.objects.get(oid = request.GET["oid"])
         return render(request, 'crud/form/update.html', context=context)
-    # if fond == "01FOND":
     context["choise"] = request.GET["choise"]
     choise = context["choise"]
     context["uniq_id"] = create_uniq_id(choise=choise,current_date = context["current_date"], fond = fond)
     return render(request, f"crud/form/{fond}/{choise}.html", context=context)
-    # elif fond == "02MAPS":
-    #     context["choise"] = request.GET["choise"]
-    #     choise = context["choise"]
-    #     context["uniq_id"] = create_uniq_id(choise=choise,current_date = context["current_date"], fond = "02maps")
-    #     return render(request, f"crud/form/02maps/{choise}.html", context=context)
-        
+
     
     
 def get_html_apr(request):
@@ -717,7 +731,6 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
         name_fond = choise[0] + choise[1]
         d, m, y = (current_date.split('.'))# 14.10.2022 
         print(fond, choise)
-        print(UdsMeta.objects.order_by("-oid").first().uniq_id)
         if choise == "apr":
             buff = UdsMetaApr.objects.order_by("-oid").first()
             old_uniq = buff.uniq_id
@@ -759,7 +772,6 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
                 return f"g14s01y{y}m{m}d{d}n{1}e"
         if choise == "02MAPS":
             buff = UdsMeta.objects.filter(uniq_id__istartswith='g02s04').order_by("-oid").first()
-            print(buff)
             old_uniq = buff.uniq_id
             old_date = buff.stor_date
             count = re.search(r"n[0-9]+", old_uniq ).group(0)[1:]   
@@ -767,7 +779,6 @@ def create_uniq_id(choise:str,current_date:datetime, fond = "") ->str: # Фун�
                 return f"g02s04y{y}m{m}d{d}n{int(count) + 1}e"
             else:
                 return f"g02s04y{y}m{m}d{d}n1e"
-        print(current_date, old_date)
         
         if current_date == old_date:
             return f"g01s{name_fond}y{y}m{m}d{d}n{int(count) + 1}e"
