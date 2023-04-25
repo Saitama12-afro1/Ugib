@@ -68,7 +68,7 @@ def refresh_view(request):
             # cursor.execute("REFRESH MATERIALIZED VIEW public.uds_meta_view_mat_v4  WITH data;")
             cursor.execute("select diagnostic.refresh_mat_view()")
         cur_page_link = request.POST["cur_page"]
-        return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
+        return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}/")
             
 
 @login_required(login_url="/")
