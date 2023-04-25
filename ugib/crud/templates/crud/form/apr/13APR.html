@@ -1,7 +1,5 @@
 {% load crud_extras %}
 <div>
-    <label for = "uniq_id" class = "lbl" >Уникальный номер</label> 
-    <textarea class="form-control" name = "uniq_id" id = "uniq_id_valid" value = "" novalidate>{{uniq_id}}</textarea>
     <label for = "stor_folder" class = "lbl">Папка хранения </label>
     <textarea class="form-control stor_folder_valid" name = "stor_folder" id = "stor_folder_valid"  value = "" novalidate onblur = "my_blur(event)"></textarea>
     <span class="error" aria-live="polite" id = "error_stor_folder"></span>

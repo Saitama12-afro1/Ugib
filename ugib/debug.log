@@ -2181,3 +2181,44 @@ KeyError: '01FOND'
 2023-04-25 13:10:13,815 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
 2023-04-25 13:10:22,745 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
 2023-04-25 13:10:30,566 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 13:11:15,719 django.request WARNING  Not Found: /apr.
+2023-04-25 13:11:18,284 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-25 13:11:21,658 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:11:34,029 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-25 13:11:43,341 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:11:47,373 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:15:35,225 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:15:45,086 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:15:57,852 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:16:21,192 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:16:22,148 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:16:23,231 django.request WARNING  Not Found: /favicon.ico
+2023-04-25 13:16:29,514 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:16:35,831 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-25 13:16:40,866 crud.views   INFO     Load <class 'crud.models.UdsMetaApr'> page
+2023-04-25 13:16:42,397 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 13:56:59,444 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\ugib\settings.py changed, reloading.
+2023-04-25 13:57:00,827 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:01:35,654 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:01:36,237 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:01:41,220 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:01:41,773 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:01:51,238 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 14:01:52,308 django.request WARNING  Not Found: /favicon.ico
+2023-04-25 14:01:55,398 crud.views   ERROR    When logun ObjectDoesNotExist
+2023-04-25 14:01:55,472 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 14:02:00,806 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:02:01,419 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:02:04,592 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 14:02:09,186 crud.views   ERROR    When logun ObjectDoesNotExist
+2023-04-25 14:02:09,214 django.request ERROR    Internal Server Error: /
+Traceback (most recent call last):
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    self.check_response(response, callback)
+  File "E:\Новая папка\env\lib\site-packages\django\core\handlers\base.py", line 332, in check_response
+    raise ValueError(
+ValueError: The view crud.views.view didn't return an HttpResponse object. It returned None instead.
+2023-04-25 14:02:15,373 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:02:15,937 django.utils.autoreload INFO     Watching for file changes with StatReloader

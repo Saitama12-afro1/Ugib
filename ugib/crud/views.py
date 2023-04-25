@@ -485,6 +485,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
 
                 except ObjectDoesNotExist:
                     logger.error("When logun ObjectDoesNotExist")
+                    return redirect(self.redirect_url)
                 
         elif 'register' in request.POST:
             if register_form.is_valid(password=request.POST["password"]):
