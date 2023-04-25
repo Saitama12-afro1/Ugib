@@ -100,7 +100,12 @@ function upd_post(event){
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
     cell = document.getElementById('modal_area').value;
     let cls = document.getElementById('close_btn').value;
-    let current_page = document.querySelector(".page-item.active").innerText;
+    let current_page = document.querySelector(".page-item.active")
+    if (current_page == null){
+        current_page = 0;
+    }else{
+    current_page = current_page.innerText;
+    }
     $.post('/', {'upd_one':"upd_one",'oid':oid,'current_page':current_page, 'cls':cls, 'upd_val':cell, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);
@@ -121,7 +126,12 @@ function update_all_cells(event){
     }
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
-    let current_page = document.querySelector(".page-item.active").innerText;
+    let current_page = document.querySelector(".page-item.active")
+    if (current_page == null){
+        current_page = 0;
+    }else{
+    current_page = current_page.innerText;
+    }
     $.post('/', {'update':"update",'data': data, 'current_page': current_page, "csrfmiddlewaretoken":csrfToken} ,function(response){
         div = $(response).find('.table-container')
         $('.table-container').html(div);

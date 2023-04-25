@@ -590,9 +590,15 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         return "update", choise
 
                     arr(user, self.data_models.objects.get(uniq_id =  form_data["uniq_id"]))
+                    
+                   
             except ObjectDoesNotExist:
                 print("error")
                 logger.error("When update ObjectDoesNotExist")
+            if cur_page_link == '0':
+                uniq_id = form_data["uniq_id"]
+                return redirect(request.META.get('HTTP_REFERER') + f"?query={uniq_id}")
+            
             return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
                 # return redirect(self.redirect_url)
         
@@ -619,6 +625,9 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
 
             except ObjectDoesNotExist:
                 logger.error("When upd_one ObjectDoesNotExist")
+            if cur_page_link == '0':
+                uniq_id = self.data_models.objects.get(oid = request.POST["oid"]).uniq_id
+                return redirect(request.META.get('HTTP_REFERER') + f"?query={uniq_id}")
             return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
         
         elif 'bascet' in request.POST:
