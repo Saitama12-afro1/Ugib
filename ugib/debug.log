@@ -2259,3 +2259,16 @@ ValueError: The view crud.views.view didn't return an HttpResponse object. It re
 2023-04-25 14:25:21,944 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
 2023-04-25 14:25:38,737 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\ugib\settings.py changed, reloading.
 2023-04-25 14:25:39,395 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:27:44,031 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 14:27:53,878 crud.views   INFO     Load <class 'crud.models.UdsMeta'> page
+2023-04-25 14:27:53,896 django.request WARNING  Not Found: /
+2023-04-25 14:28:31,648 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:28:32,252 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:28:51,226 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:28:51,775 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:29:10,727 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:29:11,278 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:29:25,931 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:29:26,485 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-04-25 14:29:29,362 django.utils.autoreload INFO     E:\Новая папка\Ugib\ugib\crud\views.py changed, reloading.
+2023-04-25 14:29:29,958 django.utils.autoreload INFO     Watching for file changes with StatReloader
