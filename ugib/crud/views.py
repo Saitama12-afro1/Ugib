@@ -318,7 +318,7 @@ def create_post(request):
         try:
             cur_page_link = form_data.pop('nt_pag')
         except KeyError:
-            cur_page_link = 0
+            cur_page_link = 1
             
         try:
             with transaction.atomic():
@@ -405,7 +405,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             try:
                 cur_page_link = request.POST["current_page"]
             except KeyError:
-                cur_page_link = 0
+                cur_page_link = 1
             try:
                 with transaction.atomic():
                     udsMetaObj = self.data_models.objects.get(oid = request.POST["oid"])
@@ -532,7 +532,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             try:
                 cur_page_link = form_data.pop('nt_pag')
             except KeyError:
-                cur_page_link = 0
+                cur_page_link = 1
             try:
                 with transaction.atomic():
                     form_data["uniq_id"] = get_uniq_id(request.POST["choise"],request.POST["fond"].lower())
@@ -573,7 +573,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             try:
                 cur_page_link = form_data.pop('nt_pag')
             except KeyError:
-                cur_page_link = 0
+                cur_page_link = 1
             try:
                 with transaction.atomic():
                     if choise == 'apr':
@@ -600,7 +600,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             try:
                 cur_page_link = request.POST["current_page"]
             except KeyError:
-                cur_page_link = 0
+                cur_page_link = 1
             try:
                 with transaction.atomic():
                     if choise == 'apr':
