@@ -56,7 +56,12 @@ function createPost(event){
     
         }
     }
-    let current_page = document.querySelector(".page-item.active").innerText;
+    let current_page = document.querySelector(".page-item.active");
+    if (current_page == null){
+        current_page = 1;
+    }else{
+    current_page = current_page.innerText;
+    }
     $.post('/apr/', {'create':"create",'fond': fond, 'choise': choise,'current_page': current_page,'data': d, "csrfmiddlewaretoken":csrfToken} ,function(response){
         console.log(response)
         div = $(response).find('.table-container')

@@ -52,7 +52,12 @@ function createPost(event){
     let inp = form.getElementsByTagName('textarea');
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
-    let current_page = document.querySelector(".page-item.active").innerText;
+    let current_page = document.querySelector(".page-item.active");
+    if (current_page == null){
+        current_page = 1;
+    }else{
+    current_page = current_page.innerText;
+    }
     for (const i in inp){
        
         if (inp[i].name != undefined){

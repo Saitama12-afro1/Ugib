@@ -57,7 +57,12 @@ function createPost(event){
     
         }
     };
-    let current_page = document.querySelector(".page-item.active").innerText;
+    let current_page = document.querySelector(".page-item.active");
+    if (current_page == null){
+        current_page = 1;
+    }else{
+    current_page = current_page.innerText;
+    }
     $.post('/grr-stage/', {'create':"create",'fond': fond, 'choise': choise,'data': d,'current_page':current_page ,"csrfmiddlewaretoken":csrfToken} ,function(response){
         console.log(response)
         div = $(response).find('.table-container')
@@ -205,7 +210,7 @@ function my_blur(event){
     let year = stor_folder_data.match(pattern)[0];
     let cookie = document.cookie;
     let csrfToken = cookie.substring(cookie.indexOf('=') + 1);
-    $.post('/test/', {'choise':'stage','stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
+    $.post('/test/', {'choise':'grr-stage','stor_folder': stor_folder_data, "csrfmiddlewaretoken":csrfToken} ,function(response){
         let error =  document.getElementById("error_stor_folder")
 
         if (response == "1"){

@@ -491,7 +491,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                         return redirect(self.redirect_url)
 
                 except ObjectDoesNotExist:
-                    logger.error("When logun ObjectDoesNotExist")
+                    logger.error("When login ObjectDoesNotExist")
                     return redirect(self.redirect_url)
                 
         elif 'register' in request.POST:
@@ -536,6 +536,7 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
             try:
                 with transaction.atomic():
                     form_data["uniq_id"] = get_uniq_id(request.POST["choise"],request.POST["fond"].lower())
+                        
                     if choise == 'apr':
                         buff: dict = deepcopy(form_data)
                         buff.pop('path_cloud_protocol')
@@ -560,10 +561,13 @@ class UdsMetaHTMxTableView(SingleTableMixin, FilterView): # представле
                 form_data["uniq_id"] = uniq_id
                 self.data_models.objects.create(**form_data)
                 logger.error(" create not valid key")
+                print(2222222)
                 return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
                 
             except Exception as e:
                 logger.error(f"When create {str(e)}")
+                logger.error(request.POST)
+                logger.error("------------------")
                 response = HttpResponse()
                 return response
                 # return redirect(request.META.get('HTTP_REFERER') + f"?page={cur_page_link}")
