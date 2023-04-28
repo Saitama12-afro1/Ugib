@@ -2,7 +2,7 @@ task.txt
 test.py
 env
 env/pyvenv.cfg
-Ugib/ugib/debug.log
+ugib\ugib\debug.log
 ugib/ugib/__pycache__/
 ugib/crud/__pycache__/переезд
 Ugib\ugib\crud\templatetags\__pycache__
